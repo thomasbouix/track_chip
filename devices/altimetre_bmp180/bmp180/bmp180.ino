@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <Wire.h>
+#include <math.h>
 #include "BMP180I2C.h"
 
 /*
@@ -11,7 +12,7 @@
 #define BMP_I2C_ADDRESS 0x77                  // 1110 111(1) ; (last bit = R/W bit)
 
 // create an BMP180 object using the I2C interface
-BMP180I2C bmp180(I2C_ADDRESS);  
+BMP180I2C bmp180(BMP_I2C_ADDRESS);  
 
 void setup() {
   // put your setup code here, to run once:
@@ -55,9 +56,7 @@ void loop() {
     delay(100);
   } while (!bmp180.hasValue());
 
-  Serial.print("Temperature: "); 
-  Serial.print(bmp180.getTemperature()); 
-  Serial.println(" degC");
+  float temperature = bmp180.getTemperature();
 
   //start a pressure measurement. pressure measurements depend on temperature measurement, you should only start a pressure 
   //measurement immediately after a temperature measurement. 
@@ -73,7 +72,11 @@ void loop() {
     delay(100);
   } while (!bmp180.hasValue());
 
-  Serial.print("Pressure: "); 
-  Serial.print(bmp180.getPressure());
-  Serial.println(" Pa");
+  float P = bmp180.getPressure();
+
+  float altitude = - 8.3143 * 288.15 * log(P/101325) / (0.02896 * 9.807) - 155;
+
+  Serial.print("altitude : ");
+  Serial.print(altitude);
+  Serial.println("m");  
 }
