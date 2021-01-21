@@ -1,73 +1,79 @@
+#include <Arduino.h>
 #include <Wire.h>
-#include <SoftwareSerial.h>
+#include "BMP180I2C.h"
 
-int bmp_address = 0xEF;                   // 1110 111(1) ; (last bit = R/W bit)
+/*
+ * PIN I2C 
+ * SDA = D21, PIN 42
+ * SCL = D22, PIN 39
+ */
 
-#define I2C_SDA 	33
-#define I2C_SCL		32
-#define bmp_register0   Ox00              // adresses des registres du périphérique slave 
-#define bmp_register1   Ox01              // 
+#define I2C_ADDRESS 0x77                  // 1110 111(1) ; (last bit = R/W bit)
 
-int bmp_reg0, bmp_reg1;
+// create an BMP180 object using the I2C interface
+BMP180I2C bmp180(I2C_ADDRESS);  
 
 void setup() {
-  Serial.begin(9600);                     // Stdout
-  Wire.begin();                           // Initiate the Wire library
-  
-  delay(100);
+  // put your setup code here, to run once:
+  Serial.begin(115200);
 
-  /* 
-   *  Lire la donnée de calibration dans la E2PROM pour pouvoir 
-   *  calculer la pression après sa lecture
-   */
+  //wait for serial connection to open (only necessary on some boards)
+  while (!Serial);
 
-  /*
-   * Mode ultra low-power
-   * oversampling_setting = 0 ; temps de conversion max = 4.5 ms
-   */
+  Wire.begin();
 
-  /* Transfert de données */
-  Wire.beginTransmission(bcm_address);    // Enable measurement
-  Wire.write(bmp_reg0);                   // Demande des données aux registres
-  Wire.write(bmp_reg1);                   // 
-  Wire.endTransmission();                 // Fin de transmission
-
-  /* Traitement des données */
-  Wire.requestfrom(bmp_address, 2);       // Demande les données reçues
-
-  if(Wire.available() >= 2) {
-    bmp_reg0 = Wire.read();
-    bmp_reg1 = Wire.read();
+  //begin() initializes the interface, checks the sensor ID and reads the calibration parameters.  
+  if (!bmp180.begin())
+  {
+    Serial.println("begin() failed. check your BMP180 Interface and I2C Address.");
+      
+    while (1);
   }
 
-  Serial.println("bmp_reg0 = %d", bmp_reg0);
-  Serial.println("bmp_reg1 = %d", bmp_reg1);
+  //reset sensor to default parameters.
+  bmp180.resetToDefaults();
 
+  //enable ultra high resolution mode for pressure measurements
+  bmp180.setSamplingMode(BMP180MI::MODE_UHR);
 }
 
 void loop() {
-  
-}
+  // put your main code here, to run repeatedly:
 
-uint16_t read_temperature_value() {
-  /*
-      write 0x2E into reg 0xF4, wait 4.5ms
-      read reg 0xF6 (MSB), 0xF7 (LSB)
-      UT = MSB << 8 + LSB
-   */
-  Wire.write(
-}
+  delay(1000);
 
+  //start a temperature measurement
+  if (!bmp180.measureTemperature())
+  {
+    Serial.println("could not start temperature measurement, is a measurement already running?");
+    return;
+  }
 
-uint32_t read_pressure_value() {
-  /*
-     write 0x34+(oss<<6) into reg 0XF4, wait
-     read reg 0xF6 (MSB), 0xF7 (LSB), 0xF8 (XLSB)
-     UP = (MSB<<16 + LSB<<8 + XLSB) >> (8-oss) 
-   */
-}
+  //wait for the measurement to finish. proceed as soon as hasValue() returned true. 
+  do
+  {
+    delay(100);
+  } while (!bmp180.hasValue());
 
-void calculate_true_pressure() {
-  X1 = 
+  Serial.print("Temperature: "); 
+  Serial.print(bmp180.getTemperature()); 
+  Serial.println(" degC");
 
+  //start a pressure measurement. pressure measurements depend on temperature measurement, you should only start a pressure 
+  //measurement immediately after a temperature measurement. 
+  if (!bmp180.measurePressure())
+  {
+    Serial.println("could not start perssure measurement, is a measurement already running?");
+    return;
+  }
+
+  //wait for the measurement to finish. proceed as soon as hasValue() returned true. 
+  do
+  {
+    delay(100);
+  } while (!bmp180.hasValue());
+
+  Serial.print("Pressure: "); 
+  Serial.print(bmp180.getPressure());
+  Serial.println(" Pa");
 }
