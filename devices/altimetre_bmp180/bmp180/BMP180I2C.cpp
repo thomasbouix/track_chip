@@ -26,3 +26,41 @@ BMP180I2C::BMP180I2C(uint8_t address) :
 BMP180I2C::~BMP180I2C()
 {
 }
+
+// Fonction ajoutée par Thomas Bouix
+float BMP180I2C::computeAltitude() {
+	
+	if (!this->measureTemperature()) {
+		Serial.println("could not start temperature measurement!");
+	       	Serial.println("Is a measurement already running?");
+		return;
+	}
+
+	// wait for the measurement to finish. proceed as soon as hasValue() returned true. 
+	do {
+		delay(100);
+	} while (!this->hasValue());
+
+	float temperature = this->getTemperature();
+
+	// start a pressure measurement. 
+	// pressure measurements depend on temperature measurement,
+	// you should only start a pressure 
+	// measurement immediately after a temperature measurement. 
+	if (!this->measurePressure()) {
+		Serial.println("could not start perssure measurement");
+		Serial.println("is a measurement already running?");
+		return;
+	}
+
+	//wait for the measurement to finish. proceed as soon as hasValue() returned true. 
+	do {
+		delay(100);
+	} while (!this->hasValue());
+
+	float P = this->getPressure();
+
+	float altitude = - 8.3143 * 288.15 * log(P/101325) / (0.02896 * 9.807) - 155;
+
+	return altitude;
+}

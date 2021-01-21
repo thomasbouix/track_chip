@@ -43,38 +43,7 @@ void loop() {
 
   delay(1000);
 
-  //start a temperature measurement
-  if (!bmp180.measureTemperature())
-  {
-    Serial.println("could not start temperature measurement, is a measurement already running?");
-    return;
-  }
-
-  //wait for the measurement to finish. proceed as soon as hasValue() returned true. 
-  do
-  {
-    delay(100);
-  } while (!bmp180.hasValue());
-
-  float temperature = bmp180.getTemperature();
-
-  //start a pressure measurement. pressure measurements depend on temperature measurement, you should only start a pressure 
-  //measurement immediately after a temperature measurement. 
-  if (!bmp180.measurePressure())
-  {
-    Serial.println("could not start perssure measurement, is a measurement already running?");
-    return;
-  }
-
-  //wait for the measurement to finish. proceed as soon as hasValue() returned true. 
-  do
-  {
-    delay(100);
-  } while (!bmp180.hasValue());
-
-  float P = bmp180.getPressure();
-
-  float altitude = - 8.3143 * 288.15 * log(P/101325) / (0.02896 * 9.807) - 155;
+  float altitude = bmp180.computeAltitude();
 
   Serial.print("altitude : ");
   Serial.print(altitude);

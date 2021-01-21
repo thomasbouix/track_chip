@@ -27,6 +27,9 @@ class BMP180I2C :
 public:
 	BMP180I2C(uint8_t address);
 	virtual ~BMP180I2C();
+
+	// Fonction ajoutée par Thomas Bouix
+	float computeAltitude();
 };
 
 #endif /* BMP180I2C_H_ */
