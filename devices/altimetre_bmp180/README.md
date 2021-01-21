@@ -12,7 +12,7 @@ Start	: SDA drops low, SDC still high
 ACK	: le slave tire la ligne SDA à zéro
 Stop 	: SDA low -> high ; SCL high
 ```
-## Librairie utilisée
+## Librairie utilisée
 ```
 https://bitbucket.org/christandlg/bmp180mi/src/master/
 ```

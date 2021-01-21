@@ -8,7 +8,7 @@
  * SCL = D22, PIN 39
  */
 
-#define I2C_ADDRESS 0x77                  // 1110 111(1) ; (last bit = R/W bit)
+#define BMP_I2C_ADDRESS 0x77                  // 1110 111(1) ; (last bit = R/W bit)
 
 // create an BMP180 object using the I2C interface
 BMP180I2C bmp180(I2C_ADDRESS);  
