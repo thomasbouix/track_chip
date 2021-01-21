@@ -23,19 +23,7 @@ void setup() {
 
   Wire.begin();
 
-  //begin() initializes the interface, checks the sensor ID and reads the calibration parameters.  
-  if (!bmp180.begin())
-  {
-    Serial.println("begin() failed. check your BMP180 Interface and I2C Address.");
-      
-    while (1);
-  }
-
-  //reset sensor to default parameters.
-  bmp180.resetToDefaults();
-
-  //enable ultra high resolution mode for pressure measurements
-  bmp180.setSamplingMode(BMP180MI::MODE_UHR);
+  bmp180.init();
 }
 
 void loop() {
