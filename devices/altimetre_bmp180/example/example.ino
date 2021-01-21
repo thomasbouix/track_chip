@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <math.h>
-#include "BMP180I2C.h"
+#include <BMP180I2C.h>
 
 /*
  * PIN I2C 

@@ -16,4 +16,9 @@ Stop 	: SDA low -> high ; SCL high
 ```
 https://bitbucket.org/christandlg/bmp180mi/src/master/
 ```
-
+## Packager la librairie modifiée
+```
+Créer un lien symbolique du dossier bmp180/ dans Arduino/libraries :
+$ cd ~/Arduino/libraries
+$ ln -s /path/to/bmp180
+```
