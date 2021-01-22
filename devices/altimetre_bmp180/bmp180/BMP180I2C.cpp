@@ -27,7 +27,7 @@ BMP180I2C::~BMP180I2C()
 {
 }
 
-// Fonction ajoutée par Thomas Bouix
+// Fonctions ajoutées par Thomas Bouix
 void BMP180I2C::init() {
 
   
@@ -80,7 +80,7 @@ float BMP180I2C::computeAltitude() {
 
 	float P = this->getPressure();
 
-  float altitude = - (1/0.00012) * log(P/101325); 
+ 	float altitude = - (1/0.00012) * log(P/101325); 
 
 	return altitude;
 }
