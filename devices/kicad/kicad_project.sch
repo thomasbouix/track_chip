@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:kicad_project-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
@@ -27,54 +28,77 @@ $EndComp
 $Comp
 L power:Earth #PWR?
 U 1 1 600DC354
-P 6650 2300
-F 0 "#PWR?" H 6650 2050 50  0001 C CNN
-F 1 "Earth" H 6650 2150 50  0001 C CNN
-F 2 "" H 6650 2300 50  0001 C CNN
-F 3 "~" H 6650 2300 50  0001 C CNN
-	1    6650 2300
+P 5150 2400
+F 0 "#PWR?" H 5150 2150 50  0001 C CNN
+F 1 "Earth" H 5150 2250 50  0001 C CNN
+F 2 "" H 5150 2400 50  0001 C CNN
+F 3 "~" H 5150 2400 50  0001 C CNN
+	1    5150 2400
 	1    0    0    -1  
 $EndComp
 $Comp
 L power:+3.3V #PWR?
 U 1 1 600DC827
-P 5800 2350
-F 0 "#PWR?" H 5800 2200 50  0001 C CNN
-F 1 "+3.3V" H 5815 2523 50  0000 C CNN
-F 2 "" H 5800 2350 50  0001 C CNN
-F 3 "" H 5800 2350 50  0001 C CNN
-	1    5800 2350
+P 4650 2500
+F 0 "#PWR?" H 4650 2350 50  0001 C CNN
+F 1 "+3.3V" H 4665 2673 50  0000 C CNN
+F 2 "" H 4650 2500 50  0001 C CNN
+F 3 "" H 4650 2500 50  0001 C CNN
+	1    4650 2500
 	1    0    0    -1  
 $EndComp
-Text Label 6650 2300 0    50   ~ 0
+Text Label 5150 2400 0    50   ~ 0
 GND
 Text Label 5500 4450 0    50   ~ 0
 GND
-Text Label 5800 2350 0    50   ~ 0
+Text Label 4650 2500 0    50   ~ 0
 VIN
-Text Label 6600 3650 2    50   ~ 0
+Text Label 6600 4700 2    50   ~ 0
 VIN
-Text Label 6600 3750 2    50   ~ 0
+Text Label 6600 4800 2    50   ~ 0
 VIN
-Text Label 6600 3850 2    50   ~ 0
+Text Label 6600 4900 2    50   ~ 0
 GND
 $Comp
 L track_chip:bmp180 U?
 U 1 1 600DBC2E
-P 6700 3650
-F 0 "U?" H 7278 3496 50  0000 L CNN
-F 1 "bmp180" H 7278 3405 50  0000 L CNN
-F 2 "" H 7000 3850 50  0001 C CNN
-F 3 "" H 7000 3850 50  0001 C CNN
-	1    6700 3650
+P 6700 4700
+F 0 "U?" H 7278 4546 50  0000 L CNN
+F 1 "bmp180" H 7278 4455 50  0000 L CNN
+F 2 "" H 7000 4900 50  0001 C CNN
+F 3 "" H 7000 4900 50  0001 C CNN
+	1    6700 4700
 	1    0    0    -1  
 $EndComp
-Text Label 6600 3950 2    50   ~ 0
+Text Label 6600 5000 2    50   ~ 0
 SCL
-Text Label 6600 4050 2    50   ~ 0
+Text Label 6600 5100 2    50   ~ 0
 SDA
 Text Label 5500 3550 0    50   ~ 0
 SDA
 Text Label 5500 3250 0    50   ~ 0
 SCL
+$Comp
+L track_chip:brkws01 U?
+U 1 1 60101594
+P 7350 2850
+F 0 "U?" V 7904 2978 50  0000 L CNN
+F 1 "brkws01" V 7995 2978 50  0000 L CNN
+F 2 "" H 7350 2850 50  0001 C CNN
+F 3 "" H 7350 2850 50  0001 C CNN
+	1    7350 2850
+	0    1    1    0   
+$EndComp
+Text Label 6350 3150 2    50   ~ 0
+TX
+Text Label 5500 3350 0    50   ~ 0
+TX
+Text Label 5500 3450 0    50   ~ 0
+RX
+Text Label 6350 3250 2    50   ~ 0
+RX
+Text Label 6350 3750 2    50   ~ 0
+VIN
+Text Label 6350 3850 2    50   ~ 0
+GND
 $EndSCHEMATC
