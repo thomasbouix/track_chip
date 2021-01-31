@@ -1,6 +1,3 @@
-#define RX2 16                                  // Port RX 2 => GPIO 16 => PIN 25
-#define TX2 17                                  // Port TX 2 => GPIO 17 => PIN 27
-  
 void setup()
 {
     Serial.begin(115200);                       // the Serial port of Arduino baud rate => Communication between ESP and computer via USB port.
