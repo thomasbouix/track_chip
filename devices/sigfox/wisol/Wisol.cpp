@@ -1,3 +1,6 @@
+/*
+Librairie permettant d'envoyer une chaine de caractère de 12 octets d'un ESP32 vers un module Sigfox Wisol
+*/
 #include "wisol.h"
 
 //Constructor
@@ -30,7 +33,7 @@ bool Wisol::IsHex(char* text){
 bool Wisol::string_ok(String verif){
     //verifier que la string fait moins de 12 octets
     int n = verif.length() ;
-    if (n > 12){
+    if (n > 24){
       Serial.println("string too long");
       return false;
     }
