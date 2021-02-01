@@ -19,7 +19,7 @@ public:
 	// Fill buffer attribute with NMEA data
 	void get_data_line();
 
-	void clear_buffer_array(unsigned char *arr, int count);
+	void clearBufferArray(unsigned char *arr, int count);
 };
 
 #endif
