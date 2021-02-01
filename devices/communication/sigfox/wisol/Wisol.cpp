@@ -1,7 +1,7 @@
 /*
 Librairie permettant d'envoyer une chaine de caractère de 12 octets d'un ESP32 vers un module Sigfox Wisol
 */
-#include "wisol.h"
+#include "Wisol.h"
 
 //Constructor
 Wisol::Wisol(int baudrate, int RX, int TX){
