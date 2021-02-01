@@ -39,8 +39,8 @@ void GROVE11302::get_data_line(){
 
 void GROVE11302::clearBufferArray(unsigned char *arr, int count)   // function to clear buffer array
 {
-    for (int i = 0 ; i < count ; i++) {
-        arr[i] = NULL;                                 // clear all index of array with command NULL
-    }                                        
+  for (int i = 0 ; i < count ; i++) {
+    arr[i] = NULL;                                 // clear all index of array with command NULL
+  }                                        
 }
 
