@@ -4,8 +4,8 @@
 
 #define BMP_I2C_ADDRESS 0x77 
 
-BMP180I2C bmp180(BMP_I2C_ADDRESS);
-GROVE11302 gps_grove();
+BMP180I2C bmp180 = BMP180I2C(BMP_I2C_ADDRESS);
+GROVE11302 gps_grove = GROVE11302();
 
 float altitude;
 
@@ -23,11 +23,11 @@ void setup() {
 void loop() {
 
 	altitude = bmp180.computeAltitude();
-  // gps_grove.get_line_data();
+  gps_grove.get_data_line();
 
   Serial.print("\n=============\n");
   Serial.print("buffer : "); 
-  // Serial.write(gps_grove.buffer, 70);
+  Serial.write(gps_grove.buffer, 70);
 	Serial.print("altitude : ");
 	Serial.print(altitude);
 	Serial.println("m");	

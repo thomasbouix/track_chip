@@ -14,7 +14,6 @@ public:
 
 	GROVE11302();
 	GROVE11302(int baudrate, int RX, int TX);
-	virtual ~GROVE11302();
 
 	// Fill buffer attribute with NMEA data
 	void get_data_line();

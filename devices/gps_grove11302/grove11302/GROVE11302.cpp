@@ -2,16 +2,17 @@
 
 // Constructor
 GROVE11302::GROVE11302(int baudrate, int RX, int TX){
-  Serial2.begin(baudrate, SERIAL_8N1, RX, TX);		// Hardware Serial Port 2 => Communication between ESP and GPS
+	Serial2.begin(baudrate, SERIAL_8N1, RX, TX);		// Hardware Serial Port 2 => Communication between ESP and GPS
 }
 
 GROVE11302::GROVE11302(){
-	GROVE11302(9600, RX2, TX2);											// Hardware Serial Port 2 => Communication between ESP and GPS
+
+	GROVE11302(9600, RX2, TX2);	// Hardware Serial Port 2 => Communication between ESP and GPS
 }
 
 void GROVE11302::get_data_line(){
 
-	unsigned char header[5];                        // NMEA headers, Example : $GPGGA
+	unsigned char header[5];	// NMEA headers, Example : $GPGGA
 
 	clearBufferArray(buffer, 70);
 	clearBufferArray(header, 5);
