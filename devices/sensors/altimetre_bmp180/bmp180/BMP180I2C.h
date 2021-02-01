@@ -30,7 +30,7 @@ public:
 
 	// Fonctions ajoutée par Thomas Bouix
 	float computeAltitude();
-  void init();
+	void init();
 };
 
 #endif /* BMP180I2C_H_ */
