@@ -2,26 +2,33 @@
 
 TrackChip::TrackChip() {
 
-	*bmp180		= BMP180I2C(BMP_I2C_ADDRESS);   
-	*gps_grove	= GROVE11302();
-	*w		= Wisol();
+	this->bmp180	= new BMP180I2C(BMP_I2C_ADDRESS);
+	this->gps	= new GROVE11302();
+	this->wisol	= new Wisol();
 
 	Wire.begin();
-	bmp180->init();
+
+	if ( bmp180->init() < 0 ) goto error;
+
+	return;
+	
+	error : Serial.println("Error in TrackChip Constructor"); 
 }
 
 void TrackChip::send_data(String s) {
-	w->send_string_data(s);
-}  
+
+	wisol->send_string_data(s);
+}
 
 String TrackChip::get_all_data() {
 
 	String res;
-	float altitude;
 
-	altitude = bmp180->computeAltitude();
-	gps_grove->get_data_line();
-	String buffer((char*) gps_grove->buffer);
+	float altitude;
+	altitude = get_altitude();
+
+	gps->get_data_line();
+	String buffer((char*) gps->buffer);
 
 	res += "\n=============\n";
 	res += "buffer : "; 

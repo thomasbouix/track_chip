@@ -14,18 +14,20 @@ Utilise les pins RX2, TX2 par défaut pour communiquer
 #ifndef WISOL_H
 #define WISOL_H
  
-class Wisol
-{
-private:
-	// Test if a string is valid before sending it
- Wisol(int baurate, int RX, int TX);
- 		
-public:
-    Wisol();
+class Wisol {
+
+	private:
+		// Test if a string is valid before sending it
+		Wisol(int baurate, int RX, int TX);
+			
+	public:
+		Wisol();
+
+		static bool IsHexCharOrNewLine(char c);
+		static bool IsHex(char* text);
+		static bool string_ok(String verif);
+
 		void send_string_data(String envoie);
-    static bool IsHexCharOrNewLine(char c);
-    static bool IsHex(char* text);
-    static bool string_ok(String verif);
 };
  
 #endif

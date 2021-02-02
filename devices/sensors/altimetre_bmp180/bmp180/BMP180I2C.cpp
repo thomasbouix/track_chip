@@ -28,14 +28,14 @@ BMP180I2C::~BMP180I2C()
 }
 
 // Fonctions ajoutées par Thomas Bouix
-void BMP180I2C::init() {
+int BMP180I2C::init() {
 
 	//begin() initializes the interface, checks the sensor ID and reads the calibration parameters.	
-	if (!this->begin())
-	{
-		Serial.println("begin() failed. check your BMP180 Interface and I2C Address.");
-			
-		while (1);
+	if (!this->begin()) {
+		Serial.println("BMP180I2C::init => begin() failed.\n");
+		Serial.println("Check your BMP180 Interface and I2C Address.\n");
+
+		return -1;		
 	}
 
 	//reset sensor to default parameters.
@@ -44,7 +44,7 @@ void BMP180I2C::init() {
 	//enable ultra high resolution mode for pressure measurements
 	this->setSamplingMode(BMP180MI::MODE_UHR);
 
-	return;
+	return 0;
 }
 
 float BMP180I2C::computeAltitude() {

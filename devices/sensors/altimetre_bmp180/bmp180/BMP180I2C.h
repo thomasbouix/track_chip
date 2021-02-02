@@ -29,8 +29,8 @@ public:
 	virtual ~BMP180I2C();
 
 	// Fonctions ajoutée par Thomas Bouix
+	int init();
 	float computeAltitude();
-	void init();
 };
 
 #endif /* BMP180I2C_H_ */

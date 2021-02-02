@@ -11,9 +11,9 @@
 class TrackChip {
 
 	private :
-		BMP180I2C * bmp180;
-		GROVE11302 * gps_grove;
-		Wisol * w;
+		BMP180I2C * bmp180 	= NULL;
+		Wisol * wisol		= NULL;
+		GROVE11302 * gps	= NULL;
 
 	public :
 		TrackChip();
