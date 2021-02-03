@@ -7,26 +7,22 @@ void setup() {
 	Serial.begin(115200); 
 	while (!Serial);
 
-  String res;
-
+  String message = "004A882F000398DC2F";
+  Serial.println("========");
   Serial.println("sending message");
-  trackChip.send_data("00005");
-  trackChip.wisol->send_string_data("00000"); 
+  trackChip.send_data(message);
   Serial.println("message sent");
-
-  /*
-  Serial.println("getting altitude");
-  float altitude = trackChip.get_altitude();
-  Serial.print("altitude : "); Serial.print(altitude); Serial.println("m");
-  */
-
+  Serial.println("========");
 }
 
 void loop() {
+  
+  float altitude = trackChip.get_altitude();
+  Serial.print("altitude : "); Serial.print(altitude); Serial.println("m");
 
-      // trackChip.test_objet_bmp();
-      // trackChip.test_pointeur_bmp();
+  // Serial.println("========");
+  // Serial.println(trackChip.get_position());
 
-      delay(1000);
+  delay(1000);
 
 }

@@ -5,7 +5,8 @@ void setup() {
   Serial.begin(115200);
   Wisol w;
   Serial.println("end setup");
-  w.send_string_data("004A882F000398DC2E");
+  String res = "00100";
+  w.send_string_data(res);
 }
 
 void loop() {
