@@ -11,8 +11,8 @@ class TrackChip {
 
 	private :
 		BMP180I2C * bmp180 	= NULL;
-		Wisol * wisol		= NULL;
 		GROVE11302 * gps	= NULL;
+		Wisol * wisol		= NULL;
 
 	public :
 		TrackChip();
@@ -21,6 +21,11 @@ class TrackChip {
 		void send_data(String s);
 
 		String get_all_data();
+
+		void test_objet_bmp();
+		void test_pointeur_bmp();
+		void test_objet_wisol();
+		void test_pointeur_wisol();
 };
 
 #endif

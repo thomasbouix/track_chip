@@ -18,13 +18,13 @@
 
 #include "BMP180I2C.h"
 
-BMP180I2C::BMP180I2C(uint8_t address) :
-	BMP180TwoWire(&Wire, address)
-{
+BMP180I2C::BMP180I2C(uint8_t address) : BMP180TwoWire(&Wire, address) {
+
+	Serial.println("BMP180I2C()");
 }
 
-BMP180I2C::~BMP180I2C()
-{
+BMP180I2C::~BMP180I2C() {
+	Serial.println("~BMP180I2C()");
 }
 
 // Fonctions ajoutées par Thomas Bouix

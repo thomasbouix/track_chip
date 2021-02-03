@@ -10,15 +10,23 @@ void setup() {
   String res;
 
   Serial.println("sending message");
-  trackChip.send_data("004A882Fa000398DC2E");
+  trackChip.send_data("00005");
+  trackChip.wisol->send_string_data("00000"); 
   Serial.println("message sent");
 
+  /*
   Serial.println("getting altitude");
-  trackChip.get_altitude();
-  // Serial.print("altitude : "); Serial.print(altitude); Serial.println("m");
+  float altitude = trackChip.get_altitude();
+  Serial.print("altitude : "); Serial.print(altitude); Serial.println("m");
+  */
 
 }
 
 void loop() {
+
+      // trackChip.test_objet_bmp();
+      // trackChip.test_pointeur_bmp();
+
+      delay(1000);
 
 }

@@ -23,16 +23,15 @@
 
 #define BMP_I2C_ADDRESS 0x77 
 
-class BMP180I2C :
-	public BMP180TwoWire
-{
-public:
-	BMP180I2C(uint8_t address);
-	virtual ~BMP180I2C();
+class BMP180I2C : public BMP180TwoWire {
 
-	// Fonctions ajoutée par Thomas Bouix
-	int init();
-	float computeAltitude();
+	public:
+		BMP180I2C(uint8_t address);
+		virtual ~BMP180I2C();
+
+		// Fonctions ajoutée par Thomas Bouix
+		int init();
+		float computeAltitude();
 };
 
 #endif /* BMP180I2C_H_ */
