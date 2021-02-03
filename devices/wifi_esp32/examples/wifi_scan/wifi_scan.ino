@@ -43,6 +43,9 @@ void loop()
             
             Serial.print(", chan : ");
             Serial.print(WiFi.channel(i));
+
+            Serial.print(", authmode : ");
+            Serial.print(WiFi.encryptionType(i));
             
             Serial.print(", ");
             Serial.println((WiFi.encryptionType(i) == WIFI_AUTH_OPEN)?" ":"*");
