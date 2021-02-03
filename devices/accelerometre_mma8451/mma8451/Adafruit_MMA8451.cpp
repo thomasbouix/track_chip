@@ -312,6 +312,4 @@ void Adafruit_MMA8451::getSensor(sensor_t *sensor) {
   sensor->resolution = 0;
 }
 
-// Functions added by Aziz IDOMAR
-
 #endif
