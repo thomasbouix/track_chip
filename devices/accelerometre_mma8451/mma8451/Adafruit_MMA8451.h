@@ -23,6 +23,7 @@
     I2C ADDRESS/BITS
     -----------------------------------------------------------------------*/
 #define MMA8451_DEFAULT_ADDRESS (0x1A) //(0x1D) //!< Default MMA8451 I2C address, if A is GND, its 0x1C
+#define MMA8451_I2C_ADDRESS 0x1D
 /*=========================================================================*/
 
 #define MMA8451_REG_OUT_X_MSB 0x01 //!< Read-only device output register
@@ -83,6 +84,7 @@ class Adafruit_MMA8451
  */
 {
 public:
+
   /*!
    * @brief Adafruit MMA8451 object
    * @param id MMA8451 ID
@@ -98,12 +100,9 @@ public:
 
   void read(); //!< @brief Reads data from the sensor
 
-  void
-  setRange(mma8451_range_t range); //!< @param range Desired range of sensor
-  mma8451_range_t
-  getRange(void); //!< @return Range of sensor, either 0b10, 0b01, or 0b00, 8G,
-                  //!< 4G, and 2G respectively
-
+  void setRange(mma8451_range_t range); //!< @param range Desired range of sensor
+  mma8451_range_t getRange(void);       //!< @return Range of sensor, either 0b10, 0b01, or 0b00, 8G,
+                                        //!< 4G, and 2G respectively
   /*!
    * @param dataRate Data rate of the sensor
    */
@@ -139,6 +138,18 @@ public:
    * @param value Value to write
    */
   void writeRegister8(uint8_t reg, uint8_t value);
+
+  // functions added by Aziz IDOMAR
+  /*!
+   * @brief initialize the MMA8451 component
+   */
+  void init();
+
+  /*!
+   * @brief get the addition of the accelerations on the three axes (in m/s^2)
+   * @return addition of the accelerations on the three axes
+   */
+  float computeAcceleration();
 
 protected:
   /*!

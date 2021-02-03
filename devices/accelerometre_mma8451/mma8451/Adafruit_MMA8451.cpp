@@ -21,7 +21,7 @@
  * @ section license License
  *
  * BSD (see license.txt)
- */
+*/
 
 #if ARDUINO >= 100
 #include "Arduino.h"
@@ -38,19 +38,19 @@
 */
 /**************************************************************************/
 static inline uint8_t i2cread(void) {
-#if ARDUINO >= 100
-  return Wire.read();
-#else
-  return Wire.receive();
-#endif
+  #if ARDUINO >= 100
+    return Wire.read();
+  #else
+    return Wire.receive();
+  #endif
 }
 
 static inline void i2cwrite(uint8_t x) {
-#if ARDUINO >= 100
-  Wire.write((uint8_t)x);
-#else
-  Wire.send(x);
-#endif
+  #if ARDUINO >= 100
+    Wire.write((uint8_t)x);
+  #else
+    Wire.send(x);
+  #endif
 }
 
 /**************************************************************************/
@@ -63,6 +63,38 @@ void Adafruit_MMA8451::writeRegister8(uint8_t reg, uint8_t value) {
   i2cwrite((uint8_t)reg);
   i2cwrite((uint8_t)(value));
   Wire.endTransmission();
+}
+
+// functions added by Aziz IDOMAR
+/**************************************************************************/
+/*!
+    @brief initialize the MMA8451 component
+*/
+/**************************************************************************/
+void Adafruit_MMA8451::init(){
+  if (!this->begin(MMA8451_I2C_ADDRESS)) {
+    Serial.println("Adafruit_MMA8451: Couldnt start");
+    return;
+  }
+  this->setRange(MMA8451_RANGE_2_G);
+}
+
+/**************************************************************************/
+/*!
+    @brief  Get the addition of the accelerations on the three axes (in m/s^2)
+*/
+/**************************************************************************/
+float Adafruit_MMA8451::computeAcceleration(){
+  sensors_event_t event;
+  float x0, x1;
+
+  this->getEvent(&event);
+  x0 = abs(event.acceleration.x) + abs(event.acceleration.y) + abs(event.acceleration.z);
+
+  this->getEvent(&event);
+  x1 = abs(event.acceleration.x) + abs(event.acceleration.y) + abs(event.acceleration.z);
+
+  return abs(x1 - x0);
 }
 
 /**************************************************************************/
@@ -142,7 +174,6 @@ bool Adafruit_MMA8451::begin(uint8_t i2caddr) {
     Serial.println(readRegister8(i), HEX);
   }
   */
-
   return true;
 }
 
@@ -280,4 +311,7 @@ void Adafruit_MMA8451::getSensor(sensor_t *sensor) {
   sensor->min_value = 0;
   sensor->resolution = 0;
 }
+
+// Functions added by Aziz IDOMAR
+
 #endif
