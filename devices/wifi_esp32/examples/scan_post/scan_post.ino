@@ -1,17 +1,20 @@
+#include <stdlib.h>
+#include <string.h>
+
 #include <WiFi.h>
 
 #include <HTTPClient.h>
 
 #include <ArduinoJson.h>
  
-char *AP_SSID = "Redmi";
-char *AP_PWD = "toto1234";
+char *AP_SSID = "Livebox-4870_EXT";
+char *AP_PWD = "Enzo1998!";
 
 const char  *serverAddress = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDMnY8W47H_ztdC4sJjo2Z9_bu2y9-zEPM";
 int         port = 8080;
 
 String mac_address[3];
-int    recep_power[3];
+int recep_power[3];
 
 void setup()
 {
@@ -64,7 +67,7 @@ int postDataToServer() {
 
     Serial.println("Filling Json with first wifi object...");
     Serial.println("macAdress : " + mac_address[0]);
-    Serial.println("Strength  : " + recep_power[0]);
+    //Serial.println("Strength  : " + recep_power[0]);
     
     JsonObject wifiAccessPoints_0           = wifiAccessPoints.createNestedObject();
     wifiAccessPoints_0["macAddress"]        = mac_address[0];
@@ -74,7 +77,7 @@ int postDataToServer() {
 
     Serial.println("Filling Json with second wifi object...");
     Serial.println("macAdress : " + mac_address[1]);
-    Serial.println("Strength  : " + recep_power[1]);
+    //Serial.println("Strength  : " + recep_power[1]);
     
     JsonObject wifiAccessPoints_1           = wifiAccessPoints.createNestedObject();
     wifiAccessPoints_1["macAddress"]        = mac_address[1];
@@ -84,7 +87,7 @@ int postDataToServer() {
 
     Serial.println("Filling Json with third wifi object...");
     Serial.println("macAdress : " + mac_address[2]);
-    Serial.println("Strength  : " + recep_power[2]);
+    //Serial.println("Strength  : " + recep_power[2]);
     
     JsonObject wifiAccessPoints_2           = wifiAccessPoints.createNestedObject();
     wifiAccessPoints_2["macAddress"]        = mac_address[2];
@@ -94,6 +97,10 @@ int postDataToServer() {
      
     String requestBody;
     serializeJson(doc, requestBody);
+
+    Serial.println("");
+    Serial.print(requestBody);
+    Serial.println("");
      
     int httpResponseCode = http.POST(requestBody);
 
@@ -123,6 +130,12 @@ void wifi_scan(){
     Serial.println("scan start");
     
     int wifi_saved = 0;
+    
+    uint8_t *bssid;
+    char bssid_str[18];
+    
+    char power_str[5];
+    int power;
 
     // WiFi.scanNetworks will return the number of networks found
     int n = WiFi.scanNetworks();
@@ -136,13 +149,25 @@ void wifi_scan(){
         
         for (int i = 0; i < n; ++i) {
             
-            // Print SSID and RSSI for each network found
-
+            bssid = WiFi.BSSID(i);
+            sprintf(bssid_str, "%X-%X-%X-%X-%X-%X",bssid[5], bssid[4], bssid[3], bssid[2], bssid[1], bssid[0]); 
+                       
             // if wifi isn't mobile
-//            if(int(WiFi.encryptionType(i)) != 3 && wifi_saved < 3){
-//                mac_address[wifi_saved] = WiFi.BSSID(i);
-//                recep_power[wifi_saved] = int(WiFi.RSSI(i));
-//            }
+            if(int(WiFi.encryptionType(i)) != 3 && wifi_saved < 3){
+
+                power = int(WiFi.RSSI(i));
+                sprintf(power_str, "%d", power);
+                Serial.print(power);
+                Serial.print(", ");
+                Serial.print(wifi_saved);
+                Serial.print(", ");
+                
+                mac_address[wifi_saved] = bssid_str;
+                recep_power[wifi_saved] = power;
+                wifi_saved++;
+            }
+
+            // Print SSID, RSSI, BSSID and encryption mode for each network found
             
             Serial.print(i + 1);
             Serial.print(": ");
@@ -150,26 +175,13 @@ void wifi_scan(){
             Serial.print(WiFi.SSID(i));
 
             Serial.print(", Power (dBm) :");
-            Serial.print(WiFi.RSSI(i));
+            Serial.print(power_str);
             
-            Serial.print(", MAC : ");
-            byte bssid[6];
-            WiFi.BSSID(bssid);    
-            Serial.print("BSSID: ");
-            Serial.print(bssid[5],HEX);
-            Serial.print(":");
-            Serial.print(bssid[4],HEX);
-            Serial.print(":");
-            Serial.print(bssid[3],HEX);
-            Serial.print(":");
-            Serial.print(bssid[2],HEX);
-            Serial.print(":");
-            Serial.print(bssid[1],HEX);
-            Serial.print(":");
-            Serial.println(bssid[0],HEX);
-            
+            Serial.print(", BSSID: ");
+            Serial.print(bssid_str);
+
             Serial.print(", authmode : ");
-            Serial.print(WiFi.encryptionType(i));
+            Serial.println(WiFi.encryptionType(i));
             
             delay(10);
         }
