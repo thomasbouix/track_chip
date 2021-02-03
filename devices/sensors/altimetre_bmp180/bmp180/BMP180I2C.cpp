@@ -50,11 +50,10 @@ int BMP180I2C::init() {
 float BMP180I2C::computeAltitude() {
 	
 	if (!this->measureTemperature()) {
-		Serial.println("could not start temperature measurement!");
-				 	Serial.println("Is a measurement already running?");
+		Serial.println("BMP180I2C::computeAltitude => Could not start temperature measurement!");
+		Serial.println("BMP180I2C::computeAltitude => Is a measurement already running?");
 		return -1;
 	}
-
 	// wait for the measurement to finish. proceed as soon as hasValue() returned true. 
 	do {
 		delay(100);
@@ -67,8 +66,8 @@ float BMP180I2C::computeAltitude() {
 	// you should only start a pressure 
 	// measurement immediately after a temperature measurement. 
 	if (!this->measurePressure()) {
-		Serial.println("could not start perssure measurement");
-		Serial.println("is a measurement already running?");
+		Serial.println("BMP180I2C::computeAltitude => Could not start pressure measurement");
+		Serial.println("BMP180I2C::computeAltitude => Is a measurement already running?");
 		return -1;
 	}
 

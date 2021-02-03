@@ -7,7 +7,7 @@ GROVE11302::GROVE11302(int baudrate, int RX, int TX){
 
 GROVE11302::GROVE11302(){
 
-	GROVE11302(9600, RX2, TX2);	// Hardware Serial Port 2 => Communication between ESP and GPS
+	GROVE11302(9600, RX0, TX0);	// Hardware Serial Port 2 => Communication between ESP and GPS
 }
 
 void GROVE11302::get_data_line(){

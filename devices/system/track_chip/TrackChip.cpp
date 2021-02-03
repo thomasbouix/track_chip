@@ -3,12 +3,12 @@
 TrackChip::TrackChip() {
 
 	this->bmp180	= new BMP180I2C(BMP_I2C_ADDRESS);
-	this->gps	= new GROVE11302();
-	this->wisol	= new Wisol();
+	this->gps	= new GROVE11302();			// RX0, TX0
+	this->wisol	= new Wisol();				// RX2, TX2
 
 	Wire.begin();
 
-	if ( bmp180->init() < 0 ) goto error;
+	if ( bmp180->init() < 0 ) goto error;	
 
 	return;
 	

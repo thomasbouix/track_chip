@@ -7,8 +7,8 @@ Utilise les pins RX2, TX2 par défaut pour communiquer
 #include <string>
 #include <Arduino.h>
 
-#define RXD2 16
-#define TXD2 17
+#define RX2 16		// Port RX 2 => GPIO 16 => PIN 25
+#define TX2 17		// Port TX 2 => GPIO 17 => PIN 27
 
 //Define class wisol
 #ifndef WISOL_H

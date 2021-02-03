@@ -6,7 +6,6 @@
 #include <GROVE11302.h>
 #include <Wisol.h>
 
-#define BMP_I2C_ADDRESS 0x77 
 
 class TrackChip {
 

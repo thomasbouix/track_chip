@@ -21,6 +21,8 @@
 
 #include "BMP180TwoWire.h"
 
+#define BMP_I2C_ADDRESS 0x77 
+
 class BMP180I2C :
 	public BMP180TwoWire
 {

@@ -9,7 +9,7 @@ Wisol::Wisol(int baudrate, int RX, int TX){
 }
 
 Wisol::Wisol(){
-	Wisol(9600, RXD2, TXD2);
+	Wisol(9600, RX2, TX2);
 }
 
 //private function

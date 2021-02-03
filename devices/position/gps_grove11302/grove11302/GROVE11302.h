@@ -3,8 +3,8 @@
 
 #include <Arduino.h>
 
-#define RX2 16              	// Port RX 2 => GPIO 16 => PIN 25
-#define TX2 17                  // Port TX 2 => GPIO 17 => PIN 27
+#define RX0 3		// PIN 40 => GPIO3
+#define TX0 1		// PIN 41 => GPIO1 
 
 class GROVE11302
 {
