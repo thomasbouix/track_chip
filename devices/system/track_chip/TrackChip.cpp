@@ -22,13 +22,13 @@ void TrackChip::send_data(String s) {
 
 float TrackChip::get_altitude() {
 
-	static int cpt = 0;
+	static bool init = true; 
 	static BMP180I2C bmp = BMP180I2C(BMP_I2C_ADDRESS);
 
-	if (cpt == 0) {
+	if (init) {
 		Serial.println("TrackChip::get_altitude() => bmp init");
 		bmp.init();
-		cpt++;
+		init = false;
 	}
 
 	return bmp.computeAltitude();
