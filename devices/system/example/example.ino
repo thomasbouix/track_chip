@@ -20,8 +20,8 @@ void setup() {
   float lat, lng;
 
   prc = trackChip.get_wifi_accuracy();
-  lat = trackChip.get_wifi_accuracy();
-  lng = trackChip.get_wifi_accuracy();
+  lat = trackChip.get_wifi_lat();
+  lng = trackChip.get_wifi_lng();
 
   Serial.print("prc = "); Serial.println(prc);
   Serial.print("lat = "); Serial.println(lat);

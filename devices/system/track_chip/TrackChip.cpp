@@ -25,7 +25,6 @@ float TrackChip::get_altitude() {
 	static BMP180I2C bmp = BMP180I2C(BMP_I2C_ADDRESS);
 
 	if (init) {
-		Serial.println("TrackChip::get_altitude() => bmp init");
 		bmp.init();
 		init = false;
 	}
