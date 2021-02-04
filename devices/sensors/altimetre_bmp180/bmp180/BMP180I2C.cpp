@@ -1,4 +1,4 @@
-//Multi interface Bosch Sensortec BMP180  pressure sensor library 
+//Multi interface Bosch Sensortec BMP180	pressure sensor library 
 // Copyright (c) 2018-2019 Gregor Christandl <christandlg@yahoo.com>
 // home: https://bitbucket.org/christandlg/BMP180mi
 //
@@ -9,53 +9,51 @@
 //
 // This library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the GNU
 // Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA	02110-1301	USA
 
 #include "BMP180I2C.h"
 
-BMP180I2C::BMP180I2C(uint8_t address) :
-	BMP180TwoWire(&Wire, address)
-{
+BMP180I2C::BMP180I2C(uint8_t address) : BMP180TwoWire(&Wire, address) {
+
+	Serial.println("BMP180I2C()");
 }
 
-BMP180I2C::~BMP180I2C()
-{
+BMP180I2C::~BMP180I2C() {
+	Serial.println("~BMP180I2C()");
 }
 
 // Fonctions ajoutées par Thomas Bouix
-void BMP180I2C::init() {
+int BMP180I2C::init() {
 
-  
-  //begin() initializes the interface, checks the sensor ID and reads the calibration parameters.  
-  if (!this->begin())
-  {
-    Serial.println("begin() failed. check your BMP180 Interface and I2C Address.");
-      
-    while (1);
-  }
+	//begin() initializes the interface, checks the sensor ID and reads the calibration parameters.	
+	if (!this->begin()) {
+		Serial.println("BMP180I2C::init => begin() failed.\n");
+		Serial.println("Check your BMP180 Interface and I2C Address.\n");
 
-  //reset sensor to default parameters.
-  this->resetToDefaults();
+		return -1;		
+	}
 
-  //enable ultra high resolution mode for pressure measurements
-  this->setSamplingMode(BMP180MI::MODE_UHR);
+	//reset sensor to default parameters.
+	this->resetToDefaults();
 
-  return;
+	//enable ultra high resolution mode for pressure measurements
+	this->setSamplingMode(BMP180MI::MODE_UHR);
+
+	return 0;
 }
 
 float BMP180I2C::computeAltitude() {
 	
 	if (!this->measureTemperature()) {
-		Serial.println("could not start temperature measurement!");
-	       	Serial.println("Is a measurement already running?");
+		Serial.println("BMP180I2C::computeAltitude => Could not start temperature measurement!");
+		Serial.println("BMP180I2C::computeAltitude => Is a measurement already running?");
 		return -1;
 	}
-
 	// wait for the measurement to finish. proceed as soon as hasValue() returned true. 
 	do {
 		delay(100);
@@ -68,8 +66,8 @@ float BMP180I2C::computeAltitude() {
 	// you should only start a pressure 
 	// measurement immediately after a temperature measurement. 
 	if (!this->measurePressure()) {
-		Serial.println("could not start perssure measurement");
-		Serial.println("is a measurement already running?");
+		Serial.println("BMP180I2C::computeAltitude => Could not start pressure measurement");
+		Serial.println("BMP180I2C::computeAltitude => Is a measurement already running?");
 		return -1;
 	}
 

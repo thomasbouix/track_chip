@@ -3,8 +3,8 @@
 
 #include <Arduino.h>
 
-#define RX2 16              	// Port RX 2 => GPIO 16 => PIN 25
-#define TX2 17                  // Port TX 2 => GPIO 17 => PIN 27
+#define RX0 3		// PIN 40 => GPIO3
+#define TX0 1		// PIN 41 => GPIO1 
 
 class GROVE11302
 {
@@ -14,12 +14,11 @@ public:
 
 	GROVE11302();
 	GROVE11302(int baudrate, int RX, int TX);
-	virtual ~GROVE11302();
 
 	// Fill buffer attribute with NMEA data
 	void get_data_line();
 
-	void clear_buffer_array(unsigned char *arr, int count);
+	void clearBufferArray(unsigned char *arr, int count);
 };
 
 #endif

@@ -1,7 +1,7 @@
 /*
 Librairie permettant d'envoyer une chaine de caractère de 12 octets d'un ESP32 vers un module Sigfox Wisol
 */
-#include "wisol.h"
+#include "Wisol.h"
 
 //Constructor
 Wisol::Wisol(int baudrate, int RX, int TX){
@@ -9,7 +9,7 @@ Wisol::Wisol(int baudrate, int RX, int TX){
 }
 
 Wisol::Wisol(){
-	Wisol(9600, RXD2, TXD2);
+	Wisol(9600, RX2, TX2);
 }
 
 //private function
@@ -46,9 +46,18 @@ bool Wisol::string_ok(String verif){
 //public function
 
 void Wisol::send_string_data(String envoie) {
-  if( string_ok(envoie)) { 
-    String command = "AT$SF=";
-    command = command + envoie;
-    Serial2.println(command);
+
+	Serial.print("envoie : " );
+	Serial.println(envoie);
+	
+ 	if( string_ok(envoie)) { 
+		String command = "AT$SF=";
+		Serial.print("command: " );
+		Serial.println(command);
+		command = command + envoie;
+		Serial.print("command: " );
+		Serial.println(command);
+
+		Serial2.println(command);
   }
 }
