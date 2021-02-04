@@ -28,6 +28,24 @@ string complete_hexa_bytes(string hexa, int nb_bytes){ // prend en argument une 
 	return complete +hexa;
 }
 
+string dms_lat_to_trame_hexa(char cardinal, int angle, int minute, double seconde,int prec){
+	double dd = shift_latitude(Dms_to_dd(cardinal,angle,minute, seconde));
+    string res_lat = Message::double_to_hexa(dd,prec);
+	res_lat = complete_hexa_bytes(res_lat,4);
+	return res_lat;
+}
+
+string dms_lng_to_trame_hexa(char cardinal, int angle, int minute, double seconde,int prec){
+	double dd = shift_longitude(Dms_to_dd(cardinal,angle,minute, seconde));
+    string res_lat = Message::double_to_hexa(dd,prec);
+	res_lat = complete_hexa_bytes(res_lat,4);
+	return res_lat;
+}
+
+string altitude_to_trame_hexa(int altitude){
+	string res_alt = Message::int_to_hexa(altitude);
+	return complete_hexa_bytes(res_alt,2);
+}
 
 int main() {
     Message m = Message();
@@ -45,7 +63,7 @@ int main() {
     //std::cout << res<<endl;
     //std::cout<<Dms_to_dd('N',48, 51, 17.005)<<endl;
     //std::cout<<Dms_to_dd('E',2, 21, 0.749)<<endl; // !!!Attention!!! Ne tient pas compte du signe ==> int_to_hexa
-    std::cout<<"Test Général"<<endl;
+    /*std::cout<<"Test Général"<<endl;
     lat = shift_latitude(Dms_to_dd('N',48, 51, 17.005));
     double lng = shift_longitude(Dms_to_dd('E',2, 21, 0.749));
     std::cout << lat<<endl;
@@ -63,7 +81,16 @@ int main() {
     std::cout << res_alt<<endl;
     std::cout <<complete_hexa_bytes(res_alt,2)<<endl;
     res = res_lat+res_lng+ res_alt;
-    std::cout << res<<endl;
+    std::cout << res<<endl;*/
+    std::cout<<"Test Latitude"<<endl;
+    string res_lat = dms_lat_to_trame_hexa('N',48, 51, 17.005,5);
+    std::cout << res_lat<<endl;
     
+    std::cout<<"Test Longitude"<<endl;
+    string res_lng = dms_lng_to_trame_hexa('E',2, 21, 0.749,5);
+    std::cout << res_lng<<endl;
     
+   std::cout<<"Test altitude"<<endl;
+   string res_alt = altitude_to_trame_hexa(55);
+   std::cout << res_alt<<endl;
 }
