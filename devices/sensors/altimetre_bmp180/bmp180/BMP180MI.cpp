@@ -81,8 +81,8 @@ bool BMP180MI::measurePressure()
 	return true;
 }
 
-bool BMP180MI::measureTemperature()
-{
+bool BMP180MI::measureTemperature() {
+
 	//return false if a measurement is already running. 
 	if (readRegisterValue(BMP180_REG_CTRL_MEAS, BMP180_MASK_SCO))
 		return false;
@@ -138,6 +138,12 @@ float BMP180MI::getPressure()
 
 	uint32_t B4 = static_cast<uint32_t>(cal_params_.cp_AC4_) * (static_cast<uint32_t>(X3 + 32768)) >> 15;
 
+	// Sécurité Thomas Bouix
+	if (B4 == 0) {
+		Serial.println("BMP180MI:getPressure => ERROR ! (Division by 0)");
+		return -1;
+	}
+
 	uint32_t B7 = static_cast<uint32_t>(up_ - B3) * (50000 >> sampling_mode_);
 
 	if (B7 < 0x80000000)
@@ -159,6 +165,12 @@ float BMP180MI::getPressure()
 float BMP180MI::getTemperature()
 {
 	int32_t X1 = ((ut_ - static_cast<int32_t>(cal_params_.cp_AC6_)) * static_cast<int32_t>(cal_params_.cp_AC5_)) >> 15;
+
+	// Sécurité ajoutée par Thomas Bouix
+	if (X1 + static_cast<int32_t>(cal_params_.cp_MD_) == 0) {
+		Serial.println("BMP180MI:getTemperature => ERROR ! (Division by 0)");
+		return -1;
+	}
 
 	int32_t X2 = (static_cast<int32_t>(cal_params_.cp_MC_) << 11) / (X1 + static_cast<int32_t>(cal_params_.cp_MD_));
 
@@ -201,8 +213,8 @@ float BMP180MI::readPressure()
 uint8_t BMP180MI::readID()
 {
 	uint8_t val = readRegisterValue(BMP180_REG_ID, BMP180_MASK_ID);
-	Serial.print("BMP180MI::readID() val = ");
-	Serial.println(val);
+	// Serial.print("BMP180MI::readID() val = ");
+	// Serial.println(val);
 	return val;
 }
 
@@ -300,8 +312,7 @@ uint8_t BMP180MI::readRegisterValue(uint8_t reg, uint8_t mask)
 	return getMaskedBits(readRegister(reg), mask);
 }
 
-void BMP180MI::writeRegisterValue(uint8_t reg, uint8_t mask, uint8_t value)
-{
+void BMP180MI::writeRegisterValue(uint8_t reg, uint8_t mask, uint8_t value) {
 	uint8_t reg_val = readRegister(reg);
 	writeRegister(reg, setMaskedBits(reg_val, mask, value));
 }

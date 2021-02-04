@@ -21,16 +21,17 @@
 
 #include "BMP180TwoWire.h"
 
-class BMP180I2C :
-	public BMP180TwoWire
-{
-public:
-	BMP180I2C(uint8_t address);
-	virtual ~BMP180I2C();
+#define BMP_I2C_ADDRESS 0x77 
 
-	// Fonctions ajoutée par Thomas Bouix
-	float computeAltitude();
-  void init();
+class BMP180I2C : public BMP180TwoWire {
+
+	public:
+		BMP180I2C(uint8_t address);
+		virtual ~BMP180I2C();
+
+		// Fonctions ajoutée par Thomas Bouix
+		int init();
+		float computeAltitude();
 };
 
 #endif /* BMP180I2C_H_ */
