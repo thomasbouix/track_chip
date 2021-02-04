@@ -82,6 +82,7 @@ bool BMP180MI::measurePressure()
 }
 
 bool BMP180MI::measureTemperature() {
+
 	//return false if a measurement is already running. 
 	if (readRegisterValue(BMP180_REG_CTRL_MEAS, BMP180_MASK_SCO))
 		return false;
@@ -170,7 +171,7 @@ float BMP180MI::getTemperature()
 		Serial.println("BMP180MI:getTemperature => ERROR ! (Division by 0)");
 		return -1;
 	}
-	
+
 	int32_t X2 = (static_cast<int32_t>(cal_params_.cp_MC_) << 11) / (X1 + static_cast<int32_t>(cal_params_.cp_MD_));
 
 	B5_ = X1 + X2;
