@@ -1,7 +1,7 @@
 /*
 Librairie permettant d'envoyer une chaine de caractère de 12 octets d'un ESP32 vers un module Sigfox Wisol
 */
-#include "wisol.h"
+#include "Wisol.h"
 
 //Constructor
 Wisol::Wisol(int baudrate, int RX, int TX){
@@ -51,4 +51,72 @@ void Wisol::send_string_data(String envoie) {
     command = command + envoie;
     Serial2.println(command);
   }
+}
+
+String Wisol::double_to_hexa(double a, int prec){
+		String message = "";
+		int temp;
+		temp = double_to_int(a, prec);
+		//std::cout << temp<<endl;
+		message = int_to_hexa(temp);
+		return message;
+	}
+	
+String Wisol::int_to_hexa(int a){
+ 		char hex_string[20];
+   		sprintf(hex_string, "%X", a); //convert number to hex
+   		return hex_string;
+ 	}
+
+
+int Wisol::double_to_int(double a, int prec){
+	int res = round(a*pow (10, prec));
+	//std::cout << res<<std::endl;
+	return res;
+}
+
+
+// convertis aussi bien la latitude que la longitude. Cette fonction suppose que le paramètre cardinal est N, S, E ou O.
+double Wisol::Dms_to_dd(char cardinal, int angle, int minute, double seconde){
+	double res = angle;
+	double temp = seconde/60;
+	res += (minute+temp)/60;
+	if( cardinal == 'S' || cardinal == 'O') { res = -res;}
+	return res;
+	}
+	
+double Wisol::shift_latitude(double lat){
+	return lat+180;
+}
+
+double Wisol::shift_longitude(double lng){
+	return lng+90;
+}
+
+String Wisol::complete_hexa_bytes(String hexa, int nb_bytes){ // prend en argument une chaine hexa et le nombre d'octets voulu pour le callback et complete avec des 0 big edians
+	int add = 2*nb_bytes - hexa.length();
+	String complete = "";
+	for(int i = 0; i<add;i++){
+	complete = complete+"0";
+	}
+	return complete +hexa;
+}
+
+String Wisol::dms_lat_to_trame_hexa(char cardinal, int angle, int minute, double seconde,int prec){
+	double dd = shift_latitude(Dms_to_dd(cardinal,angle,minute, seconde));
+  String res_lat = Wisol::double_to_hexa(dd,prec);
+	res_lat = complete_hexa_bytes(res_lat,4);
+	return res_lat;
+}
+
+String Wisol::dms_lng_to_trame_hexa(char cardinal, int angle, int minute, double seconde,int prec){
+	double dd = shift_longitude(Dms_to_dd(cardinal,angle,minute, seconde));
+  String res_lat = Wisol::double_to_hexa(dd,prec);
+	res_lat = complete_hexa_bytes(res_lat,4);
+	return res_lat;
+}
+
+String Wisol::altitude_to_trame_hexa(int altitude){
+	String res_alt = Wisol::int_to_hexa(altitude);
+	return complete_hexa_bytes(res_alt,2);
 }
