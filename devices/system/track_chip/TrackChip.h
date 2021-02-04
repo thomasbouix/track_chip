@@ -9,6 +9,9 @@
 
 class TrackChip {
 
+	private :
+		GROVE11302 * gps; 
+
 	public :
 		TrackChip();
 		~TrackChip();

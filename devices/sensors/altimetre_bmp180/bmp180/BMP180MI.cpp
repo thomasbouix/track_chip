@@ -212,8 +212,8 @@ float BMP180MI::readPressure()
 uint8_t BMP180MI::readID()
 {
 	uint8_t val = readRegisterValue(BMP180_REG_ID, BMP180_MASK_ID);
-	Serial.print("BMP180MI::readID() val = ");
-	Serial.println(val);
+	// Serial.print("BMP180MI::readID() val = ");
+	// Serial.println(val);
 	return val;
 }
 

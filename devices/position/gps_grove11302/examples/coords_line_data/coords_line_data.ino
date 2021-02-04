@@ -1,6 +1,6 @@
 #include <GROVE11302.h>
 
-GROVE11302 gps_grove();
+GROVE11302 gps_grove = GROVE11302();
 
 void setup()
 {
@@ -9,7 +9,7 @@ void setup()
  
 void loop()
 {  
-  gps_grove.get_line_data();
+  gps_grove.get_data_line();
 
   Serial.print("\n=============\n");
   Serial.print("buffer : "); 

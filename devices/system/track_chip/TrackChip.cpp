@@ -1,10 +1,13 @@
 #include "TrackChip.h"
 
 TrackChip::TrackChip() {
+	this->gps = new GROVE11302();
 	Wire.begin();
 }
 
-TrackChip::~TrackChip() {}
+TrackChip::~TrackChip() {
+
+}
 
 void TrackChip::send_data(String s) {
 
@@ -32,10 +35,9 @@ float TrackChip::get_altitude() {
 }
 
 String TrackChip::get_position() {
-
-	GROVE11302 gps = GROVE11302();
-	gps.get_data_line();	
-	String res((char*) gps.buffer);
+	
+	gps->get_data_line();
+	String res = (char*) (gps->buffer);
 
 	return res;
 }

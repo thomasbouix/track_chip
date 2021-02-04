@@ -8,20 +8,18 @@ void setup() {
 	while (!Serial);
 
   String message = "004A882F000398DC2F";
-  Serial.println("========");
-  Serial.println("sending message");
-  trackChip.send_data(message);
-  Serial.println("message sent");
-  Serial.println("========");
+  Serial.println("====SENDING MESSAGE===");
+  // trackChip.send_data(message);
+  Serial.println("=====MESSAGE SENT===");
 }
 
 void loop() {
   
   float altitude = trackChip.get_altitude();
+  String position = trackChip.get_position();
+  Serial.println("========");
   Serial.print("altitude : "); Serial.print(altitude); Serial.println("m");
-
-  // Serial.println("========");
-  // Serial.println(trackChip.get_position());
+  Serial.print("position : "); Serial.println(position);
 
   delay(1000);
 
