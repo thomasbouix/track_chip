@@ -105,7 +105,7 @@ int postDataToServer(){
   return -1;
 }
 
-void wifi_scan(){
+void wifi_scan() {
 	
 	Serial.println("scan start");
     

@@ -8,10 +8,26 @@ float altitude;
 void setup() {
 
   Serial.begin(115200); 
-  while (!Serial);
+  while (!Serial); 
 
-  message = "004A882F000398DC2F";
-  // trackChip.send_data(message);
+  trackChip.connect_to_wifi();
+  trackChip.wifi_scan();
+  if (trackChip.send_mac_and_get_pos() < 0 ) {
+    Serial.println("Error in send_mac_and_get_pos()");
+  }
+
+  int prc;
+  float lat, lng;
+
+  prc = trackChip.get_wifi_accuracy();
+  lat = trackChip.get_wifi_accuracy();
+  lng = trackChip.get_wifi_accuracy();
+
+  Serial.print("prc = "); Serial.println(prc);
+  Serial.print("lat = "); Serial.println(lat);
+  Serial.print("lng = "); Serial.println(lng);
+  
+  // trackChip.send_data("004A882F000398DC2F");
 
 }
 
