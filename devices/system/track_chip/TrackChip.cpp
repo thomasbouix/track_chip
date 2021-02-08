@@ -81,8 +81,8 @@ void TrackChip::wifi_scan() {
 			sprintf(bssid_str, "%X-%X-%X-%X-%X-%X",bssid[5], bssid[4], bssid[3], bssid[2], bssid[1], bssid[0]); 
 			power = int(WiFi.RSSI(i));
 			
-			// if wifi isn't mobile
-			if(int(WiFi.encryptionType(i)) != 3 && wifi_saved < 3) {
+			// select fix WiFi which are in google database
+			if(bssid_str[9] == 'B' && bssid_str[10] == 'D' && wifi_saved < 3){
 				// Serial.print(power);
 				// Serial.print(", ");
 				// Serial.print(wifi_saved);
@@ -127,9 +127,10 @@ int TrackChip::send_mac_and_get_pos() {
 		Serial.print("Strength	: ");
 		Serial.println(recep_power[0]);
 		
-		JsonObject wifiAccessPoints_0		= wifiAccessPoints.createNestedObject();
-		wifiAccessPoints_0["macAddress"]	= mac_address[0];
-		wifiAccessPoints_0["signalStrength"]	= recep_power[0];
+		JsonObject wifiAccessPoints_0				= wifiAccessPoints.createNestedObject();
+		wifiAccessPoints_0["macAddress"]			= mac_address[0];
+		wifiAccessPoints_0["signalStrength"]		= recep_power[0];
+		wifiAccessPoints_0["signalToNoiseRatio"]    = 0;
 
 		delay(1000);
 
@@ -138,9 +139,10 @@ int TrackChip::send_mac_and_get_pos() {
 		Serial.print("Strength	: ");
 		Serial.println(recep_power[1]);
 		
-		JsonObject wifiAccessPoints_1		= wifiAccessPoints.createNestedObject();
-		wifiAccessPoints_1["macAddress"]	= mac_address[1];
-		wifiAccessPoints_1["signalStrength"]	= recep_power[1];
+		JsonObject wifiAccessPoints_1				= wifiAccessPoints.createNestedObject();
+		wifiAccessPoints_1["macAddress"]			= mac_address[1];
+		wifiAccessPoints_1["signalStrength"]		= recep_power[1];
+		wifiAccessPoints_0["signalToNoiseRatio"]    = 0;
 
 		delay(1000);
 
@@ -149,9 +151,10 @@ int TrackChip::send_mac_and_get_pos() {
 		Serial.print("Strength	: ");
 		Serial.println(recep_power[2]);
 		
-		JsonObject wifiAccessPoints_2		= wifiAccessPoints.createNestedObject();
-		wifiAccessPoints_2["macAddress"]	= mac_address[2];
-		wifiAccessPoints_2["signalStrength"]	= recep_power[2];
+		JsonObject wifiAccessPoints_2				= wifiAccessPoints.createNestedObject();
+		wifiAccessPoints_2["macAddress"]			= mac_address[2];
+		wifiAccessPoints_2["signalStrength"]		= recep_power[2];
+		wifiAccessPoints_0["signalToNoiseRatio"]    = 0;
 
 		delay(1000);
 		 
@@ -180,6 +183,7 @@ int TrackChip::send_mac_and_get_pos() {
 				location_lng = res["location"]["lng"];
 
 				accuracy = res["accuracy"];
+				accuracy = accuracy / 50;
 				
 				return 0;
 			} else {
