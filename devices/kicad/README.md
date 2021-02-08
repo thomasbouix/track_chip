@@ -35,3 +35,8 @@ Recommendations : faire des plans de masses.
 Si il y a un domaine analogique et un domaine numérique, 
 faire des plans de masse séparés et les relier avec une piste.
 ```
+
+## Batterie
+```
+On utiliser un circuit avec chargeur intégré.
+```

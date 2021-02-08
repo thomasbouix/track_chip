@@ -14,28 +14,6 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-$Comp
-L kicad_project-rescue:esp32_NodeMCU-track_chip U2
-U 1 1 600DACF0
-P 4500 3150
-F 0 "U2" H 4950 3415 50  0000 C CNN
-F 1 "esp32_NodeMCU-track_chip" H 4950 3324 50  0000 C CNN
-F 2 "track_chip:esp32" H 4950 3300 50  0001 C CNN
-F 3 "" H 4950 3300 50  0001 C CNN
-	1    4500 3150
-	1    0    0    -1  
-$EndComp
-$Comp
-L kicad_project-rescue:bmp180-track_chip U4
-U 1 1 600DBC2E
-P 6850 3100
-F 0 "U4" H 7428 2946 50  0000 L CNN
-F 1 "bmp180" H 7428 2855 50  0000 L CNN
-F 2 "track_chip:bmp180" H 7150 3300 50  0001 C CNN
-F 3 "" H 7150 3300 50  0001 C CNN
-	1    6850 3100
-	1    0    0    -1  
-$EndComp
 NoConn ~ 5500 4550
 NoConn ~ 5500 4350
 NoConn ~ 5500 4250
@@ -58,8 +36,6 @@ NoConn ~ 4400 4350
 NoConn ~ 4400 4450
 NoConn ~ 4400 4550
 NoConn ~ 5500 3850
-Text GLabel 5500 3250 2    50   Input ~ 0
-SCL
 Text GLabel 5500 3350 2    50   Input ~ 0
 TX0
 Text GLabel 5500 3450 2    50   Input ~ 0
@@ -74,13 +50,11 @@ Text GLabel 5500 4450 2    50   Input ~ 0
 GND
 NoConn ~ 5500 3150
 Text GLabel 6750 3100 0    50   Input ~ 0
-VIN
+3.3V
 Text GLabel 6750 3200 0    50   Input ~ 0
-VIN
+3.3V
 Text GLabel 6750 3300 0    50   Input ~ 0
 GND
-Text GLabel 6750 3400 0    50   Input ~ 0
-SCL
 Text GLabel 6750 3500 0    50   Input ~ 0
 SDA
 $Comp
@@ -98,7 +72,7 @@ NoConn ~ 6650 4550
 NoConn ~ 6650 4050
 NoConn ~ 6650 3850
 Text GLabel 6650 4450 0    50   Input ~ 0
-VIN
+3.3V
 Text GLabel 6650 4350 0    50   Input ~ 0
 GND
 Text GLabel 6650 4150 0    50   Input ~ 0
@@ -135,8 +109,6 @@ F 3 "" H 3250 3100 50  0001 C CNN
 	1    3250 3100
 	1    0    0    -1  
 $EndComp
-Text GLabel 3150 3200 0    50   Input ~ 0
-VIN
 Text GLabel 3150 3300 0    50   Input ~ 0
 GND
 NoConn ~ 3150 3100
@@ -146,7 +118,7 @@ U 1 1 6021D78B
 P 2500 4000
 F 0 "D2" H 2500 3784 50  0000 C CNN
 F 1 "D" H 2500 3875 50  0000 C CNN
-F 2 "" H 2500 4000 50  0001 C CNN
+F 2 "Diode_THT:D_DO-15_P10.16mm_Horizontal" H 2500 4000 50  0001 C CNN
 F 3 "~" H 2500 4000 50  0001 C CNN
 	1    2500 4000
 	-1   0    0    1   
@@ -157,7 +129,7 @@ U 1 1 6021E3B7
 P 2650 4350
 F 0 "C1" H 2765 4396 50  0000 L CNN
 F 1 "C" H 2765 4305 50  0000 L CNN
-F 2 "" H 2688 4200 50  0001 C CNN
+F 2 "Capacitor_THT:CP_Axial_L10.0mm_D4.5mm_P15.00mm_Horizontal" H 2688 4200 50  0001 C CNN
 F 3 "~" H 2650 4350 50  0001 C CNN
 	1    2650 4350
 	1    0    0    -1  
@@ -189,27 +161,59 @@ Wire Wire Line
 	2650 4600 2650 4750
 Text GLabel 2650 4600 0    50   Input ~ 0
 GND
-$Comp
-L track_chip:batterie U6
-U 1 1 60221E39
-P 3550 2450
-F 0 "U6" V 4013 2072 50  0000 R CNN
-F 1 "batterie" V 3922 2072 50  0000 R CNN
-F 2 "" H 3550 2450 50  0001 C CNN
-F 3 "" H 3550 2450 50  0001 C CNN
-	1    3550 2450
-	-1   0    0    1   
-$EndComp
-Text GLabel 3750 2450 2    50   Input ~ 0
-VIN
-Text GLabel 3900 2350 2    50   Input ~ 0
+Text GLabel 4800 2400 0    50   Input ~ 0
+VBAT
+Text GLabel 4800 2550 0    50   Input ~ 0
 GND
-Wire Wire Line
-	3650 2450 3750 2450
-Wire Wire Line
-	3900 2350 3650 2350
 Wire Wire Line
 	3150 3400 2350 3400
 Wire Wire Line
 	2350 3400 2350 4000
+$Comp
+L track_chip:charger_mr010 U7
+U 1 1 60216DFB
+P 4700 2200
+F 0 "U7" V 4888 1422 50  0000 R CNN
+F 1 "charger_mr010" V 4797 1422 50  0000 R CNN
+F 2 "track_chip:charger_mr010" H 4700 2200 50  0001 C CNN
+F 3 "" H 4700 2200 50  0001 C CNN
+	1    4700 2200
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4800 2300 4800 2400
+Wire Wire Line
+	4900 2300 4900 2550
+Wire Wire Line
+	4900 2550 4800 2550
+Text GLabel 2350 3400 0    50   Input ~ 0
+5V
+$Comp
+L track_chip:esp32_NodeMCU U2
+U 1 1 6021AB3C
+P 4500 3150
+F 0 "U2" H 4950 3415 50  0000 C CNN
+F 1 "esp32_NodeMCU-track_chip" H 4950 3324 50  0000 C CNN
+F 2 "track_chip:esp32" H 4950 3300 50  0001 C CNN
+F 3 "" H 4950 3300 50  0001 C CNN
+	1    4500 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L track_chip:bmp180 U4
+U 1 1 6021BEE0
+P 6850 3100
+F 0 "U4" H 7428 2946 50  0000 L CNN
+F 1 "bmp180-track_chip" H 7428 2855 50  0000 L CNN
+F 2 "track_chip:bmp180" H 7150 3300 50  0001 C CNN
+F 3 "" H 7150 3300 50  0001 C CNN
+	1    6850 3100
+	1    0    0    -1  
+$EndComp
+Text GLabel 3150 3200 0    50   Input ~ 0
+VBAT
+Text GLabel 5500 3250 2    50   Input ~ 0
+SCL
+Text GLabel 6750 3400 0    50   Input ~ 0
+SCL
 $EndSCHEMATC
