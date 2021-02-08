@@ -158,6 +158,7 @@
               // Retrieve the first result
               if (results[0]) {
                 current_alt = results[0].elevation
+                document.getElementById("current_alt").innerHTML = current_alt;
                 // print(current_alt)
               } 
               else {
@@ -174,7 +175,7 @@
     </script>
   </head>
 
-  <body>
+  <body onload="getElevation()">
 
     <div class="jumbotron text-center">
       <h1>Bienvenue sur votre Application de Tracking !</h1>
@@ -188,7 +189,7 @@
 
       <p>Distance : </p>
       <p>Direction : </p>
-      <p>Altitude : </p>
+      <p>Altitude : <span id="current_alt"></span> m</p>
 
     </div>
 
