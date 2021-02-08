@@ -1,6 +1,10 @@
-## Installation instructions using Arduino IDE Boards Manager
-### ==========================================================
+# Fonctions de localisation grâce aux réseaux Wifi
+```
+Ces fonctions ont été recopiées et intégrées à la classe TrackChip.
+```
 
+# Installation instructions using Arduino IDE Boards Manager
+```
 - Stable release link: `https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json`
 - Development release link: `https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_dev_index.json`
 
@@ -10,3 +14,4 @@ Starting with 1.6.4, Arduino allows installation of third-party platform package
 - Start Arduino and open Preferences window.
 - Enter one of the release links above into *Additional Board Manager URLs* field. You can add multiple URLs, separating them with commas.
 - Open Boards Manager from Tools > Board menu and install *esp32* platform (and don't forget to select your ESP32 board from Tools > Board menu after installation).
+```
