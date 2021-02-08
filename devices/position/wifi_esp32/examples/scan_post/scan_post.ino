@@ -14,8 +14,8 @@ char *AP_PWD = "toto1234";
 const char  *serverAddress = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDMnY8W47H_ztdC4sJjo2Z9_bu2y9-zEPM";
 int          port = 8080;
 
-String mac_address[3];
-int recep_power[3];
+String mac_address[2];
+int recep_power[2];
 
 double location_lat  = 0.000000;
 double location_lng  = 0.000000;
@@ -62,7 +62,7 @@ void run(){
     Serial.println(location_lng);
 
     Serial.print("Accuracy (m) : ");
-    Serial.print(accuracy);
+    Serial.print(accuracy/50);
 
     Serial.println("");
 }
@@ -88,9 +88,10 @@ int postDataToServer(){
     Serial.print("Strength  : ");
     Serial.println(recep_power[0]);
     
-    JsonObject wifiAccessPoints_0           = wifiAccessPoints.createNestedObject();
-    wifiAccessPoints_0["macAddress"]        = mac_address[0];
-    wifiAccessPoints_0["signalStrength"]    = recep_power[0];
+    JsonObject wifiAccessPoints_0               = wifiAccessPoints.createNestedObject();
+    wifiAccessPoints_0["macAddress"]            = mac_address[0];
+    wifiAccessPoints_0["signalStrength"]        = recep_power[0];
+    wifiAccessPoints_0["signalToNoiseRatio"]    = 0;
 
     delay(1000);
 
@@ -99,20 +100,10 @@ int postDataToServer(){
     Serial.print("Strength  : ");
     Serial.println(recep_power[1]);
     
-    JsonObject wifiAccessPoints_1           = wifiAccessPoints.createNestedObject();
-    wifiAccessPoints_1["macAddress"]        = mac_address[1];
-    wifiAccessPoints_1["signalStrength"]    = recep_power[1];
-
-    delay(1000);
-
-    Serial.println("Filling Json with third wifi object...");
-    Serial.println("macAdress : " + mac_address[2]);
-    Serial.print("Strength  : ");
-    Serial.println(recep_power[2]);
-    
-    JsonObject wifiAccessPoints_2           = wifiAccessPoints.createNestedObject();
-    wifiAccessPoints_2["macAddress"]        = mac_address[2];
-    wifiAccessPoints_2["signalStrength"]    = recep_power[2];
+    JsonObject wifiAccessPoints_1               = wifiAccessPoints.createNestedObject();
+    wifiAccessPoints_1["macAddress"]            = mac_address[1];
+    wifiAccessPoints_1["signalStrength"]        = recep_power[1];
+    wifiAccessPoints_1["signalToNoiseRatio"]    = 0;
 
     delay(1000);
      
@@ -185,7 +176,7 @@ void wifi_scan(){
 
             
             // if wifi isn't mobile
-            if(int(WiFi.encryptionType(i)) != 3 && wifi_saved < 3){
+            if(bssid_str[9] == 'B' && bssid_str[10] == 'D' && wifi_saved < 2){
 
                // Serial.print(power);
                // Serial.print(", ");
@@ -211,7 +202,7 @@ void wifi_scan(){
             Serial.print(bssid_str);
 
             Serial.print(", Encryption Type : ");
-            printEncryptionType(WiFi.encryptionType(i));
+            Serial.println(WiFi.encryptionType(i));
             
             delay(10);
         }

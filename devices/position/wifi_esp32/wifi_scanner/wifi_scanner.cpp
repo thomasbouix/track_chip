@@ -2,19 +2,19 @@
 
 void init(){
     
-    WiFi.begin(AP_SSID, AP_PWD);
-    
-    Serial.println("Connecting");
-    while(WiFi.status() != WL_CONNECTED) {
-      delay(500);
-      Serial.print(".");
-    }
+  WiFi.begin(AP_SSID, AP_PWD);
+  
+  Serial.println("Connecting");
+  while(WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
 
-    Serial.println("");
-    Serial.print("Connected to WiFi network with IP Address: ");
-    Serial.println(WiFi.localIP());
+  Serial.println("");
+  Serial.print("Connected to WiFi network with IP Address: ");
+  Serial.println(WiFi.localIP());
 
-    Serial.println("Setup done");
+  Serial.println("Setup done");
 }
 
 int postDataToServer(){
@@ -133,9 +133,8 @@ void wifi_scan(){
 
           power = int(WiFi.RSSI(i));
 
-          
-          // if wifi isn't mobile
-          if(int(WiFi.encryptionType(i)) != 3 && wifi_saved < 3){
+          // select fix WiFi which are in google database
+          if(bssid_str[9] == 'B' && bssid_str[10] == 'D' && wifi_saved < 3){
 
              // Serial.print(power);
              // Serial.print(", ");
