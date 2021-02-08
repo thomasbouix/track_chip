@@ -30,7 +30,7 @@ private :
 	int recep_power[3];
 	float location_lat  	= 0;
 	float location_lng  	= 0;
-	int accuracy		= 0;
+	int accuracy			= 0;
 
 public :
 	TrackChip();
