@@ -15,11 +15,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 NoConn ~ 5500 4550
-NoConn ~ 5500 4350
-NoConn ~ 5500 4250
-NoConn ~ 5500 4150
 NoConn ~ 5500 3750
-NoConn ~ 5500 3650
 NoConn ~ 4400 3150
 NoConn ~ 4400 3250
 NoConn ~ 4400 3350
@@ -69,8 +65,6 @@ F 3 "" H 6750 3750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 NoConn ~ 6650 4550
-NoConn ~ 6650 4050
-NoConn ~ 6650 3850
 Text GLabel 6650 4450 0    50   Input ~ 0
 3.3V
 Text GLabel 6650 4350 0    50   Input ~ 0
@@ -99,36 +93,22 @@ RX0
 NoConn ~ 3150 4100
 NoConn ~ 3150 3900
 $Comp
-L track_chip:polulu U5
-U 1 1 6021A9B1
-P 3250 3100
-F 0 "U5" H 3928 3001 50  0000 L CNN
-F 1 "polulu" H 3928 2910 50  0000 L CNN
-F 2 "track_chip:polulu" H 3250 3100 50  0001 C CNN
-F 3 "" H 3250 3100 50  0001 C CNN
-	1    3250 3100
-	1    0    0    -1  
-$EndComp
-Text GLabel 3150 3300 0    50   Input ~ 0
-GND
-NoConn ~ 3150 3100
-$Comp
-L Device:D D2
+L Device:D D1
 U 1 1 6021D78B
-P 2500 4000
-F 0 "D2" H 2500 3784 50  0000 C CNN
-F 1 "D" H 2500 3875 50  0000 C CNN
-F 2 "Diode_THT:D_DO-15_P10.16mm_Horizontal" H 2500 4000 50  0001 C CNN
-F 3 "~" H 2500 4000 50  0001 C CNN
-	1    2500 4000
-	-1   0    0    1   
+P 2650 3850
+F 0 "D1" V 2650 3950 50  0000 C CNN
+F 1 "0.8V" V 2650 3725 50  0000 C CNN
+F 2 "Diode_THT:D_DO-15_P10.16mm_Horizontal" H 2650 3850 50  0001 C CNN
+F 3 "~" H 2650 3850 50  0001 C CNN
+	1    2650 3850
+	0    -1   -1   0   
 $EndComp
 $Comp
 L Device:C C1
 U 1 1 6021E3B7
 P 2650 4350
-F 0 "C1" H 2765 4396 50  0000 L CNN
-F 1 "C" H 2765 4305 50  0000 L CNN
+F 0 "C1" H 2400 4450 50  0000 L CNN
+F 1 "100u" H 2350 4250 50  0000 L CNN
 F 2 "Capacitor_THT:CP_Axial_L10.0mm_D4.5mm_P15.00mm_Horizontal" H 2688 4200 50  0001 C CNN
 F 3 "~" H 2650 4350 50  0001 C CNN
 	1    2650 4350
@@ -151,7 +131,6 @@ Wire Wire Line
 	2650 4500 2650 4600
 Wire Wire Line
 	2650 4000 3150 4000
-Connection ~ 2650 4000
 Wire Wire Line
 	3150 4400 3150 4600
 Wire Wire Line
@@ -161,33 +140,27 @@ Wire Wire Line
 	2650 4600 2650 4750
 Text GLabel 2650 4600 0    50   Input ~ 0
 GND
-Text GLabel 4800 2400 0    50   Input ~ 0
+Text GLabel 4800 2300 0    50   Input ~ 0
 VBAT
-Text GLabel 4800 2550 0    50   Input ~ 0
+Text GLabel 4800 2450 0    50   Input ~ 0
 GND
-Wire Wire Line
-	3150 3400 2350 3400
-Wire Wire Line
-	2350 3400 2350 4000
 $Comp
 L track_chip:charger_mr010 U7
 U 1 1 60216DFB
-P 4700 2200
-F 0 "U7" V 4888 1422 50  0000 R CNN
-F 1 "charger_mr010" V 4797 1422 50  0000 R CNN
-F 2 "track_chip:charger_mr010" H 4700 2200 50  0001 C CNN
-F 3 "" H 4700 2200 50  0001 C CNN
-	1    4700 2200
+P 4700 2100
+F 0 "U7" V 4888 1322 50  0000 R CNN
+F 1 "charger_mr010" V 4797 1322 50  0000 R CNN
+F 2 "track_chip:charger_mr010" H 4700 2100 50  0001 C CNN
+F 3 "" H 4700 2100 50  0001 C CNN
+	1    4700 2100
 	0    -1   -1   0   
 $EndComp
 Wire Wire Line
-	4800 2300 4800 2400
+	4800 2200 4800 2300
 Wire Wire Line
-	4900 2300 4900 2550
+	4900 2200 4900 2450
 Wire Wire Line
-	4900 2550 4800 2550
-Text GLabel 2350 3400 0    50   Input ~ 0
-5V
+	4900 2450 4800 2450
 $Comp
 L track_chip:esp32_NodeMCU U2
 U 1 1 6021AB3C
@@ -210,10 +183,37 @@ F 3 "" H 7150 3300 50  0001 C CNN
 	1    6850 3100
 	1    0    0    -1  
 $EndComp
-Text GLabel 3150 3200 0    50   Input ~ 0
-VBAT
 Text GLabel 5500 3250 2    50   Input ~ 0
 SCL
 Text GLabel 6750 3400 0    50   Input ~ 0
 SCL
+Text GLabel 6650 3850 0    50   Input ~ 0
+EN_GPS
+NoConn ~ 6650 4050
+$Comp
+L track_chip:polulu U5
+U 1 1 6021A9B1
+P 3300 2950
+F 0 "U5" H 3978 2851 50  0000 L CNN
+F 1 "polulu" H 3978 2760 50  0000 L CNN
+F 2 "track_chip:polulu" H 3300 2950 50  0001 C CNN
+F 3 "" H 3300 2950 50  0001 C CNN
+	1    3300 2950
+	1    0    0    -1  
+$EndComp
+Text GLabel 3200 3150 0    50   Input ~ 0
+GND
+NoConn ~ 3200 2950
+Text GLabel 3200 3050 0    50   Input ~ 0
+VBAT
+Connection ~ 2650 4000
+NoConn ~ 5500 3650
+Text GLabel 5500 4150 2    50   Input ~ 0
+EN_GPS
+NoConn ~ 5500 4250
+NoConn ~ 5500 4350
+Wire Wire Line
+	3200 3250 2650 3250
+Wire Wire Line
+	2650 3250 2650 3700
 $EndSCHEMATC
