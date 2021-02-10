@@ -39,6 +39,9 @@ class Wisol {
 		static String dms_lat_to_trame_hexa(char cardinal, int angle, int minute, double seconde,int prec);
 		static String dms_lng_to_trame_hexa(char cardinal, int angle, int minute, double seconde,int prec);
 		static String altitude_to_trame_hexa(int altitude);
+
+   //parse trame GPS
+   static bool verif_type(String trame);
 };
  
 #endif

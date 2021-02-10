@@ -131,3 +131,14 @@ String Wisol::altitude_to_trame_hexa(int altitude){
 	String res_alt = Wisol::int_to_hexa(altitude);
 	return complete_hexa_bytes(res_alt,2);
 }
+
+//parse trame GPS
+bool  Wisol::verif_type(String trame){
+   /* int i = 0;
+    char* temp;
+    while(i < trame.length() && trame[i] != ','){
+      temp[i] = trame[i];
+    }*/
+    return (trame.indexOf("$GPGGA") == 0); 
+    
+  }
