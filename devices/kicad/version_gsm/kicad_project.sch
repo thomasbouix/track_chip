@@ -1,5 +1,4 @@
 EESchema Schematic File Version 4
-LIBS:kicad_project-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
@@ -14,7 +13,6 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-NoConn ~ 5500 3750
 NoConn ~ 4400 3150
 NoConn ~ 4400 3250
 NoConn ~ 4400 3350
@@ -32,8 +30,6 @@ NoConn ~ 4400 4450
 NoConn ~ 5500 3850
 Text GLabel 5500 3350 2    50   Input ~ 0
 TX0
-Text GLabel 5500 3450 2    50   Input ~ 0
-RX0
 Text GLabel 5500 3550 2    50   Input ~ 0
 SDA
 Text GLabel 5500 3950 2    50   Input ~ 0
@@ -69,8 +65,6 @@ Text GLabel 6650 4350 0    50   Input ~ 0
 GND
 Text GLabel 6650 4150 0    50   Input ~ 0
 TX0
-Text GLabel 6650 4250 0    50   Input ~ 0
-RX0
 NoConn ~ 6650 3750
 NoConn ~ 6650 3950
 $Comp
@@ -134,7 +128,7 @@ Wire Wire Line
 Connection ~ 2650 4600
 Wire Wire Line
 	2650 4600 2650 4750
-Text GLabel 2650 4600 0    50   Input ~ 0
+Text GLabel 2500 4600 0    50   Input ~ 0
 GND
 Text GLabel 4800 2300 0    50   Input ~ 0
 VBAT
@@ -204,18 +198,25 @@ Text GLabel 3200 3050 0    50   Input ~ 0
 VBAT
 Connection ~ 2650 4000
 NoConn ~ 5500 3650
-Text GLabel 5500 4150 2    50   Input ~ 0
+Text GLabel 5500 3750 2    50   Input ~ 0
 EN_GPS
 NoConn ~ 5500 4250
 NoConn ~ 5500 4350
-Wire Wire Line
-	3200 3250 2650 3250
-Wire Wire Line
-	2650 3250 2650 3700
 Text GLabel 3150 4200 0    50   Input ~ 0
 RX2
 Text GLabel 4400 4550 0    50   Input ~ 0
-VBAT
+5V
 Text GLabel 5500 4550 2    50   Input ~ 0
 3V3
+Text GLabel 3200 3250 0    50   Input ~ 0
+5V
+Text GLabel 2650 3550 1    50   Input ~ 0
+5V
+Wire Wire Line
+	2650 3700 2650 3550
+NoConn ~ 5500 3450
+NoConn ~ 6650 4250
+Wire Wire Line
+	2500 4600 2650 4600
+NoConn ~ 5500 4150
 $EndSCHEMATC
