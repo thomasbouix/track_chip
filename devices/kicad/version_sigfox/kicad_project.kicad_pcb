@@ -2,7 +2,7 @@
 
   (general
     (thickness 1.6)
-    (drawings 0)
+    (drawings 4)
     (tracks 63)
     (zones 0)
     (modules 7)
@@ -480,6 +480,11 @@
     (pad 19 thru_hole circle (at 2.54 -2.54) (size 1.524 1.524) (drill 0.762) (layers *.Cu *.Mask))
     (pad 20 thru_hole circle (at 0 -2.54) (size 1.524 1.524) (drill 0.762) (layers *.Cu *.Mask))
   )
+
+  (gr_line (start 102.108 144.4752) (end 166.5224 144.4244) (layer Edge.Cuts) (width 0.05))
+  (gr_line (start 102.108 49.1744) (end 166.4716 49.1744) (layer Edge.Cuts) (width 0.05))
+  (gr_line (start 166.4716 49.1744) (end 166.5224 144.4244) (layer Edge.Cuts) (width 0.05) (tstamp 60243293))
+  (gr_line (start 102.108 49.1744) (end 102.108 144.4752) (layer Edge.Cuts) (width 0.05) (tstamp 6024328F))
 
   (segment (start 151.395199 83.069199) (end 151.395199 83.018399) (width 1) (layer B.Cu) (net 1))
   (segment (start 152.8572 84.5312) (end 151.395199 83.069199) (width 1) (layer B.Cu) (net 1))
