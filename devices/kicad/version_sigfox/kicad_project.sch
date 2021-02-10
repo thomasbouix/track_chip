@@ -123,8 +123,6 @@ NoConn ~ 5500 3650
 Text GLabel 5500 4150 2    50   Input ~ 0
 EN_GPS
 NoConn ~ 5500 4350
-Text GLabel 4400 4550 0    50   Input ~ 0
-VBAT
 Text GLabel 5500 4550 2    50   Input ~ 0
 3V3
 $Comp
@@ -152,4 +150,24 @@ Text GLabel 5500 4250 2    50   Input ~ 0
 RST_WSL
 NoConn ~ 5500 3450
 NoConn ~ 6500 2550
+$Comp
+L track_chip:polulu U1
+U 1 1 602554CA
+P 6650 5100
+F 0 "U1" H 7328 5001 50  0000 L CNN
+F 1 "polulu" H 7328 4910 50  0000 L CNN
+F 2 "track_chip:polulu" H 6650 5100 50  0001 C CNN
+F 3 "" H 6650 5100 50  0001 C CNN
+	1    6650 5100
+	1    0    0    -1  
+$EndComp
+NoConn ~ 6550 5100
+Text GLabel 6550 5200 0    50   Input ~ 0
+VBAT
+Text GLabel 6550 5300 0    50   Input ~ 0
+GND
+Text GLabel 6550 5400 0    50   Input ~ 0
+5V
+Text GLabel 4400 4550 0    50   Input ~ 0
+5V
 $EndSCHEMATC
