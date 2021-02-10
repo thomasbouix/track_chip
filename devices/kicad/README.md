@@ -17,3 +17,26 @@ afin d'éliminer la dépendance à la version du logiciel.
 Le fichier .sch représente le schéma du circuit électronique du système (Eeschema).
 Il instancie les différents symboles de la librairie du projet.
 ```
+
+## Empreintes
+
+### Dimensions
+```
+- Largeur typique d'une piste : 1mm
+- Largeur typique d'une alimentation : 2mm
+- Ecart entre les pastilles : 2.54mm
+- Diamètre typique de perçage : 0.8mm
+- Diamètre typique de pastille : 1.5mm
+```
+
+### Plans de masse
+```
+Recommendations : faire des plans de masses.
+Si il y a un domaine analogique et un domaine numérique, 
+faire des plans de masse séparés et les relier avec une piste.
+```
+
+## Batterie
+```
+On utiliser un circuit avec chargeur intégré.
+```
