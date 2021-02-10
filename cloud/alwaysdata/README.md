@@ -20,4 +20,4 @@ Déclarer la clés publique (.pub) sur le serveur.
 
 Se connecter au serveur en ssh.
 
-		$ ssh track-chip@ssh-track-chip.alwaysdata.netß
+		$ ssh track-chip@ssh-track-chip.alwaysdata.net
