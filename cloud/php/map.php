@@ -48,7 +48,7 @@
     </style>
     <script>
 
-      var current_alt;
+      var current_alt = 0;
 
       let map, window_current_pos;
 
@@ -177,10 +177,21 @@
 
   <body onload="getElevation()">
 
+    <?php
+
+      $db = new SQLite3('/Users/enzocalvino/Documents/Polytech/5A/IOT/Projet/track_chip/cloud/database/track_chip.db');
+
+      $res = $db->query('SELECT * FROM Device');
+
+      while ($row = $res->fetchArray()) {
+        echo "{$row['id']} {$row['name']} {$row['ref_com']} {$row['owner_id']} \n";
+      }
+
+    ?>
+
     <div class="jumbotron text-center">
       <h1>Bienvenue sur votre Application de Tracking !</h1>
       <p>Ici, vous pourrez suivre votre position par rapport à celle de votre tracker !</p>
-      <p>Test PHP : Aujourd'hui nous sommes le <?php echo date('d/m/Y h:i:s'); ?>.</p>
     </div>
 
     <div class="container">
