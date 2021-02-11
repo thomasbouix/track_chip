@@ -7,35 +7,20 @@
 
     <title>Geolocation</title>
 
+    <link rel="icon" href="favicone.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/map.css">
+    <link rel="stylesheet" href="css/style.css">
 
     <!-- Google API JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>   
     
-    <script src="../js/map.js" type="text/javascript" charset="utf-8" async defer></script>
+    <script src="js/map.js" type="text/javascript" charset="utf-8" async defer></script>
+    <script src="js/datas.js" type="text/javascript" charset="utf-8" async defer></script>
 
   </head>
 
   <body>
-
-    <?php
-
-    	// Connection to database
-      try
-      {
-        $db = new SQLite3('/Users/enzocalvino/Documents/Polytech/5A/IOT/Projet/track_chip/cloud/database/track_chip.db');
-      }
-      catch(Exception $e)
-      {
-      	die('Erreur : '.$e->getMessage());
-      } 
-
-      // Request to database
-      $res = $db->query('SELECT * FROM Device');
-
-    ?>
 
     <div class="jumbotron text-center">
       <h1>Bienvenue sur votre Application de Tracking !</h1>
@@ -43,22 +28,8 @@
     </div>
 
     <div class="container">
-    	
-    	<?php
-
-    	// Test print some data from database
-
-    	while ($row = $res->fetchArray()) {
-        echo "{$row['id']} {$row['name']} {$row['ref_com']} {$row['owner_id']} \n";
-      }
-
-    	?>
-
-    </div>
-
-    <div class="container">
       
-      <h2>Informations iténaire :</h1>
+      <h2>Informations iténaire :</h2>
 
       <p>Distance : </p>
       <p>Direction : </p>
