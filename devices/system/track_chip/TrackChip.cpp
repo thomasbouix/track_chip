@@ -13,11 +13,22 @@ TrackChip::~TrackChip() {}
 void TrackChip::send_data(String s) {
 	// Envoyer uniquement des chaines de la forme :
 	// 004A882F000398DC2F 
-
+	int altitude;
+	String trame;
+	char lat_c,lng_c;
+  	int lat_minute, lat_angle;
+  	double lat_seconde;
+  	int lng_minute, lng_angle;
+  	double lng_seconde;
+  	Wisol wisol = Wisol();
+  	
+  	altitude = (int) TrackChip::get_altitude();
+  	trame = TrackChip::get_position();
+  	Wisol::trame_GPGGA_to_DMS(trame, &lat_angle, &lat_minute, &lat_seconde, &lat_c, &lng_angle, &lng_minute, &lng_seconde, &lng_c);
+  	
 	// insérer vérification
-
-	Wisol wisol = Wisol();
-	wisol.send_string_data(s);
+	wisol.send_trame(lat_angle, lat_minute, lat_seconde, lat_c, lng_angle, lng_minute, lng_seconde, lng_c, altitude);
+	
 }
 
 float TrackChip::get_altitude() {
