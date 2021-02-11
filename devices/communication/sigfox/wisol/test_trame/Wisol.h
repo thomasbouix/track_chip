@@ -42,6 +42,7 @@ class Wisol {
 
    //parse trame GPS
    static bool verif_type(String trame);
+   static void GPGGA_to_DMS(String trame, int *angle, int *minute, double *seconde);
 };
  
 #endif

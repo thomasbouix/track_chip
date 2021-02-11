@@ -134,11 +134,21 @@ String Wisol::altitude_to_trame_hexa(int altitude){
 
 //parse trame GPS
 bool  Wisol::verif_type(String trame){
-   /* int i = 0;
-    char* temp;
-    while(i < trame.length() && trame[i] != ','){
-      temp[i] = trame[i];
-    }*/
     return (trame.indexOf("$GPGGA") == 0); 
-    
+  }
+
+void Wisol::GPGGA_to_DMS(String test, int* angle, int* minute, double* seconde){
+  //séparer la partie entière de la partie décimale :
+  String angle_minute = test.substring(0, test.indexOf('.'));
+  test.remove(0, test.indexOf('.')+1);
+  
+  //séparer les angles et les minutes
+  int n  = angle_minute.length();
+  String s_minute = angle_minute.substring(n-2,n);
+  *minute = s_minute.toInt();
+  angle_minute.remove(n-2,n);
+  *angle = angle_minute.toInt();
+  //convertir les secondes
+  int temp = test.toDouble();
+  *seconde =  (double) (temp*60/100)/100;
   }
