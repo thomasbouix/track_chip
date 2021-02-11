@@ -48,19 +48,32 @@ String trame = "$GPGGA,064036.289,4836.5375,N,00740.9373,E,1,04,3.2,200.2,M,,,,0
     Serial.println(param_suppr);
   }*/
   //String res = "lat : "+lat_dms;//" "+lat_c+", lng : "+lng_dms+" "+lng_c;
+  
+  //récupération de la latitude
   String test = "00740.9373";
-  float test_float = test.toFloat();
+  //séparer la partie entière de la partie décimale :
+  String angle_minute = test.substring(0, test.indexOf('.'));
+  Serial.println(angle_minute);
+  test.remove(0, test.indexOf('.')+1);
+  Serial.println(test);
+  //séparer les angles et les minutes
+  int n  = angle_minute.length();
+  String s_minute = angle_minute.substring(n-2,n);
+  Serial.println(s_minute);
+  int minute = s_minute.toInt();
+  Serial.println(s_minute);
+  angle_minute.remove(n-2,n);
+  Serial.println(angle_minute);
+  int angle = angle_minute.toInt();
+  Serial.println(angle);
+  //convertir les secondes
+  double seconde = test.toFloat();
+  seconde = (seconde*60/100)/100;
+  Serial.println(seconde);
   //récupération des charactères
-  Serial.println(test_float);
   String cardinal = "E";
   cardinal.toCharArray(buf,20);
-  //Serial.println(cardinal);
-  //Serial.println(buf);
   lat_c = buf[0];
   Serial.println(lat_c);
-  //Serial.println(lat_c,DEC); //cette ligne fait buggé
-  //Serial.println("lat :");
-  //Serial.println(lat_dms);
-  //Serial.println(lat_c);
   delay(5000);
 }
