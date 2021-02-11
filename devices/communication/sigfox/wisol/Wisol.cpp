@@ -132,6 +132,16 @@ String Wisol::altitude_to_trame_hexa(int altitude){
 	return complete_hexa_bytes(res_alt,2);
 }
 
+
+void Wisol::send_trame(int lat_angle, int lat_minute, double lat_seconde, char lat_c, int lng_angle, int lng_minute, double lng_seconde, char lng_c, int altitude){
+	int prec = 5;
+  String res;
+  res = Wisol::dms_lat_to_trame_hexa(lat_c, lat_angle, lat_minute, lat_seconde,prec);
+  res+= Wisol::dms_lng_to_trame_hexa(lng_c, lng_angle, lng_minute, lng_seconde, prec);
+  res+= Wisol::altitude_to_trame_hexa(altitude);
+  Wisol::send_string_data(res);//sending int
+}
+
 //parse trame GPS
 bool  Wisol::verif_type(String trame){
     return (trame.indexOf("$GPGGA") == 0); 
