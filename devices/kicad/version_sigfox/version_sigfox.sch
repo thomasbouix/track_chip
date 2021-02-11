@@ -1,5 +1,4 @@
 EESchema Schematic File Version 4
-LIBS:kicad_project-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
@@ -42,9 +41,9 @@ Text GLabel 5500 4450 2    50   Input ~ 0
 GND
 NoConn ~ 5500 3150
 Text GLabel 4700 2550 3    50   Input ~ 0
-3.3V
+3V3
 Text GLabel 4800 2550 3    50   Input ~ 0
-3.3V
+3V3
 Text GLabel 4900 2550 3    50   Input ~ 0
 GND
 Text GLabel 5100 2550 3    50   Input ~ 0
@@ -62,7 +61,7 @@ F 3 "" H 6600 2050 50  0001 C CNN
 $EndComp
 NoConn ~ 6500 2850
 Text GLabel 6500 2750 0    50   Input ~ 0
-3.3V
+3V3
 Text GLabel 6500 2650 0    50   Input ~ 0
 GND
 Text GLabel 6500 2450 0    50   Input ~ 0
@@ -119,8 +118,7 @@ SCL
 Text GLabel 6500 2150 0    50   Input ~ 0
 EN_GPS
 NoConn ~ 6500 2350
-NoConn ~ 5500 3650
-Text GLabel 5500 4150 2    50   Input ~ 0
+Text GLabel 5500 3650 2    50   Input ~ 0
 EN_GPS
 NoConn ~ 5500 4350
 Text GLabel 5500 4550 2    50   Input ~ 0
@@ -170,4 +168,5 @@ Text GLabel 6550 5400 0    50   Input ~ 0
 5V
 Text GLabel 4400 4550 0    50   Input ~ 0
 5V
+NoConn ~ 5500 4150
 $EndSCHEMATC
