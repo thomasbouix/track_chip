@@ -70,8 +70,15 @@ function initMap() {
   button_tracker_pos.addEventListener("click", () => {
     console.log("Click on tracker pos button");
 
+    // call fonction which GET datas.php
+    let data_array;
+    data_array = get_data_device();
+
+    console.log("data_array :");
+    console.log(data_array);
+
     // Default tracker position : center of Lyon
-    const tracker_pos = { lat: 45.738888, lng: 4.840406 };
+    const tracker_pos = { lat: data_array[1], lng: data_array[2] };
 
     window_tracker_pos.setPosition(tracker_pos);
     window_tracker_pos.setContent("Tracker Location found.");
