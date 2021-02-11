@@ -207,7 +207,7 @@ RX2
 Text GLabel 4400 4550 0    50   Input ~ 0
 5V
 Text GLabel 5500 4550 2    50   Input ~ 0
-3V3
+3.3V
 Text GLabel 3200 3250 0    50   Input ~ 0
 5V
 Text GLabel 2650 3550 1    50   Input ~ 0
