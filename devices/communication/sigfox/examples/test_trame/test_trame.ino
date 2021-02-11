@@ -5,7 +5,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  char lat_c,lng_c;;
+  char lat_c,lng_c;
   int lat_minute, lat_angle;
   double lat_seconde;
   int lng_minute, lng_angle;
