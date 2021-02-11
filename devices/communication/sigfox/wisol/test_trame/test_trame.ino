@@ -25,7 +25,7 @@ String trame = "$GPGGA,064036.289,4836.5375,N,00740.9373,E,1,04,3.2,200.2,M,,,,0
  // float lat_dms,lng_dms;
   char lat_c,lng_c;
   int param_suppr = 0;
-  String token; 
+  String test; 
   char buf[20];
   int lat_minute, lat_angle;
   double lat_seconde;
@@ -33,54 +33,12 @@ String trame = "$GPGGA,064036.289,4836.5375,N,00740.9373,E,1,04,3.2,200.2,M,,,,0
   double lng_seconde;
   
   while(param_suppr <=6){
-    String test = trame.substring(0, trame.indexOf(delimiter));
-    Serial.println(token);
+    test = trame.substring(0, trame.indexOf(delimiter));
     if(param_suppr == 2){
-      String angle_minute = test.substring(0, test.indexOf('.'));
-      //Serial.println(angle_minute);
-      test.remove(0, test.indexOf('.')+1);
-      //Serial.println(test);
-      //séparer les angles et les minutes
-      int n  = angle_minute.length();
-      String s_minute = angle_minute.substring(n-2,n);
-      //Serial.println(s_minute);
-      int minute = s_minute.toInt();
-      //Serial.println(s_minute);
-      angle_minute.remove(n-2,n);
-      //Serial.println(angle_minute);
-      int angle = angle_minute.toInt();
-      //Serial.println(angle);
-      //convertir les secondes
-      double seconde = test.toFloat();
-      seconde = (seconde*60/100)/100;
-      //Serial.println(seconde);
-      lat_minute = minute;
-      lat_angle = angle;
-      lat_seconde = seconde;
+      w.GPGGA_to_DMS(test, &lat_angle, &lat_minute, &lat_seconde);
       }
     else if( param_suppr == 4){
-      String angle_minute = test.substring(0, test.indexOf('.'));
-      //Serial.println(angle_minute);
-      test.remove(0, test.indexOf('.')+1);
-      //Serial.println(test);
-      //séparer les angles et les minutes
-      int n  = angle_minute.length();
-      String s_minute = angle_minute.substring(n-2,n);
-      //Serial.println(s_minute);
-      int minute = s_minute.toInt();
-      //Serial.println(s_minute);
-      angle_minute.remove(n-2,n);
-      //Serial.println(angle_minute);
-      int angle = angle_minute.toInt();
-      //Serial.println(angle);
-      //convertir les secondes
-      double seconde = test.toFloat();
-      seconde = (seconde*60/100)/100;
-      Serial.println(seconde);
-      lng_minute = minute;
-      lng_angle = angle;
-      lng_seconde = seconde;
-      
+       w.GPGGA_to_DMS(test, &lng_angle, &lng_minute, &lng_seconde);
       }
     else if(param_suppr == 3){
       test.toCharArray(buf,20);
