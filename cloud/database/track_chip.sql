@@ -6,9 +6,9 @@ DROP TABLE IF EXISTS Device;
 DROP TABLE IF EXISTS Owner;
 
 CREATE TABLE Location 	(	id 			INTEGER 	PRIMARY KEY AUTOINCREMENT, 
-							longitude 	INTEGER 	NOT NULL,
-							latitude  	INTEGER 	NOT NULL,
 							altitude  	INTEGER 	NOT NULL,
+							latitude 	INTEGER 	NOT NULL,
+							longitude  	INTEGER 	NOT NULL,
 							send_time	TIMESTAMP 	DEFAULT CURRENT_TIMESTAMP, 
 							device_id 	INTEGER 	NOT NULL, 
 							FOREIGN KEY (device_id) REFERENCES Device(id)
@@ -31,5 +31,5 @@ CREATE TABLE Owner 		(	id 			INTEGER 	PRIMARY KEY AUTOINCREMENT,
 INSERT INTO Owner(lastname, firstname, phone, email) VALUES 
 			("Cover", "Harry", "0678246351", "harrycover@gmail.com");
 
-INSERT INTO Device(name, ref_com, owner_id)
-			("TrackChip", "KF6853", 1)
+INSERT INTO Device(name, ref_com, owner_id) VALUES
+			("TrackChip", "KF6853", 1);
