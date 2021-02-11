@@ -152,3 +152,32 @@ void Wisol::GPGGA_to_DMS(String test, int* angle, int* minute, double* seconde){
   int temp = test.toDouble();
   *seconde =  (double) (temp*60/100)/100;
   }
+
+
+void Wisol::trame_GPGGA_to_DMS(String trame, int *lat_angle, int *lat_minute, double *lat_seconde, char* lat_c, int *lng_angle, int *lng_minute, double *lng_seconde, char* lng_c){
+if( Wisol::verif_type(trame)) {
+  char delimiter = ',';
+  int param_suppr = 0;
+  String test; 
+  char buf[20];
+  while(param_suppr <=6){
+    test = trame.substring(0, trame.indexOf(delimiter));
+    if(param_suppr == 2){
+      Wisol::GPGGA_to_DMS(test, lat_angle, lat_minute, lat_seconde);
+      }
+    else if( param_suppr == 4){
+      Wisol::GPGGA_to_DMS(test, lng_angle, lng_minute, lng_seconde);
+      }
+    else if(param_suppr == 3){
+      test.toCharArray(buf,20);
+     *lat_c = buf[0];
+      }
+    else if (param_suppr == 5){
+      test.toCharArray(buf,20);
+      *lng_c = buf[0];
+      }
+    trame.remove(0, trame.indexOf(delimiter)+1);
+    param_suppr+=1;
+  }
+}
+}
