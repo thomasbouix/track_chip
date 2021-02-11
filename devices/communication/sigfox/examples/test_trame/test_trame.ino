@@ -24,5 +24,7 @@ void loop() {
   Serial.println(lng_minute);
   Serial.println(lng_seconde);
   Serial.println(lng_c);
+  int altitude = 14;
+  w.send_trame(lat_angle, lat_minute, lat_seconde, lat_c, lng_angle, lng_minute, lng_seconde, lng_c, altitude);
   while(1);
 }
