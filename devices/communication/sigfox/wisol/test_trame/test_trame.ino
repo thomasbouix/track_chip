@@ -26,7 +26,7 @@ String trame = "$GPGGA,064036.289,4836.5375,N,00740.9373,E,1,04,3.2,200.2,M,,,,0
   char lat_c,lng_c;
   int param_suppr = 0;
   String token; 
-  char* buf;
+  char buf[20];
   /*while(param_suppr <=6){
     token = trame.substring(0, trame.indexOf(delimiter));
     Serial.println(token);
@@ -50,10 +50,14 @@ String trame = "$GPGGA,064036.289,4836.5375,N,00740.9373,E,1,04,3.2,200.2,M,,,,0
   //String res = "lat : "+lat_dms;//" "+lat_c+", lng : "+lng_dms+" "+lng_c;
   String test = "00740.9373";
   float test_float = test.toFloat();
+  //récupération des charactères
   Serial.println(test_float);
   String cardinal = "E";
-  cardinal.toCharArray(buf,1);
+  cardinal.toCharArray(buf,20);
+  //Serial.println(cardinal);
+  //Serial.println(buf);
   lat_c = buf[0];
+  Serial.println(lat_c);
   //Serial.println(lat_c,DEC); //cette ligne fait buggé
   //Serial.println("lat :");
   //Serial.println(lat_dms);
