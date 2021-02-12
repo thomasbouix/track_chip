@@ -7,9 +7,13 @@
   // Receive Data from SigFox
   if (isset($_POST['altitude'], $_POST['latitude'], $_POST['longitude'])) 
   {  
-    $altitude   = (double)$_POST['altitude'];
-    $latitude   = (double)$_POST['latitude'];
-    $longitude  = (double)$_POST['longitude'];
+    $altitude   = (int)$_POST['altitude'];
+    $latitude   = (int)$_POST['latitude'];
+    $longitude  = (int)$_POST['longitude'];
+
+    // scalling SigFox data
+    $latitude   = $latitude / 1000000;
+    $longitude  = $longitude / 1000000;
   }
   else
   {
