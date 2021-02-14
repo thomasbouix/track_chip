@@ -29,14 +29,14 @@
 
   if (empty($resutl) == false) 
   {
-    // header('Location: https://track-chip.alwaysdata.net/map.php');
-    header('Location: http://127.0.0.1:8888/php/map.php');
+    header('Location: https://track-chip.alwaysdata.net/map.php');
+    // header('Location: http://127.0.0.1:8888/php/map.php');
     exit();
   }
   else
   {
-    // header('Location: https://track-chip.alwaysdata.net/index.php?auth_failed=1');
-    header('Location: http://127.0.0.1:8888/index.php?auth_failed=1');
+    header('Location: https://track-chip.alwaysdata.net/index.php?auth_failed=1');
+    // header('Location: http://127.0.0.1:8888/index.php?auth_failed=1');
     exit();
   }
 
