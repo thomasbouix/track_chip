@@ -1,50 +1,49 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Geolocation</title>
+<head>
+  <title>TrackChip : Geolocation - LogIn</title>
 
-    <link rel="icon" href="favicone.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Google API JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>   
-    
-    <script src="js/map.js" type="text/javascript" charset="utf-8" async defer></script>
-    <script src="js/datas.js" type="text/javascript" charset="utf-8" async defer></script>
+  <!--bootstrap styles -->
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
-  </head>
+  <!-- Custom styles for this template -->
+  <link href="css/login.css" rel="stylesheet">
 
-  <body>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
-    <div class="jumbotron text-center">
-      <h1>Bienvenue sur votre Application de Tracking !</h1>
-      <p>Ici, vous pourrez suivre votre position par rapport à celle de votre tracker !</p>
+</head>
+
+<body>
+
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+
+      <!-- Login Form -->
+      <form method=POST action="/php/login.php" class="needs-validation" novalidate>
+
+        <h2>TrackChip : Authentification</h2>
+
+        <input type="text" id="username" class="fadeIn second" name="username" placeholder="username" required>
+
+        <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" required>
+        
+        <input type="submit" class="fadeIn fourth" value="Log In">
+
+        <?php
+        $auth_failed = $_REQUEST['auth_failed'];
+        if ($auth_failed == true) 
+        {
+          echo "<p>Error : Wrong username or password</p>";
+        }
+        ?>
+
+      </form>
+
     </div>
-
-    <div class="container">
-      
-      <h2>Informations iténaire :</h2>
-
-      <p>Distance : </p>
-      <p>Direction : </p>
-      <p>Altitude : <span id="current_alt"></span> m</p>
-
-    </div>
-
-    <div class="container" id="map"></div>
-
-    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMnY8W47H_ztdC4sJjo2Z9_bu2y9-zEPM&callback=initMap&libraries=&v=weekly"
-      async
-    ></script>
-
-  </body>
-
-</html>
+  </div>
+</body>
