@@ -1,5 +1,6 @@
 
 var current_alt = 0;
+document.getElementById("current_alt").innerHTML = current_alt;
 
 let map, window_current_pos;
 
