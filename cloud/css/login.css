@@ -27,6 +27,13 @@ h2 {
   color: #cccccc;
 }
 
+p {
+  text-align: center;
+  font-style: italic;
+  color: #ff0000;
+  animation: .8s shake infinite alternate;
+}
+
 /* STRUCTURE */
 
 .wrapper {
@@ -207,6 +214,15 @@ input[type=password]:placeholder {
     -webkit-transform: none;
     transform: none;
   }
+}
+
+@keyframes shake {
+  0% { transform: skewX(-15deg); }
+  5% { transform: skewX(15deg); }
+  10% { transform: skewX(-15deg); }
+  15% { transform: skewX(15deg); }
+  20% { transform: skewX(0deg); }
+  100% { transform: skewX(0deg); }  
 }
 
 /* Simple CSS3 Fade-in Animation */
