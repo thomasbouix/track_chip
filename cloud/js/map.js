@@ -1,4 +1,6 @@
 
+var curr_pos, tracker_pos;
+
 var current_alt = 0;
 document.getElementById("current_alt").innerHTML = current_alt;
 
@@ -8,11 +10,16 @@ function initMap() {
   
   console.log("initMap()");
 
+  const directionsService = new google.maps.DirectionsService();
+  const directionsRenderer = new google.maps.DirectionsRenderer();
+
   // Default position : center of Paris
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 48.858725, lng: 2.341706 },
     zoom: 6,
   });
+
+  directionsRenderer.setMap(map);
 
   // Create elevation service for current position
   const current_elevator = new google.maps.ElevationService();
@@ -24,16 +31,23 @@ function initMap() {
   window_tracker_pos = new google.maps.InfoWindow();
 
   // button to get current position
-  const button_current_pos = document.createElement("button");
+  const button_current_pos  = document.createElement("button");
 
   // button to get tracket position
-  const button_tracker_pos = document.createElement("button");
+  const button_tracker_pos  = document.createElement("button");
+
+  // button to get itinerary between current and tracker pos
+  const button_itineraty    = document.createElement("button");
 
   // Customize buttons
   button_current_pos.textContent = "View Current Location";
   button_current_pos.classList.add("custom-map-control-button");
+
   button_tracker_pos.textContent = "View Tracker Location";
   button_tracker_pos.classList.add("custom-map-control-button");
+
+  button_itineraty.textContent = "Get Route";
+  button_itineraty.classList.add("custom-map-control-button");
   
   // Add buttons to map
   map.controls[google.maps.ControlPosition.TOP_CENTER].push(
@@ -41,6 +55,9 @@ function initMap() {
   );
   map.controls[google.maps.ControlPosition.TOP_CENTER].push(
     button_tracker_pos
+  );
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+    button_itineraty
   );
 
   button_current_pos.addEventListener("click", () => {
@@ -50,7 +67,7 @@ function initMap() {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           
-          const curr_pos = { lat: position.coords.latitude, lng: position.coords.longitude };
+          curr_pos = { lat: position.coords.latitude, lng: position.coords.longitude };
 
           getElevation(curr_pos, current_elevator);
 
@@ -78,8 +95,7 @@ function initMap() {
     console.log("data_array :");
     console.log(data_array);
 
-    // Default tracker position : center of Lyon
-    const tracker_pos = { lat: data_array[1], lng: data_array[2] };
+    tracker_pos = { lat: data_array[1], lng: data_array[2] };
 
     window_tracker_pos.setPosition(tracker_pos);
     window_tracker_pos.setContent("Tracker Location found.");
@@ -88,6 +104,15 @@ function initMap() {
     map.setCenter(tracker_pos);
 
     handleLocationError(true, window_tracker_pos, map.getCenter());
+
+  button_itineraty.addEventListener("click", () => {
+    console.log("Click on route button");
+
+    // do some tests on position available !
+
+    calculateAndDisplayRoute(directionsService, directionsRenderer);
+
+  })
 
   });
 }
@@ -129,6 +154,23 @@ function getElevation(location, elevator) {
       else 
       {
         console.log("Elevation service failed due to: " + status)
+      }
+    }
+  );
+}
+
+function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+  directionsService.route(
+    {
+      origin: curr_pos,
+      destination: tracker_pos,
+      travelMode: google.maps.TravelMode.DRIVING,
+    },
+    (response, status) => {
+      if (status === "OK") {
+        directionsRenderer.setDirections(response);
+      } else {
+        window.alert("Directions request failed due to " + status);
       }
     }
   );
