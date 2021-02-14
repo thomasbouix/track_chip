@@ -4,14 +4,15 @@ var curr_pos, tracker_pos;
 var current_alt = 0;
 document.getElementById("current_alt").innerHTML = current_alt;
 
-let map, window_current_pos;
+let map, window_current_pos, window_tracker_pos;
 
 function initMap() {
   
   console.log("initMap()");
 
-  const directionsService = new google.maps.DirectionsService();
-  const directionsRenderer = new google.maps.DirectionsRenderer();
+  const DirectionsService   = new google.maps.DirectionsService();
+  const directionsRenderer  = new google.maps.DirectionsRenderer();
+  const geocoder            = new google.maps.Geocoder();
 
   // Default position : center of Paris
   map = new google.maps.Map(document.getElementById("map"), {
@@ -72,9 +73,13 @@ function initMap() {
           getElevation(curr_pos, current_elevator);
 
           window_current_pos.setPosition(curr_pos);
-          window_current_pos.setContent("Current Location found.");
+          // window_current_pos.setContent("Current Location found.");
+          geocodeLatLng(geocoder, map, window_current_pos, curr_pos, 0);
+
           window_current_pos.open(map);
+          
           map.setCenter(curr_pos);
+          map.setZoom(11);
 
         }, () => { handleLocationError(true, window_current_pos, map.getCenter()); }
       );
@@ -98,18 +103,19 @@ function initMap() {
     tracker_pos = { lat: data_array[1], lng: data_array[2] };
 
     window_tracker_pos.setPosition(tracker_pos);
-    window_tracker_pos.setContent("Tracker Location found.");
+    // window_tracker_pos.setContent("Tracker Location found.");
+    geocodeLatLng(geocoder, map, window_tracker_pos, tracker_pos, 1);
+
     window_tracker_pos.open(map);
     
     map.setCenter(tracker_pos);
+    map.setZoom(11);
 
     handleLocationError(true, window_tracker_pos, map.getCenter());
 
   button_itineraty.addEventListener("click", () => {
     console.log("Click on route button");
-
     // do some tests on position available !
-
     calculateAndDisplayRoute(directionsService, directionsRenderer);
 
   })
@@ -157,6 +163,36 @@ function getElevation(location, elevator) {
       }
     }
   );
+}
+
+function geocodeLatLng(geocoder, map, infowindow, latlng, pos) {
+
+  console.log("geocodeLatLng()");
+
+  geocoder.geocode({ location: latlng }, (results, status) => {
+    if (status === "OK") 
+    {
+      if (results[0]) 
+      {
+        // current pos
+        if (pos == 0) 
+        {
+          infowindow.setContent("Current Location : \n" + results[0].formatted_address);
+        }
+        // tracker pos`
+        else{
+          infowindow.setContent("Tracker Location : \n" + results[0].formatted_address);
+        }
+        
+      } 
+      else {
+        window.alert("No results found");
+      }
+    } 
+    else {
+      window.alert("Geocoder failed due to: " + status);
+    }
+  });
 }
 
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
