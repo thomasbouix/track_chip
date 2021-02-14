@@ -25,6 +25,29 @@ void loop() {
   Serial.println(lng_seconde);
   Serial.println(lng_c);
   int altitude = 14;
-  w.send_trame(lat_angle, lat_minute, lat_seconde, lat_c, lng_angle, lng_minute, lng_seconde, lng_c, altitude);
+  //Test_send_trame
+  Serial.println("test DMS_to_dd");
+  double lat = w.Dms_to_dd(lat_c,lat_angle,lat_minute, lat_seconde);
+  Serial.println(lat);
+  double lng = w.Dms_to_dd(lng_c,lng_angle,lng_minute, lng_seconde);
+  Serial.println(lng);
+  Serial.println("---------");
+  int prec = 5;
+  double a = w.shift_latitude(lat);
+  Serial.println(a);
+  int temp = w.double_to_int(a, prec);
+  Serial.println(temp);
+  Serial.println("Test_send_trame :");
+  String res;
+  res = w.altitude_to_trame_hexa(altitude);
+  Serial.println(res);
+  
+  res+= w.dms_lat_to_trame_hexa(lat_c, lat_angle, lat_minute, lat_seconde,prec);
+  Serial.println(res);
+  
+  res+= w.dms_lng_to_trame_hexa(lng_c, lng_angle, lng_minute, lng_seconde, prec);
+  Serial.println(res);
+  w.send_string_data(res);//sending int
+  //w.send_trame(lat_angle, lat_minute, lat_seconde, lat_c, lng_angle, lng_minute, lng_seconde, lng_c, altitude);
   while(1);
 }
