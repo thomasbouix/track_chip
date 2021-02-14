@@ -29,7 +29,7 @@
 
   if (empty($resutl) == false) 
   {
-    header('Location: https://track-chip.alwaysdata.net/map.php');
+    header('Location: https://track-chip.alwaysdata.net/php/map.php');
     // header('Location: http://127.0.0.1:8888/php/map.php');
     exit();
   }
