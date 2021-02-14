@@ -15,7 +15,7 @@
   }
 
   // Select last Location receive in database
-  $response = $db->query('SELECT * FROM Location WHERE id = (SELECT MAX(id) FROM Location)');
+  $response = $db->query('SELECT * FROM Location WHERE (id >= (SELECT MAX(id) FROM Location) - 4);');
   
   $data = array();
 
