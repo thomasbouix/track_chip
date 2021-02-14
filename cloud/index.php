@@ -19,17 +19,28 @@
 </head>
 
 <body>
+
   <div class="wrapper fadeInDown">
     <div id="formContent">
 
       <!-- Login Form -->
       <form method=POST action="/php/login.php" class="needs-validation" novalidate>
 
+        <h2>TrackChip : Authentification</h2>
+
         <input type="text" id="username" class="fadeIn second" name="username" placeholder="username" required>
 
-        <input type="text" id="password" class="fadeIn third" name="password" placeholder="password" required>
+        <input type="password" id="password" class="fadeIn third" name="password" placeholder="password" required>
         
         <input type="submit" class="fadeIn fourth" value="Log In">
+
+        <?php
+        $auth_failed = $_REQUEST['auth_failed'];
+        if ($auth_failed == true) 
+        {
+          echo "<p>Error : Wrong username or password</p>";
+        }
+        ?>
 
       </form>
 
