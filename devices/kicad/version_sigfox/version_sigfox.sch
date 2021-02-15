@@ -1,4 +1,5 @@
 EESchema Schematic File Version 4
+LIBS:version_sigfox-cache
 EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
@@ -29,14 +30,10 @@ NoConn ~ 4400 4250
 NoConn ~ 4400 4350
 NoConn ~ 4400 4450
 NoConn ~ 5500 3850
-Text GLabel 5500 3350 2    50   Input ~ 0
-TX0
+Text GLabel 5500 3450 2    50   Input ~ 0
+GPS_TX0
 Text GLabel 5500 3550 2    50   Input ~ 0
 SDA
-Text GLabel 5500 3950 2    50   Input ~ 0
-TX2
-Text GLabel 5500 4050 2    50   Input ~ 0
-RX2
 Text GLabel 5500 4450 2    50   Input ~ 0
 GND
 NoConn ~ 5500 3150
@@ -65,7 +62,7 @@ Text GLabel 6500 2750 0    50   Input ~ 0
 Text GLabel 6500 2650 0    50   Input ~ 0
 GND
 Text GLabel 6500 2450 0    50   Input ~ 0
-TX0
+GPS_TX0
 NoConn ~ 6500 2050
 NoConn ~ 6500 2250
 Text GLabel 5150 4950 2    50   Input ~ 0
@@ -134,10 +131,6 @@ F 3 "" H 7450 3450 50  0001 C CNN
 	1    7450 3450
 	0    1    1    0   
 $EndComp
-Text GLabel 6450 3750 0    50   Input ~ 0
-TX2
-Text GLabel 6450 3850 0    50   Input ~ 0
-RX2
 Text GLabel 6450 4350 0    50   Input ~ 0
 3V3
 Text GLabel 6450 4450 0    50   Input ~ 0
@@ -146,7 +139,6 @@ Text GLabel 6450 4250 0    50   Input ~ 0
 RST_WSL
 Text GLabel 5500 4250 2    50   Input ~ 0
 RST_WSL
-NoConn ~ 5500 3450
 NoConn ~ 6500 2550
 $Comp
 L track_chip:polulu U1
@@ -169,4 +161,13 @@ Text GLabel 6550 5400 0    50   Input ~ 0
 Text GLabel 4400 4550 0    50   Input ~ 0
 5V
 NoConn ~ 5500 4150
+NoConn ~ 5500 3350
+NoConn ~ 6450 3950
+NoConn ~ 6450 4050
+Text GLabel 5500 3950 2    50   Input ~ 0
+MCU_TX2
+Text GLabel 6450 3850 0    50   Input ~ 0
+MCU_TX2
+NoConn ~ 5500 4050
+NoConn ~ 6450 3750
 $EndSCHEMATC
