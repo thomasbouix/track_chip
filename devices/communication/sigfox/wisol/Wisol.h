@@ -46,6 +46,12 @@ class Wisol {
    static bool verif_type(String trame);
    static void GPGGA_to_DMS(String trame, int *angle, int *minute, double *seconde);
    static void trame_GPGGA_to_DMS(String trame, int *lat_angle, int *lat_minute, double *lat_seconde, char* lat_c, int *lng_angle, int *lng_minute, double *lng_seconde, char* lng_c);
+   
+   //create different message
+   static String create_message1();
+   static String create_message2();
+   static String create_message3();
+   static void chose_message_to_send();
 };
  
 #endif
