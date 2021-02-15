@@ -15,7 +15,7 @@ function initMap() {
   
   console.log("initMap()");
 
-  const DirectionsService   = new google.maps.DirectionsService();
+  const directionsService   = new google.maps.DirectionsService();
   const directionsRenderer  = new google.maps.DirectionsRenderer();
   const geocoder            = new google.maps.Geocoder();
 
