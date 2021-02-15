@@ -7,7 +7,7 @@
 	// Connection to database
   try
   {
-    system('bash ../database/database.sh');
+    // system('bash ../database/database.sh');
     $db = new SQLite3('../database/track_chip.db');
   }
   catch(Exception $e)
