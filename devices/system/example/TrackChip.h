@@ -54,6 +54,7 @@ public :
 	int get_wifi_accuracy()	{ return accuracy;	}
 	float get_wifi_lat()	{ return location_lat;	}
 	float get_wifi_lng()	{ return location_lng;	}
+  bssid_tab* get_bssid() { return  &bssidtab;}
 };
 
 #endif
