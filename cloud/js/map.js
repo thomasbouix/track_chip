@@ -6,8 +6,10 @@ document.getElementById("current_alt").innerHTML = current_alt;
 
 let map, window_current_pos, window_tracker_pos;
 
-let markers = [];
-let pos_marker = [];
+let markers     = [];
+let pos_marker  = [];
+
+var nb_position_display = 5;
 
 function initMap() {
   
@@ -100,7 +102,7 @@ function initMap() {
     clearMarkers();
     markers = [];
 
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < nb_position_display; i++) {
 
       // call fonction which GET datas.php
       let data_array;
@@ -113,8 +115,7 @@ function initMap() {
 
       pos_marker.push({ lat: data_array[1], lng: data_array[2] });
 
-      if (i != 4) 
-      {
+      if (i != nb_position_display - 1){
         // add circle marker on each old tracker's position
         markers.push(new google.maps.Marker({
           position: pos_marker[i],
@@ -134,7 +135,7 @@ function initMap() {
       }
     }
 
-    tracker_marker = markers[4];
+    tracker_marker = markers[nb_position_display - 1];
     
     // Rely all old tracker's positions
     const flightPlanCoordinates = [
@@ -153,18 +154,18 @@ function initMap() {
     });
     flightPath.setMap(map);
 
-    tracker_pos = pos_marker[4];
+    tracker_pos = pos_marker[nb_position_display - 1];
 
-    window_tracker_pos.setPosition(pos_marker[4]);
+    window_tracker_pos.setPosition(pos_marker[nb_position_display - 1]);
     // window_tracker_pos.setContent("Tracker Location found.");
-    geocodeLatLng(geocoder, map, window_tracker_pos, pos_marker[4], 1);
+    geocodeLatLng(geocoder, map, window_tracker_pos, pos_marker[nb_position_display - 1], 1);
 
     // window_tracker_pos.open(map);
     tracker_marker.addListener("click", () => {
       window_tracker_pos.open(map, tracker_marker);
     });
     
-    map.setCenter(pos_marker[4]);
+    map.setCenter(pos_marker[nb_position_display - 1]);
     map.setZoom(11);
 
     handleLocationError(true, window_tracker_pos, map.getCenter());
@@ -175,7 +176,6 @@ function initMap() {
     // do some tests on position available !
     calculateAndDisplayRoute(directionsService, directionsRenderer);
   });
-
 }
 
 function clearMarkers() {
