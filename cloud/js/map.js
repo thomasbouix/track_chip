@@ -5,6 +5,8 @@ var curr_pos, tracker_pos;
 var current_alt         = 0;
 var current_tracket_alt = 0;
 
+var span_time           = document.getElementById("time");
+var span_dist           = document.getElementById("dist");
 var span_abs_diff_alt   = document.getElementById("abs_diff_alt");
 var span_arrow_alt      = document.getElementById("arrow");
 
@@ -20,6 +22,7 @@ function initMap() {
   const directionsService   = new google.maps.DirectionsService();
   const directionsRenderer  = new google.maps.DirectionsRenderer();
   const geocoder            = new google.maps.Geocoder();
+  const dist_service        = new google.maps.DistanceMatrixService();
 
   // Default position : center of Paris
   map = new google.maps.Map(document.getElementById("map"), {
@@ -177,6 +180,39 @@ function initMap() {
 
   button_itineraty.addEventListener("click", () => {
     console.log("Click on route button");
+
+    dist_service.getDistanceMatrix(
+    {
+      origins: [curr_pos],
+      destinations: [tracker_pos],
+      travelMode: google.maps.TravelMode.DRIVING,
+      unitSystem: google.maps.UnitSystem.METRIC,
+      avoidHighways: false,
+      avoidTolls: false,
+    },
+    (response, status) => {
+      if (status !== "OK") {
+        alert("Error was: " + status);
+      } 
+      else {
+
+        var results = response.rows[0].elements;
+        var element = results[0];
+        var distance = element.distance.text;
+        var duration = element.duration.text;
+
+        console.log('distance :');
+        console.log(distance); 
+        span_dist.innerHTML = distance;
+
+        console.log('duration :');
+        console.log(duration);
+        span_time.innerHTML = duration;
+
+      }
+    });
+
+
     // do some tests on position available !
     calculateAndDisplayRoute(directionsService, directionsRenderer);
   });
