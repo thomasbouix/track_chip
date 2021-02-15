@@ -12,8 +12,8 @@
     $longitude  = (int)$_POST['longitude'];
 
     // scalling SigFox data
-    $latitude   = $latitude / 1000000;
-    $longitude  = $longitude / 1000000;
+    $latitude   = ($latitude / 100000) - 180;
+    $longitude  = ($longitude / 100000) - 90;
   }
   else
   {

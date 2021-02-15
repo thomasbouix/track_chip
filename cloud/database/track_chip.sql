@@ -42,5 +42,9 @@ INSERT INTO Device(name, ref_com, owner_id) VALUES
 			("TrackChip", "KF6853", 1);
 
 INSERT INTO Location(altitude, latitude, longitude, device_id) VALUES
-			(34, 48.88, 2.36, 1);
+			(30, 48.881921	, 2.095455, 1),
+			(35, 48.849523	, 2.145314, 1),
+			(60, 48.8123	, 2.246246, 1),
+			(55, 48.88592	, 2.269959, 1),
+			(55, 48.879922	, 2.339274, 1);
 

@@ -2,7 +2,7 @@
 // Realise un GET sur datas.php et recupere le Json contenant les infos de la dernière position. 
 // Puis affiche les points de position sur la carte 
 
-function get_data_device() {
+function get_data_device(location_id) {
 
   console.log("get_data_device()");
 
@@ -21,7 +21,7 @@ function get_data_device() {
       console.log("data receive from data.php (CHANGE) :");
       console.log(data);
 
-      var res = data[0];
+      var res = data[location_id];
 
       console.log("Device Altitude : ");
       console.log(res['altitude']);
