@@ -43,3 +43,7 @@ void GROVE11302::clearBufferArray(unsigned char *arr, int count)   // function t
 	}                                        
 }
 
+bool ROVE11302::receive_fix() {
+	return False; // A faire
+}
+

@@ -19,6 +19,8 @@ public:
 	void get_data_line();
 
 	void clearBufferArray(unsigned char *arr, int count);
+	
+	bool receive_fix();
 };
 
 #endif
