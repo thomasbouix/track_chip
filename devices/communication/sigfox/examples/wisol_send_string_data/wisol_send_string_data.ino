@@ -5,7 +5,9 @@ void setup() {
   Serial.begin(115200);
   Wisol w;
   Serial.println("end setup");
-  w.send_string_data("004A882F000398DC2E");
+  //w.send_string_data("004A882F000398DC2E");// latitude, longitude, altitude int 
+  //w.send_string_data("2E4243618E4016DFA4"); // altitude, latitude, longitude en float 
+  w.send_string_data("2E02e971f200242520"); // altitude, latitude, longitude en int
 }
 
 void loop() {
@@ -14,5 +16,5 @@ void loop() {
     retour = Serial2.readStringUntil('\n');
     Serial.println(retour);
   }
-
+  while(1);
 }
