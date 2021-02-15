@@ -133,7 +133,7 @@ function initMap() {
           map: map,
         }));
       }
-      else{
+      else {
         // add clasic marker on current tracker position
         markers.push(new google.maps.Marker({
           position: pos_marker[i],
@@ -212,7 +212,6 @@ function initMap() {
       }
     });
 
-
     // do some tests on position available !
     calculateAndDisplayRoute(directionsService, directionsRenderer);
   });
@@ -257,11 +256,11 @@ function getElevation(location, elevator) {
 
           span_abs_diff_alt.innerHTML = abs_diff;
 
-          if (signed_diff > 0) 
+          if (signed_diff > 2) 
           {
             span_arrow_alt.innerHTML = '&darr;';
           }
-          else if (signed_diff < 0) 
+          else if (signed_diff < 2) 
           {
             span_arrow_alt.innerHTML = '&uarr;';
           }
@@ -269,14 +268,11 @@ function getElevation(location, elevator) {
             span_arrow_alt.innerHTML = '&harr;';
           }
         } 
-        else 
-        {
+        else {
           console.log("No results found");
         }
-
       } 
-      else 
-      {
+      else {
         console.log("Elevation service failed due to: " + status)
       }
     }
