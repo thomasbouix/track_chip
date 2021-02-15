@@ -50,12 +50,9 @@ void Wisol::send_string_data(String envoie) {
 	
  	if( string_ok(envoie)) { 
 		String command = "AT$SF=";
-		Serial.print("command: " );
-		Serial.println(command);
 		command = command + envoie;
 		Serial.print("command: " );
 		Serial.println(command);
-
 		Serial2.println(command);
 	}
 }
@@ -64,7 +61,6 @@ String Wisol::double_to_hexa(double a, int prec){
 	String message = "";
 	int temp;
 	temp = double_to_int(a, prec);
-	//std::cout << temp<<endl;
 	message = int_to_hexa(temp);
 	return message;
 }
@@ -78,7 +74,6 @@ String Wisol::int_to_hexa(int a){
 
 int Wisol::double_to_int(double a, int prec){
 	int res = round(a*pow (10, prec));
-	//std::cout << res<<std::endl;
 	return res;
 }
 
@@ -129,16 +124,16 @@ String Wisol::dms_lng_to_trame_hexa(char cardinal, int angle, int minute, double
 
 String Wisol::altitude_to_trame_hexa(int altitude){
 	String res_alt = Wisol::int_to_hexa(altitude);
-	return complete_hexa_bytes(res_alt,2);
+	return complete_hexa_bytes(res_alt,1);
 }
 
 
 void Wisol::send_trame(int lat_angle, int lat_minute, double lat_seconde, char lat_c, int lng_angle, int lng_minute, double lng_seconde, char lng_c, int altitude){
 	int prec = 5;
   String res;
-  res = Wisol::dms_lat_to_trame_hexa(lat_c, lat_angle, lat_minute, lat_seconde,prec);
+	res= Wisol::altitude_to_trame_hexa(altitude);
+  res += Wisol::dms_lat_to_trame_hexa(lat_c, lat_angle, lat_minute, lat_seconde,prec);
   res+= Wisol::dms_lng_to_trame_hexa(lng_c, lng_angle, lng_minute, lng_seconde, prec);
-  res+= Wisol::altitude_to_trame_hexa(altitude);
   Wisol::send_string_data(res);//sending int
 }
 
