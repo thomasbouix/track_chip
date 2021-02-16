@@ -42,21 +42,20 @@ bool Wisol::string_ok(String verif){
 }
 
 //public function
-
 void Wisol::send_string_data(String envoie) {
 
-	Serial.print("envoie : " );
-	Serial.println(envoie);
-	
- 	if( string_ok(envoie)) { 
+ 	if (string_ok(envoie)) { 
+		Serial.println("Wisol::send_string_data => string is valid" );
 		String command = "AT$SF=";
-		Serial.print("command: " );
-		Serial.println(command);
+
 		command = command + envoie;
-		Serial.print("command: " );
+		Serial.print("Wisol::send_string_data => sending : " );
 		Serial.println(command);
 
 		Serial2.println(command);
+
+	} else {
+		Serial.println("Wisol::send_string_data => string is not valid" );
 	}
 }
 
