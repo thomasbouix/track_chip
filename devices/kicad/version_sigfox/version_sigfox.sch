@@ -120,17 +120,6 @@ EN_GPS
 NoConn ~ 5500 4350
 Text GLabel 5500 4550 2    50   Input ~ 0
 3V3
-$Comp
-L track_chip:brkws01 wisol1
-U 1 1 6023C08F
-P 7450 3450
-F 0 "wisol1" V 8004 3578 50  0000 L CNN
-F 1 "brkws01" V 8095 3578 50  0000 L CNN
-F 2 "track_chip:BRWS01" H 7450 3450 50  0001 C CNN
-F 3 "" H 7450 3450 50  0001 C CNN
-	1    7450 3450
-	0    1    1    0   
-$EndComp
 Text GLabel 6450 4350 0    50   Input ~ 0
 3V3
 Text GLabel 6450 4450 0    50   Input ~ 0
@@ -170,4 +159,15 @@ Text GLabel 6450 3850 0    50   Input ~ 0
 MCU_TX2
 NoConn ~ 5500 4050
 NoConn ~ 6450 3750
+$Comp
+L track_chip:brkws01 wisol?
+U 1 1 602BF8D9
+P 7450 3450
+F 0 "wisol?" V 8004 3578 50  0000 L CNN
+F 1 "brkws01" V 8095 3578 50  0000 L CNN
+F 2 "track_chip:BRWS01" H 7450 3450 50  0001 C CNN
+F 3 "" H 7450 3450 50  0001 C CNN
+	1    7450 3450
+	0    1    1    0   
+$EndComp
 $EndSCHEMATC
