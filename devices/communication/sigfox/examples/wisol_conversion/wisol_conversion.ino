@@ -33,5 +33,5 @@ void loop() {
     retour = Serial2.readStringUntil('\n');
     Serial.println(retour);
   }
-
+  while(1);
 }
