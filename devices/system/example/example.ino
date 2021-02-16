@@ -42,6 +42,8 @@ void loop() {
   Serial.print("res : ");
   String res = trackChip.create_message1();
   Serial.println(res);
+  res = trackChip.create_message2();
+  Serial.println(res);
   while(1);
 
 }

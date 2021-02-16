@@ -243,3 +243,19 @@ String TrackChip::create_message1(){
    res+=String(1);
    return res;
   }
+
+String TrackChip::create_message2(){
+  char temp[2];
+  uint8_t* mac2_addr = this->get_bssid(1);
+  int mac1_power = abs(recep_power[1]);
+  String res = "";
+  for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
+    Serial.print(mac2_addr[i]);
+    sprintf(temp,"%2X",mac2_addr[i]);
+    Serial.print(": ");
+    Serial.println(temp);
+    res += temp;
+    }
+   res+=String(2);
+   return res;
+  }
