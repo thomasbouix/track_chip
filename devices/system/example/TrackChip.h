@@ -11,8 +11,10 @@
 #include <BMP180I2C.h>
 #include <GROVE11302.h>
 #include <Wisol.h>
-typedef uint8_t bssid[6];
-typedef bssid bssid_tab[2];
+#define TAILLE_ADRESSE_MAC 6
+#define NB_ADRESSE_MAC 2
+//typedef uint8_t struct_bssid[TAILLE_ADRESSE_MAC];
+//typedef struct_bssid struct_bssid_tab[NB_ADRESSE_MAC];
 class TrackChip {
 
 private :
@@ -34,7 +36,7 @@ private :
 	int accuracy			= 0;
 	
 	//Mac address
-	bssid_tab bssidtab;
+	uint8_t bssidtab[NB_ADRESSE_MAC][TAILLE_ADRESSE_MAC];
 	
 public :
 	TrackChip();
@@ -54,7 +56,13 @@ public :
 	int get_wifi_accuracy()	{ return accuracy;	}
 	float get_wifi_lat()	{ return location_lat;	}
 	float get_wifi_lng()	{ return location_lng;	}
-  bssid_tab* get_bssid() { return  &bssidtab;}
+  uint8_t*  get_bssid(int i);
+
+  //create different message
+   String create_message1();
+   String create_message2();
+   String create_message3();
+   void chose_message_to_send();
 };
 
 #endif
