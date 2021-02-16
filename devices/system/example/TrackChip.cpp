@@ -75,12 +75,26 @@ void TrackChip::wifi_scan() {
 		Serial.print(n);
 		Serial.println(" networks found");
 
+    int test_to_delete = 0;
 		for (int i = 0; i < n; ++i) {
 			
 			bssid = WiFi.BSSID(i);
 			sprintf(bssid_str, "%X-%X-%X-%X-%X-%X",bssid[5], bssid[4], bssid[3], bssid[2], bssid[1], bssid[0]); 
 			power = int(WiFi.RSSI(i));
-			
+      
+      //Serial.print("test BD google : ");
+      //Serial.print(bssid_str[9]);
+      //Serial.println(bssid_str[10]);
+      Serial.println("test bssidtab: ");
+      if (test_to_delete < 2){
+        Serial.println("enter test to delete");
+        for(int k = 0; k<TAILLE_ADRESSE_MAC ;k++){
+          //Serial.print("part of MAc is : ");
+           bssidtab[test_to_delete][k] = bssid[TAILLE_ADRESSE_MAC-1-k];
+           Serial.println(bssidtab[test_to_delete][k]);
+          }
+          test_to_delete++;
+      }
 			// select fix WiFi which are in google database
 			if(bssid_str[9] == 'B' && bssid_str[10] == 'D' && wifi_saved < 3){
 				// Serial.print(power);
@@ -89,8 +103,9 @@ void TrackChip::wifi_scan() {
 				// Serial.print(", ");
 				mac_address[wifi_saved] = bssid_str;
 				recep_power[wifi_saved] = power;
-				for(int j = 0; j++ ;j<5){
+				for(int j = 0; j++ ;j<6){
 				  bssidtab[wifi_saved][j] = bssid[5-j];
+          Serial.print(bssid[5-j]);
 				}
 				wifi_saved++;
 			}
@@ -198,3 +213,33 @@ int TrackChip::send_mac_and_get_pos() {
 
 	return -1;
 }
+
+uint8_t* TrackChip::get_bssid(int a){
+    uint8_t* ret = new uint8_t[TAILLE_ADRESSE_MAC];
+    for(int i = 0; i <TAILLE_ADRESSE_MAC ;i++){
+      ret[i] = bssidtab[a][i];
+      Serial.print(ret[i]);
+      Serial.print("-");
+    }
+    Serial.println("");
+    return ret;
+  }
+
+String TrackChip::create_message1(){
+  char temp[2];
+  uint8_t* mac1_addr = this->get_bssid(0);
+  int mac1_power = abs(recep_power[0]);
+  int altitude = 23;//TrackChip::get_altitude();
+  String res = "";
+  for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
+    Serial.print(mac1_addr[i]);
+    sprintf(temp,"%2X",mac1_addr[i]);
+    Serial.print(": ");
+    Serial.println(temp);
+    res += temp;
+    }
+   //res+= String(mac1_power);
+   res+= String(altitude);
+   res+=String(1);
+   return res;
+  }
