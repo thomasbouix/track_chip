@@ -239,7 +239,7 @@ String TrackChip::create_message1(){
     res += temp;
     }
    //res+= String(mac1_power);
-   res+= String(altitude);
+   res+= String(altitude,HEX);
    res+=String(1);
    return res;
   }
@@ -259,3 +259,22 @@ String TrackChip::create_message2(){
    res+=String(2);
    return res;
   }
+
+String TrackChip::create_message3(){
+  int prec = 5;
+  String res;
+  String trame = "$GPGGA,123519,4807.038,N,01131.324,E,1,08,0.9,545.4,M,46.9,M, , *42";//trackChip.get_position();
+  int lat_angle, lat_minute; 
+  double lat_seconde;
+  char lat_c;
+  int lng_angle,lng_minute;
+  double lng_seconde;
+  char lng_c;
+  int altitude = 23;//TrackChip::get_altitude();
+  res+=String(altitude,HEX);
+  Wisol::trame_GPGGA_to_DMS(trame, &lat_angle, &lat_minute, &lat_seconde, &lat_c, &lng_angle, &lng_minute, &lng_seconde,  &lng_c);
+  res+= Wisol::dms_lat_to_trame_hexa(lat_c, lat_angle, lat_minute, lat_seconde,prec);
+  res+= Wisol::dms_lng_to_trame_hexa(lng_c, lng_angle, lng_minute, lng_seconde,prec);
+  res+=String(3);
+  return res;
+}
