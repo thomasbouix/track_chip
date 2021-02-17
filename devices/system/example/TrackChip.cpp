@@ -227,9 +227,10 @@ String TrackChip::create_message1(){
   uint8_t* mac1_addr = this->get_bssid(0);
   int mac1_power = abs(recep_power[0]);
   int altitude = 23;//TrackChip::get_altitude();
-  String res = String(mac1_power);
-  Serial.print("taille mac_power :");
+  String res = "01";
+  Serial.print("taille auth :");
   Serial.println(res.length());
+  res+=String(mac1_power);
   for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
     Serial.print(mac1_addr[i]);
     sprintf(temp,"%2X",mac1_addr[i]);
@@ -239,7 +240,7 @@ String TrackChip::create_message1(){
     }
    //res+= String(mac1_power);
    res+= String(altitude,HEX);
-   res+=String(1);
+   res+="00";
    return res;
   }
 
@@ -247,7 +248,8 @@ String TrackChip::create_message2(){
   char temp[2];
   uint8_t* mac2_addr = this->get_bssid(1);
   int mac2_power = abs(recep_power[1]);
-  String res = String(mac2_power);
+  String res = "02";
+  res+= String(mac2_power);
   for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
     Serial.print(mac2_addr[i]);
     sprintf(temp,"%2X",mac2_addr[i]);
@@ -255,13 +257,13 @@ String TrackChip::create_message2(){
     Serial.println(temp);
     res += temp;
     }
-   res+=String(2);
+   res+="0000";
    return res;
   }
 
 String TrackChip::create_message3(){
   int prec = 5;
-  String res;
+  String res = "03";
   String trame = "$GPGGA,123519,4807.038,N,01131.324,E,1,08,0.9,545.4,M,46.9,M, , *42";//trackChip.get_position();
   int lat_angle, lat_minute; 
   double lat_seconde;
@@ -274,7 +276,6 @@ String TrackChip::create_message3(){
   Wisol::trame_GPGGA_to_DMS(trame, &lat_angle, &lat_minute, &lat_seconde, &lat_c, &lng_angle, &lng_minute, &lng_seconde,  &lng_c);
   res+= Wisol::dms_lat_to_trame_hexa(lat_c, lat_angle, lat_minute, lat_seconde,prec);
   res+= Wisol::dms_lng_to_trame_hexa(lng_c, lng_angle, lng_minute, lng_seconde,prec);
-  res+=String(3);
   return res;
 }
 
