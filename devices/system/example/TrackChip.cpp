@@ -278,3 +278,20 @@ String TrackChip::create_message3(){
   res+=String(3);
   return res;
 }
+
+void TrackChip::chose_message_to_send(){
+  String temp="";
+  if(gps->receive_fix()) {
+    temp = TrackChip::create_message3();
+    Serial.println(temp);
+    Wisol::send_string_data(temp);
+  }
+  else {
+    temp=TrackChip::create_message1();
+    Serial.println(temp);
+    Wisol::send_string_data(temp);
+    temp = TrackChip::create_message2();
+    Serial.println(temp);
+    Wisol::send_string_data(temp);
+  }
+}
