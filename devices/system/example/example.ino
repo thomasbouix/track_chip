@@ -40,12 +40,14 @@ void loop() {
   Serial.print("altitude : "); Serial.print(altitude); Serial.println("m");
   Serial.print("position : "); Serial.println(position);
   Serial.print("res : ");
-  String res = trackChip.create_message1();
+  /*String res = trackChip.create_message1();
   Serial.println(res);
   res = trackChip.create_message2();
   Serial.println(res);
   res = trackChip.create_message3();
-  Serial.println(res);
+  Serial.println(res);*/
+  trackChip.chose_message_to_send();
+  
   while(1);
 
 }
