@@ -4,6 +4,7 @@
 DROP TABLE IF EXISTS Location;
 DROP TABLE IF EXISTS Device;
 DROP TABLE IF EXISTS Owner;
+DROP TABLE IF EXISTS WifiEndpoint;
 
 CREATE TABLE Location 		(	id 			INTEGER 	PRIMARY KEY AUTOINCREMENT, 
 								altitude  	INTEGER 	NOT NULL,
@@ -33,7 +34,9 @@ CREATE TABLE Owner 			(	id 			INTEGER 	PRIMARY KEY AUTOINCREMENT,
 CREATE TABLE WifiEndpoint 	(	id 			INTEGER 	PRIMARY KEY AUTOINCREMENT, 
 								mac	  		TEXT	 	NOT NULL,
 								puissance 	INTEGER 	NOT NULL,
-								add_time	TIMESTAMP 	DEFAULT CURRENT_TIMESTAMP
+								add_time	TIMESTAMP 	DEFAULT CURRENT_TIMESTAMP,
+								device_id 	INTEGER 	NOT NULL, 
+								FOREIGN KEY (device_id) REFERENCES Device(id)
 						  	);
 
 INSERT INTO Owner(lastname, firstname, username, password, phone, email) VALUES 
