@@ -13,22 +13,11 @@ TrackChip::~TrackChip() {}
 void TrackChip::send_data(String s) {
 	// Envoyer uniquement des chaines de la forme :
 	// 004A882F000398DC2F 
-	int altitude;
-	String trame;
-	char lat_c,lng_c;
-  	int lat_minute, lat_angle;
-  	double lat_seconde;
-  	int lng_minute, lng_angle;
-  	double lng_seconde;
-  	Wisol wisol = Wisol();
-  	
-  	altitude = (int) TrackChip::get_altitude();
-  	trame = TrackChip::get_position();
-  	Wisol::trame_GPGGA_to_DMS(trame, &lat_angle, &lat_minute, &lat_seconde, &lat_c, &lng_angle, &lng_minute, &lng_seconde, &lng_c);
-  	
+
 	// insérer vérification
-	wisol.send_trame(lat_angle, lat_minute, lat_seconde, lat_c, lng_angle, lng_minute, lng_seconde, lng_c, altitude);
-	
+
+	Wisol wisol = Wisol();
+	wisol.send_string_data(s);
 }
 
 float TrackChip::get_altitude() {
@@ -86,20 +75,39 @@ void TrackChip::wifi_scan() {
 		Serial.print(n);
 		Serial.println(" networks found");
 
+    int test_to_delete = 0;
 		for (int i = 0; i < n; ++i) {
 			
 			bssid = WiFi.BSSID(i);
 			sprintf(bssid_str, "%X-%X-%X-%X-%X-%X",bssid[5], bssid[4], bssid[3], bssid[2], bssid[1], bssid[0]); 
 			power = int(WiFi.RSSI(i));
-			
+      
+      //Serial.print("test BD google : ");
+      //Serial.print(bssid_str[9]);
+      //Serial.println(bssid_str[10]);
+      Serial.println("test bssidtab: ");
+      /*if (test_to_delete < 2){
+        Serial.println("enter test to delete");
+        for(int k = 0; k<TAILLE_ADRESSE_MAC ;k++){
+          //Serial.print("part of MAc is : ");
+           bssidtab[test_to_delete][k] = bssid[TAILLE_ADRESSE_MAC-1-k];
+           Serial.println(bssidtab[test_to_delete][k]);
+          }
+          test_to_delete++;
+      }*/
 			// select fix WiFi which are in google database
-			if(bssid_str[9] == 'B' && bssid_str[10] == 'D' && wifi_saved < 3){
-				// Serial.print(power);
-				// Serial.print(", ");
-				// Serial.print(wifi_saved);
-				// Serial.print(", ");
+			if(bssid_str[9] == 'B' && bssid_str[10] == 'D' && wifi_saved < NB_ADRESSE_MAC){
+				for(int k = 0; k<TAILLE_ADRESSE_MAC ;k++){
+            Serial.print("part of MAc is : ");
+            bssidtab[wifi_saved][k] = bssid[TAILLE_ADRESSE_MAC-1-k];
+            Serial.println(bssidtab[wifi_saved][k]);
+          };
 				mac_address[wifi_saved] = bssid_str;
 				recep_power[wifi_saved] = power;
+				for(int j = 0; j++ ;j<6){
+				  bssidtab[wifi_saved][j] = bssid[5-j];
+          Serial.print(bssid[5-j]);
+				}
 				wifi_saved++;
 			}
 
@@ -205,4 +213,86 @@ int TrackChip::send_mac_and_get_pos() {
 	}
 
 	return -1;
+}
+
+uint8_t* TrackChip::get_bssid(int a){
+    uint8_t* ret = new uint8_t[TAILLE_ADRESSE_MAC];
+    for(int i = 0; i <TAILLE_ADRESSE_MAC ;i++){
+      ret[i] = bssidtab[a][i];
+      Serial.print(ret[i]);
+      Serial.print("-");
+    }
+    Serial.println("");
+    return ret;
+  }
+
+String TrackChip::create_message1(){
+  char temp[2];
+  uint8_t* mac1_addr = this->get_bssid(0);
+  int mac1_power = abs(recep_power[0]);
+  int altitude = 23;//TrackChip::get_altitude();
+  String res = "";
+  for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
+    Serial.print(mac1_addr[i]);
+    sprintf(temp,"%2X",mac1_addr[i]);
+    Serial.print(": ");
+    Serial.println(temp);
+    res += temp;
+    }
+   //res+= String(mac1_power);
+   res+= String(altitude,HEX);
+   res+=String(1);
+   return res;
+  }
+
+String TrackChip::create_message2(){
+  char temp[2];
+  uint8_t* mac2_addr = this->get_bssid(1);
+  int mac1_power = abs(recep_power[1]);
+  String res = "";
+  for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
+    Serial.print(mac2_addr[i]);
+    sprintf(temp,"%2X",mac2_addr[i]);
+    Serial.print(": ");
+    Serial.println(temp);
+    res += temp;
+    }
+   res+=String(2);
+   return res;
+  }
+
+String TrackChip::create_message3(){
+  int prec = 5;
+  String res;
+  String trame = "$GPGGA,123519,4807.038,N,01131.324,E,1,08,0.9,545.4,M,46.9,M, , *42";//trackChip.get_position();
+  int lat_angle, lat_minute; 
+  double lat_seconde;
+  char lat_c;
+  int lng_angle,lng_minute;
+  double lng_seconde;
+  char lng_c;
+  int altitude = 23;//TrackChip::get_altitude();
+  res+=String(altitude,HEX);
+  Wisol::trame_GPGGA_to_DMS(trame, &lat_angle, &lat_minute, &lat_seconde, &lat_c, &lng_angle, &lng_minute, &lng_seconde,  &lng_c);
+  res+= Wisol::dms_lat_to_trame_hexa(lat_c, lat_angle, lat_minute, lat_seconde,prec);
+  res+= Wisol::dms_lng_to_trame_hexa(lng_c, lng_angle, lng_minute, lng_seconde,prec);
+  res+=String(3);
+  return res;
+}
+
+void TrackChip::chose_message_to_send(){
+  String temp="";
+  if(gps->receive_fix()) {
+    temp = TrackChip::create_message3();
+    Serial.println(temp);
+    Wisol::send_string_data(temp);
+  }
+  else {
+    temp=TrackChip::create_message1();
+    Serial.println(temp);
+    Wisol::send_string_data(temp);
+    temp = TrackChip::create_message2();
+    Serial.println(temp);
+    Wisol::send_string_data(temp);
+  }
 }
