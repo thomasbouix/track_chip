@@ -1,4 +1,4 @@
-#include <TrackChip.h>
+#include "TrackChip.h"
 
 TrackChip trackChip = TrackChip();
 
@@ -26,20 +26,28 @@ void setup() {
   Serial.print("prc = "); Serial.println(prc);
   Serial.print("lat = "); Serial.println(lat);
   Serial.print("lng = "); Serial.println(lng);
-  
+  //Serial.println(trackChip.get_bssid());
   // trackChip.send_data("004A882F000398DC2F");
 
 }
 
 void loop() {
   
-  altitude = trackChip.get_altitude();
-  position = trackChip.get_position();
-
+  //altitude = trackChip.get_altitude();
+  //position = trackChip.get_position();
+   
   Serial.println("========");
   Serial.print("altitude : "); Serial.print(altitude); Serial.println("m");
   Serial.print("position : "); Serial.println(position);
-
-  delay(1000);
+  Serial.print("res : ");
+  /*String res = trackChip.create_message1();
+  Serial.println(res);
+  res = trackChip.create_message2();
+  Serial.println(res);
+  res = trackChip.create_message3();
+  Serial.println(res);*/
+  trackChip.chose_message_to_send();
+  
+  while(1);
 
 }
