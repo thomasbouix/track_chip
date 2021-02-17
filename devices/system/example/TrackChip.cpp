@@ -86,7 +86,7 @@ void TrackChip::wifi_scan() {
       //Serial.print(bssid_str[9]);
       //Serial.println(bssid_str[10]);
       Serial.println("test bssidtab: ");
-      if (test_to_delete < 2){
+      /*if (test_to_delete < 2){
         Serial.println("enter test to delete");
         for(int k = 0; k<TAILLE_ADRESSE_MAC ;k++){
           //Serial.print("part of MAc is : ");
@@ -94,13 +94,14 @@ void TrackChip::wifi_scan() {
            Serial.println(bssidtab[test_to_delete][k]);
           }
           test_to_delete++;
-      }
+      }*/
 			// select fix WiFi which are in google database
-			if(bssid_str[9] == 'B' && bssid_str[10] == 'D' && wifi_saved < 3){
-				// Serial.print(power);
-				// Serial.print(", ");
-				// Serial.print(wifi_saved);
-				// Serial.print(", ");
+			if(bssid_str[9] == 'B' && bssid_str[10] == 'D' && wifi_saved < NB_ADRESSE_MAC){
+				for(int k = 0; k<TAILLE_ADRESSE_MAC ;k++){
+            Serial.print("part of MAc is : ");
+            bssidtab[wifi_saved][k] = bssid[TAILLE_ADRESSE_MAC-1-k];
+            Serial.println(bssidtab[wifi_saved][k]);
+          };
 				mac_address[wifi_saved] = bssid_str;
 				recep_power[wifi_saved] = power;
 				for(int j = 0; j++ ;j<6){
