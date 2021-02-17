@@ -231,14 +231,15 @@ String TrackChip::create_message1(){
   Serial.print("taille auth :");
   Serial.println(res.length());
   res+=String(mac1_power);
-  for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
+  /*for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
     Serial.print(mac1_addr[i]);
     sprintf(temp,"%2X",mac1_addr[i]);
     Serial.print(": ");
     Serial.println(temp);
+    Wisol::complete_hexa_bytes(temp, 1);
     res += temp;
-    }
-   //res+= String(mac1_power);
+    }*/
+   res+= TrackChip::part_bssid_to_hexa(mac1_addr);
    res+= String(altitude,HEX);
    res+="00";
    return res;
@@ -250,13 +251,14 @@ String TrackChip::create_message2(){
   int mac2_power = abs(recep_power[1]);
   String res = "02";
   res+= String(mac2_power);
-  for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
+  /*for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
     Serial.print(mac2_addr[i]);
     sprintf(temp,"%2X",mac2_addr[i]);
     Serial.print(": ");
     Serial.println(temp);
     res += temp;
-    }
+    }*/
+   res+= TrackChip::part_bssid_to_hexa(mac2_addr);
    res+="0000";
    return res;
   }
@@ -294,4 +296,20 @@ void TrackChip::chose_message_to_send(){
     Serial.println(temp);
     Wisol::send_string_data(temp);
   }
+}
+
+
+//function used in create message
+String TrackChip::part_bssid_to_hexa(uint8_t* macaddr){
+    char temp[2];
+    String res="";
+    for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
+      Serial.print(macaddr[i]);
+      sprintf(temp,"%2X",macaddr[i]);
+      Wisol::complete_hexa_bytes(res, 1);
+      Serial.print(": ");
+      Serial.println(temp);
+      res+=temp;
+    }
+    return res;
 }
