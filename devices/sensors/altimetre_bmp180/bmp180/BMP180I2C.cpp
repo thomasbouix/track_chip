@@ -73,7 +73,12 @@ float BMP180I2C::computeAltitude() {
 
 	float P = this->getPressure();
 
- 	float altitude = - (1/0.00012) * log(P/101325); 
+	Serial.print("BMP180I2C::computeAltitude : temp = ");
+	Serial.println(temperature);
+	Serial.print("BMP180I2C::computeAltitude : pressure = ");
+	Serial.println(P);
+
+ 	float altitude = - (1/0.00012) * log(P/102020); 
 
 	return altitude;
 }
