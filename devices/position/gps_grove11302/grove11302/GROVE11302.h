@@ -20,7 +20,7 @@ public:
 
 	void clearBufferArray(unsigned char *arr, int count);
 	
-	bool receive_fix();
+	bool static receive_fix();
 };
 
 #endif
