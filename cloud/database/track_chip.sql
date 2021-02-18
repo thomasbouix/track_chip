@@ -4,31 +4,40 @@
 DROP TABLE IF EXISTS Location;
 DROP TABLE IF EXISTS Device;
 DROP TABLE IF EXISTS Owner;
+DROP TABLE IF EXISTS WifiEndpoint;
 
-CREATE TABLE Location 	(	id 			INTEGER 	PRIMARY KEY AUTOINCREMENT, 
-							altitude  	INTEGER 	NOT NULL,
-							latitude 	INTEGER 	NOT NULL,
-							longitude  	INTEGER 	NOT NULL,
-							send_time	TIMESTAMP 	DEFAULT CURRENT_TIMESTAMP, 
-							device_id 	INTEGER 	NOT NULL, 
-							FOREIGN KEY (device_id) REFERENCES Device(id)
-					  	);
+CREATE TABLE Location 		(	id 			INTEGER 	PRIMARY KEY AUTOINCREMENT, 
+								altitude  	INTEGER 	NOT NULL,
+								latitude 	INTEGER 	NOT NULL,
+								longitude  	INTEGER 	NOT NULL,
+								send_time	TIMESTAMP 	DEFAULT CURRENT_TIMESTAMP, 
+								device_id 	INTEGER 	NOT NULL, 
+								FOREIGN KEY (device_id) REFERENCES Device(id)
+						  	);
 
-CREATE TABLE Device 	(	id 			INTEGER 	PRIMARY KEY AUTOINCREMENT, 
-							name 		TEXT 		NOT NULL, 
-							ref_com 	INTEGER 	NOT NULL,
-							owner_id 	INTEGER 	NOT NULL, 
-							FOREIGN KEY (owner_id) REFERENCES Owner(id)
-						);
+CREATE TABLE Device 		(	id 			INTEGER 	PRIMARY KEY AUTOINCREMENT, 
+								name 		TEXT 		NOT NULL, 
+								ref_com 	INTEGER 	NOT NULL,
+								owner_id 	INTEGER 	NOT NULL, 
+								FOREIGN KEY (owner_id) REFERENCES Owner(id)
+							);
 
-CREATE TABLE Owner 		(	id 			INTEGER 	PRIMARY KEY AUTOINCREMENT, 
-							lastname 	TEXT 		NOT NULL, 
-							firstname 	TEXT 		NOT NULL, 
-							username	TEXT		NOT NULL,
-							password	TEXT		NOT NULL,
-							phone 		TEXT 		NOT NULL,
-							email 		TEXT 		NOT NULL
-						);
+CREATE TABLE Owner 			(	id 			INTEGER 	PRIMARY KEY AUTOINCREMENT, 
+								lastname 	TEXT 		NOT NULL, 
+								firstname 	TEXT 		NOT NULL, 
+								username	TEXT		NOT NULL,
+								password	TEXT		NOT NULL,
+								phone 		TEXT 		NOT NULL,
+								email 		TEXT 		NOT NULL
+							);
+
+CREATE TABLE WifiEndpoint 	(	id 			INTEGER 	PRIMARY KEY AUTOINCREMENT, 
+								mac	  		TEXT	 	NOT NULL,
+								puissance 	INTEGER 	NOT NULL,
+								add_time	TIMESTAMP 	DEFAULT CURRENT_TIMESTAMP,
+								device_id 	INTEGER 	NOT NULL, 
+								FOREIGN KEY (device_id) REFERENCES Device(id)
+						  	);
 
 INSERT INTO Owner(lastname, firstname, username, password, phone, email) VALUES 
 			("Admin"	, "Admin"	, "admin"		, "test_admin"	, "0000000000", "admin@gmail.com"		),

@@ -31,9 +31,9 @@
       
       <h2>Informations iténaire :</h2>
 
-      <p>Distance : </p>
-      <p>Direction : </p>
-      <p>Altitude : <span id="current_alt"></span> m</p>
+      <p>Temps    : <span id ="time"></span> </p>
+      <p>Distance : <span id ="dist"></span> </p>
+      <p>Altitude :  <span id ="arrow"></span> <span id="abs_diff_alt"></span> m</p>
 
     </div>
 

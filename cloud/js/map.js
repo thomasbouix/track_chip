@@ -1,13 +1,17 @@
+let map, window_current_pos, window_tracker_pos;
 
 var curr_pos, tracker_pos;
 
-var current_alt = 0;
-document.getElementById("current_alt").innerHTML = current_alt;
+var current_alt         = 0;
+var current_tracket_alt = 0;
 
-let map, window_current_pos, window_tracker_pos;
+var span_time           = document.getElementById("time");
+var span_dist           = document.getElementById("dist");
+var span_abs_diff_alt   = document.getElementById("abs_diff_alt");
+var span_arrow_alt      = document.getElementById("arrow");
 
-let markers     = [];
-let pos_marker  = [];
+let markers             = [];
+let pos_marker          = [];
 
 var nb_position_display = 5;
 
@@ -15,9 +19,10 @@ function initMap() {
   
   console.log("initMap()");
 
-  const DirectionsService   = new google.maps.DirectionsService();
+  const directionsService   = new google.maps.DirectionsService();
   const directionsRenderer  = new google.maps.DirectionsRenderer();
   const geocoder            = new google.maps.Geocoder();
+  const dist_service        = new google.maps.DistanceMatrixService();
 
   // Default position : center of Paris
   map = new google.maps.Map(document.getElementById("map"), {
@@ -113,6 +118,8 @@ function initMap() {
       console.log("] :\n");
       console.log(data_array);
 
+      current_tracket_alt = data_array[0];
+
       pos_marker.push({ lat: data_array[1], lng: data_array[2] });
 
       if (i != nb_position_display - 1){
@@ -126,7 +133,7 @@ function initMap() {
           map: map,
         }));
       }
-      else{
+      else {
         // add clasic marker on current tracker position
         markers.push(new google.maps.Marker({
           position: pos_marker[i],
@@ -173,6 +180,38 @@ function initMap() {
 
   button_itineraty.addEventListener("click", () => {
     console.log("Click on route button");
+
+    dist_service.getDistanceMatrix(
+    {
+      origins: [curr_pos],
+      destinations: [tracker_pos],
+      travelMode: google.maps.TravelMode.DRIVING,
+      unitSystem: google.maps.UnitSystem.METRIC,
+      avoidHighways: false,
+      avoidTolls: false,
+    },
+    (response, status) => {
+      if (status !== "OK") {
+        alert("Error was: " + status);
+      } 
+      else {
+
+        var results = response.rows[0].elements;
+        var element = results[0];
+        var distance = element.distance.text;
+        var duration = element.duration.text;
+
+        console.log('distance :');
+        console.log(distance); 
+        span_dist.innerHTML = distance;
+
+        console.log('duration :');
+        console.log(duration);
+        span_time.innerHTML = duration;
+
+      }
+    });
+
     // do some tests on position available !
     calculateAndDisplayRoute(directionsService, directionsRenderer);
   });
@@ -207,17 +246,33 @@ function getElevation(location, elevator) {
         // Retrieve the first result
         if (results[0]) 
         {
-          current_alt = results[0].elevation
-          document.getElementById("current_alt").innerHTML = current_alt;
+          current_alt     = results[0].elevation;
+
+          var signed_diff = current_alt - current_tracket_alt;
+          var abs_diff    = Math.abs(current_alt - current_tracket_alt);
+  
+          // cast to integer
+          abs_diff = parseInt(abs_diff, 10);
+
+          span_abs_diff_alt.innerHTML = abs_diff;
+
+          if (signed_diff > 2) 
+          {
+            span_arrow_alt.innerHTML = '&darr;';
+          }
+          else if (signed_diff < 2) 
+          {
+            span_arrow_alt.innerHTML = '&uarr;';
+          }
+          else{
+            span_arrow_alt.innerHTML = '&harr;';
+          }
         } 
-        else 
-        {
+        else {
           console.log("No results found");
         }
-
       } 
-      else 
-      {
+      else {
         console.log("Elevation service failed due to: " + status)
       }
     }
