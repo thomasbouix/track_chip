@@ -5,12 +5,28 @@
   echo "On rentre dans sigfox.php\n";
 
   // Receive Data from SigFox
-  if ($_POST['raw_data']) 
+  if (isset($_POST['data0'], $_POST['data1'], $_POST['data2'], $_POST['data3'], $_POST['data4'], 
+            $_POST['data5'], $_POST['data6'], $_POST['data7'], $_POST['data8'], $_POST['data9']))
   {
-    $raw_data   = (string)$_POST['raw_data'];
-    echo "raw_data : " . $raw_data . "\n";
 
-    $hex_str    = bin2hex($raw_data);
+    for ($i=0; $i < 10; $i++) { 
+      
+      $data_str = "data" . $i;
+      echo "data_str : " . $data_str . "\n";
+
+      $data = (int)$_POST[$data_str];
+
+      $data_hex = dechex($data);
+
+      if ($data < 15) {
+        $data_hex = "0" . $data_hex; 
+      }
+
+      echo "data_hex : " . $data_hex . "\n";
+      $hex_str = $hex_str . $data_hex;
+    }
+
+    // $hex_str    = bin2hex($raw_data);
     echo "hex_str : " . $hex_str . "\n";
 
     if (strlen($hex_str) != 20) 
@@ -22,7 +38,7 @@
     $auth_str   = substr($hex_str, 2, 2);
     echo "auth_str : " . $auth_str . "\n";
 
-    $auth_hex   = hex2bin($auth_str);
+    $auth_hex   = hexdec($auth_str);
     echo "auth_hex : " . $auth_hex . "\n";
 
     // message 1 : WiFi info 1
@@ -33,7 +49,7 @@
       $puissance1_str = substr($hex_str, 4, 2);
       echo "puissance1_str : " . $puissance1_str . "\n";
 
-      $puissance1     = (int)(hex2bin($puissance1_str));
+      $puissance1     = (int)(hexdec($puissance1_str));
       echo "puissance1 : " . $puissance1 . "\n";
 
       $mac1_raw       = substr($hex_str, 6, 12);
@@ -42,7 +58,7 @@
       $altitude_str   = substr($hex_str, 18, 2);
       echo "altitude_str : " . $altitude_str . "\n";
 
-      $altitude       = (int)(hex2bin($altitude_str));
+      $altitude       = (int)(hexdec($altitude_str));
       echo "altitude : " . $altitude . "\n";
     }
 
@@ -52,7 +68,7 @@
       echo "AUTH 2\n";
 
       $puissance2_str = substr($hex_str, 4, 2);
-      $puissance2     = (int)(hex2bin($puissance2_str));
+      $puissance2     = (int)(hexdec($puissance2_str));
 
       $mac2_raw       = substr($hex_str, 6, 12);
       echo "mac2_raw : " . $mac2_raw . "\n";
@@ -60,7 +76,7 @@
       $altitude_str   = substr($hex_str, 18, 2);
       echo "altitude_str : " . $altitude_str . "\n";
 
-      $altitude       = (int)(hex2bin($altitude_str));
+      $altitude       = (int)(hexdec($altitude_str));
       echo "altitude : " . $altitude . "\n";
     }
 
@@ -70,13 +86,13 @@
       echo "AUTH 3\n";
 
       $altitude_str   = substr($hex_str, 2, 2);
-      $altitude       = (int)(hex2bin($altitude_str));
+      $altitude       = (int)(hexdec($altitude_str));
 
       $latitude_str   = substr($hex_str, 4, 8);
-      $latitude       = (double)(hex2bin($latitude_str));
+      $latitude       = (double)(hexdec($latitude_str));
 
       $longitude_str  = substr($hex_str, 12, 8);
-      $longitude      = (double)(hex2bin($longitude_str));
+      $longitude      = (double)(hexdec($longitude_str));
     }
     else
     {
