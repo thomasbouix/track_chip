@@ -40,14 +40,14 @@ class Wisol {
 		static String dms_lng_to_trame_hexa(char cardinal, int angle, int minute, double seconde,int prec);
 		static String altitude_to_trame_hexa(int altitude);
 		
-		void send_trame(int lat_angle, int lat_minute, double lat_seconde, char lat_c, int lng_angle, int lng_minute, double lng_seconde, char lng_c, int altitude);
+		void send_trame(int lat_angle, int lat_minute, double lat_seconde, 
+		char lat_c, int lng_angle, int lng_minute, double lng_seconde, char lng_c, int altitude);
 
-   //parse trame GPS
-   static bool verif_type(String trame);
-   static void GPGGA_to_DMS(String trame, int *angle, int *minute, double *seconde);
-   static void trame_GPGGA_to_DMS(String trame, int *lat_angle, int *lat_minute, double *lat_seconde, char* lat_c, int *lng_angle, int *lng_minute, double *lng_seconde, char* lng_c);
-   
-   
+		//parse trame GPS
+		static bool verif_type(String trame);
+		static void GPGGA_to_DMS(String trame, int *angle, int *minute, double *seconde);
+		static void trame_GPGGA_to_DMS(String trame, int *lat_angle, int *lat_minute, double *lat_seconde,
+		char* lat_c, int *lng_angle, int *lng_minute, double *lng_seconde, char* lng_c);
 };
  
 #endif
