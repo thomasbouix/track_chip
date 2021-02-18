@@ -32,7 +32,6 @@ void wifi_scan();
 void setup() {
 
 	Serial.begin(115200); 
-	//while (!Serial); 
 
   WiFi.mode(WIFI_STA);
   WiFi.disconnect();
@@ -40,66 +39,46 @@ void setup() {
                                                                                 
   Wire.begin();   
   bmp.init();
-
-	for(int i=0; i++; i<2) {
-		for(int j = 0; j++ ;j<6){
-			bssidtab[i][j] = (uint8_t)15;
-		}
-	}
 }
 
 void loop() {
-  wifi_scan();
   chose_message_to_send();
   delay(1000*60*5);
 }
 
 void chose_message_to_send() {
-
-  String temp="17364ABC93C743974A61";
-
-  if(true) {
+  String temp;
+  if(false) {
     temp = create_message3();
-    Serial.println(temp);
     Wisol::send_string_data(temp);
   } 
-  else 
-  {
+  else {
+    wifi_scan();
+      
     temp = create_message1();
     temp = Wisol::complete_hexa_bytes(temp, 10);
-    Serial.print("temp (msg1) : ");
-    Serial.println(temp);
     Wisol::send_string_data(temp);
+
     
     temp = create_message2();
-    temp = Wisol::complete_hexa_bytes(temp, 10);
-    Serial.print("temp (msg2) : ");
-    Serial.println(temp);
-    
+    temp = Wisol::complete_hexa_bytes(temp, 10); 
+      
     delay(1000*30);
     Wisol::send_string_data(temp);
   }
 }
 
 void get_bssid(int a) {
-  Serial.println("get_bssid()");
-
-	for(int i = 0; i < TAILLE_ADRESSE_MAC ;i++)
-	{
+	for(int i = 0; i < TAILLE_ADRESSE_MAC ;i++) {
 		mac_int[i] = bssidtab[a][i];
-		Serial.print(mac_int[i]);
-		Serial.print("-");
 	}
-	Serial.println("");
 }
 
 String create_message1(){
-  Serial.println("deb create_message1");
 	char temp[2];
   get_bssid(0);
 	uint8_t* mac1_addr = mac_int;
  
-  //uint8_t mac1_addr[6] = {15, 15, 15, 32, 15, 15};
 	int mac1_power = (-1) * recep_power[0];
   Serial.print("mac1_power : ");
   Serial.println(mac1_power);
@@ -107,7 +86,6 @@ String create_message1(){
 	int altitude = (int)(bmp.computeAltitude());
   Serial.print("altitude : ");
   Serial.println(altitude);
-  // altitude = 50;
 	
 	String res = "";
   
@@ -117,37 +95,25 @@ String create_message1(){
 
   //PUISSANCE
   res+= String(mac1_power, HEX);
-  
+
+  //MAC
 	for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
-		Serial.print(mac1_addr[i]);
-		sprintf(temp,"%X",mac1_addr[i]);
+	  sprintf(temp,"%X",mac1_addr[i]);
     String tmp = String(temp);
     res += Wisol::complete_hexa_bytes(tmp, 1);
-    Serial.print(" -- ");
-    Serial.println(mac_int[i]);
 	}
+
+  // ALTITUDE
 	res+= String(altitude, HEX);
-	
-  Serial.println("fin create_message1");
 	return res;
 }
 
 String create_message2(){
-	Serial.println("deb create_message2");
   char temp[2];
   get_bssid(1);
   uint8_t* mac2_addr = mac_int;
- 
-  //uint8_t mac2_addr[6] = {15, 15, 15, 32, 15, 15};
   int mac2_power = (-1) * recep_power[1];
-  Serial.print("mac2_power : ");
-  Serial.println(mac2_power);
-  
   int altitude = (int)(bmp.computeAltitude());
-  Serial.print("altitude : ");
-  Serial.println(altitude);
-  // altitude = 50;
-  
   String res = "";
   
   //AUTH
@@ -156,18 +122,16 @@ String create_message2(){
 
   //PUISSANCE
   res+= String(mac2_power, HEX);
-  
+
+  //MAC
   for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
-    Serial.print(mac2_addr[i]);
     sprintf(temp,"%X",mac2_addr[i]);
     String tmp = String(temp);
     res += Wisol::complete_hexa_bytes(tmp, 1);
-    Serial.print(" -- ");
-    Serial.println(mac_int[i]);
   }
+
+  //ALTITUDE
   res+= String(altitude, HEX);
-  
-  Serial.println("fin create_message2");
   return res;
 }
 
@@ -187,9 +151,11 @@ String create_message3(){
   //AUTH
   String auth = "03";
   res += auth;
-  
+
+  //ALTITUDE
 	res+=String(altitude, HEX);
-  
+
+  //POSITION
 	Wisol::trame_GPGGA_to_DMS(trame, &lat_angle, &lat_minute, &lat_seconde, &lat_c, &lng_angle, &lng_minute, &lng_seconde,  &lng_c);
 	res+= Wisol::dms_lat_to_trame_hexa(lat_c, lat_angle, lat_minute, lat_seconde, prec);
 	res+= Wisol::dms_lng_to_trame_hexa(lng_c, lng_angle, lng_minute, lng_seconde, prec);
@@ -198,29 +164,20 @@ String create_message3(){
 	return res;
 }
 
-void wifi_scan() {
-  
-  Serial.println("scan start");
-    
+void wifi_scan() {    
   int wifi_saved = 0;
   
   uint8_t *bssid;
   char bssid_str[18];
-
   int power;
 
-  // WiFi.scanNetworks will return the number of networks found
   int n = WiFi.scanNetworks();
-  Serial.println("scan done");
   
   if (n == 0) {
       Serial.println("no networks found");
-  } else {
-      Serial.print(n);
-      Serial.println(" networks found");
-      
+  }
+  else {
       for (int i = 0; i < n; ++i) {
-          
           bssid = WiFi.BSSID(i);
           sprintf(bssid_str, "%X-%X-%X-%X-%X-%X",bssid[5], bssid[4], bssid[3], bssid[2], bssid[1], bssid[0]); 
 
@@ -228,37 +185,16 @@ void wifi_scan() {
 
           // select fix WiFi which are in google database
           if(bssid_str[9] == 'B' && bssid_str[10] == 'D' && wifi_saved < NB_ADRESSE_MAC){
-
-             // Serial.print(power);
-             // Serial.print(", ");
-             // Serial.print(wifi_saved);
-             // Serial.print(", ");
-
               for(int i = 0; i < TAILLE_ADRESSE_MAC ;i++){
                 bssidtab[wifi_saved][i] = bssid[i];
               }
               
-              //mac_address[wifi_saved] = bssid_str;
               recep_power[wifi_saved] = power;
-              wifi_saved++;// Print SSID, RSSI, BSSID and encryption mode for each network found
+              wifi_saved++;
           }
-
-          Serial.print(i + 1);
-          Serial.print(": ");
-          
-          Serial.print(WiFi.SSID(i));
-
-          Serial.print(", Power (dBm) :");
-          Serial.print(power);
-          
-          Serial.print(", BSSID: ");
-          Serial.println(bssid_str);
-          
           delay(10);
     }
-    Serial.println("");
-
-    // Wait for 5s before scanning again
-    delay(5000);
+    // Wait for 1s before scanning again
+    delay(1000);
   }
 }
