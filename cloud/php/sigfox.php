@@ -19,7 +19,7 @@
       return;
     }
 
-    $auth_str   = substr($hex_str, 0, 2);
+    $auth_str   = substr($hex_str, 2, 2);
     echo "auth_str : " . $auth_str . "\n";
 
     $auth_hex   = hex2bin($auth_str);
@@ -30,16 +30,16 @@
     {
       echo "AUTH 1\n";
 
-      $puissance1_str = substr($hex_str, 2, 2);
+      $puissance1_str = substr($hex_str, 4, 2);
       echo "puissance1_str : " . $puissance1_str . "\n";
 
       $puissance1     = (int)(hex2bin($puissance1_str));
       echo "puissance1 : " . $puissance1 . "\n";
 
-      $mac1_raw       = substr($hex_str, 4, 12);
+      $mac1_raw       = substr($hex_str, 6, 12);
       echo "mac1_raw : " . $mac1_raw . "\n";
 
-      $altitude_str   = substr($hex_str, 16, 2);
+      $altitude_str   = substr($hex_str, 18, 2);
       echo "altitude_str : " . $altitude_str . "\n";
 
       $altitude       = (int)(hex2bin($altitude_str));
@@ -51,13 +51,13 @@
     {
       echo "AUTH 2\n";
 
-      $puissance2_str = substr($hex_str, 2, 2);
+      $puissance2_str = substr($hex_str, 4, 2);
       $puissance2     = (int)(hex2bin($puissance2_str));
 
-      $mac2_raw       = substr($hex_str, 4, 12);
+      $mac2_raw       = substr($hex_str, 6, 12);
       echo "mac2_raw : " . $mac2_raw . "\n";
 
-      $altitude_str   = substr($hex_str, 16, 2);
+      $altitude_str   = substr($hex_str, 18, 2);
       echo "altitude_str : " . $altitude_str . "\n";
 
       $altitude       = (int)(hex2bin($altitude_str));
@@ -69,13 +69,13 @@
     {
       echo "AUTH 3\n";
 
-      $altitude_str   = substr($hex_str, 0, 2);
+      $altitude_str   = substr($hex_str, 2, 2);
       $altitude       = (int)(hex2bin($altitude_str));
 
-      $latitude_str   = substr($hex_str, 2, 8);
+      $latitude_str   = substr($hex_str, 4, 8);
       $latitude       = (double)(hex2bin($latitude_str));
 
-      $longitude_str  = substr($hex_str, 10, 8);
+      $longitude_str  = substr($hex_str, 12, 8);
       $longitude      = (double)(hex2bin($longitude_str));
     }
     else
