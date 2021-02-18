@@ -13,6 +13,7 @@
 #define TAILLE_ADRESSE_MAC 6
 
 Wisol w = Wisol();
+BMP180I2C bmp = BMP180I2C(BMP_I2C_ADDRESS); 
 
 String   mac_address[NB_ADRESSE_MAC];
 int      recep_power[NB_ADRESSE_MAC];
@@ -26,7 +27,6 @@ String create_message1();
 String create_message2();
 String create_message3();
 void chose_message_to_send();
-float get_altitude();
 void wifi_scan();                                                                                                                                                                                                                
 
 void setup() {
@@ -39,6 +39,7 @@ void setup() {
   delay(100);
                                                                                 
   Wire.begin();   
+  bmp.init();
 
 	for(int i=0; i++; i<2) {
 		for(int j = 0; j++ ;j<6){
@@ -57,7 +58,7 @@ void chose_message_to_send() {
 
   String temp="17364ABC93C743974A61";
 
-  if(false) {
+  if(true) {
     temp = create_message3();
     Serial.println(temp);
     Wisol::send_string_data(temp);
@@ -103,10 +104,10 @@ String create_message1(){
   Serial.print("mac1_power : ");
   Serial.println(mac1_power);
   
-	int altitude = (int)(get_altitude());
+	int altitude = (int)(bmp.computeAltitude());
   Serial.print("altitude : ");
   Serial.println(altitude);
-  altitude = 50;
+  // altitude = 50;
 	
 	String res = "";
   
@@ -115,7 +116,7 @@ String create_message1(){
   res += auth;
 
   //PUISSANCE
-  res+= String(mac1_power);
+  res+= String(mac1_power, HEX);
   
 	for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
 		Serial.print(mac1_addr[i]);
@@ -142,10 +143,10 @@ String create_message2(){
   Serial.print("mac2_power : ");
   Serial.println(mac2_power);
   
-  int altitude = (int)(get_altitude());
+  int altitude = (int)(bmp.computeAltitude());
   Serial.print("altitude : ");
   Serial.println(altitude);
-  altitude = 50;
+  // altitude = 50;
   
   String res = "";
   
@@ -154,7 +155,7 @@ String create_message2(){
   res += auth;
 
   //PUISSANCE
-  res+= String(mac2_power);
+  res+= String(mac2_power, HEX);
   
   for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
     Serial.print(mac2_addr[i]);
@@ -172,7 +173,7 @@ String create_message2(){
 
 String create_message3(){
 	int prec = 5;
-	String res;
+	String res; 
 	String trame = "$GPGGA,123519,4807.038,N,01131.324,E,1,08,0.9,545.4,M,46.9,M, , *42";//trackChip.get_position();
 	int lat_angle, lat_minute; 
 	double lat_seconde;
@@ -180,21 +181,22 @@ String create_message3(){
 	int lng_angle,lng_minute;
 	double lng_seconde;
 	char lng_c;
-	int altitude = get_altitude();
-	res+=String(altitude,HEX);
+	int altitude = bmp.computeAltitude();
+
+    
+  //AUTH
+  String auth = "03";
+  res += auth;
+  
+	res+=String(altitude, HEX);
+  
 	Wisol::trame_GPGGA_to_DMS(trame, &lat_angle, &lat_minute, &lat_seconde, &lat_c, &lng_angle, &lng_minute, &lng_seconde,  &lng_c);
-	res+= Wisol::dms_lat_to_trame_hexa(lat_c, lat_angle, lat_minute, lat_seconde,prec);
-	res+= Wisol::dms_lng_to_trame_hexa(lng_c, lng_angle, lng_minute, lng_seconde,prec);
-	res+=String(3);
+	res+= Wisol::dms_lat_to_trame_hexa(lat_c, lat_angle, lat_minute, lat_seconde, prec);
+	res+= Wisol::dms_lng_to_trame_hexa(lng_c, lng_angle, lng_minute, lng_seconde, prec);
+
+  res = Wisol::complete_hexa_bytes(res, 10);
 	return res;
 }
-
-float get_altitude() {                                                                                                                                                                                                                                       
-        static BMP180I2C bmp = BMP180I2C(BMP_I2C_ADDRESS);                                                                                                                                                                                                                                                                                                                                                                      
-        bmp.init();                                                                                                                                                                                                                                                                        
-                                                                                                                                              
-        return bmp.computeAltitude();                                                                                                                 
-} 
 
 void wifi_scan() {
   
