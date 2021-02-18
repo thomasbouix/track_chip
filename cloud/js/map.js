@@ -13,7 +13,7 @@ var span_arrow_alt      = document.getElementById("arrow");
 let markers             = [];
 let pos_marker          = [];
 
-var nb_position_display = 5;
+var nb_position_display = 10;
 
 function initMap() {
   
