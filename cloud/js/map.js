@@ -105,7 +105,8 @@ function initMap() {
 
     // remove all markers
     clearMarkers();
-    markers = [];
+    markers     = [];
+    pos_marker  = [];
 
     for (var i = 0; i < nb_position_display; i++) {
 

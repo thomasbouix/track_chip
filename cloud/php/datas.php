@@ -15,7 +15,7 @@
   	die('Erreur : '.$e->getMessage());
   }
 
-  // id start at 1, so we retrieve the last 5 locations
+  // id start at 1, so we retrieve the last 10 locations
   $response = $db->query('SELECT * FROM Location WHERE (id >= (SELECT MAX(id) FROM Location) - 9);');
   
   $data = array();
