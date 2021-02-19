@@ -151,6 +151,11 @@ function initMap() {
       pos_marker[2],
       pos_marker[3],
       pos_marker[4],
+      pos_marker[5],
+      pos_marker[6],
+      pos_marker[7],
+      pos_marker[8],
+      pos_marker[9]
     ];
     const flightPath = new google.maps.Polyline({
       path: flightPlanCoordinates,
