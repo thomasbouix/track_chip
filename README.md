@@ -1,8 +1,8 @@
 # TrackChip, le traqueur autonome ! 
 L'objectif de ce projet est triple :
 * Développer un traqueur minimaliste et autonome
-* Obtenir une position en extérieur et en intérieur.
-* Avoir une précision de l'ordre de la dizaine de mètre.
+* Obtenir une position en extérieur et en intérieur
+* Avoir une précision de l'ordre de la dizaine de mètre
 
 ## Device
 Le device en lui-même est basé sur un micro-controleur ESP32, entouré des périphériques suivant :
@@ -38,9 +38,13 @@ Le batterie du device est rechargeable en dévissant la boite par cable micro-US
 Le device envoie ses données sur un backend web en utilisant le réseau SigFox.
 Ce backend redirigie ensuite ces informations sur notre serveur grâce à une fonction de callback.
 On accède au backend via l'URL suivant :
+```
 https://backend.sigfox.com/auth/login
+```
 
 ## Site Web
 Le site web est disponible à l'adresse suivante :
+```
 https://track-chip.alwaysdata.net/
+```
 
