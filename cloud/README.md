@@ -1,4 +1,4 @@
-# Procedure à suivre pour se connecter au site
+# Procédure à suivre pour se connecter au site
 
 Ouvrir un navigateur internet (Chrome ou Chromium de préférence, ne fonctionne pas sur Safari) et taper l'adresse suivante : 
 ```
