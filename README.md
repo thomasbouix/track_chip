@@ -59,10 +59,9 @@ $ php -S 127.0.0.1.:8888
 ```
 
 ### Site Web
-Le site web est disponible à l'adresse suivante :
+Nous avons choisi d'utiliser l'hébergeur always-data pour notre site.
+Cela donnait un URL du type :
 ```
 https://track-chip.alwaysdata.net/
 ```
-Des identifiants seront demandés pour s'y connecter.
-Contacter l'adminitrateur pour en obtenir.
 
