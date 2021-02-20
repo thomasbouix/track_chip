@@ -11,8 +11,10 @@ Le device en lui-même est basé sur un micro-controleur ESP32, entouré des pé
 * Batterie LIPO 1050mAh
 * Régulateur de tension 5V Polulu U1V11F5
 
-Le tout a été intégré dans un circuit imprimé.
-
+```
+Les sources des bibliothèques des périphériques ainsi que du PCB 
+sont disponibles dans le dossier /devices du git.
+```
 ### Site Web
 Le site internet possède les fonctionnalitées suivantes :
 * Position de l'utilisateur
@@ -20,6 +22,11 @@ Le site internet possède les fonctionnalitées suivantes :
 * Calcul de la différence d'altitude
 * Calcul du trajet en voiture pour rejoindre le traqueur
 * Historique des positions du traqueur
+
+```
+Les sources du serveur, de la base de donnée et du site Web 
+sont disponibles dans la partie cloud/ du git.
+```
 
 # Notice d'utilisation
 Le système dans son ensemble possède le comportement suivant :
