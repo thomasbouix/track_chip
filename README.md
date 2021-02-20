@@ -12,8 +12,7 @@ Le device en lui-même est basé sur un micro-controleur ESP32, entouré des pé
 * Régulateur de tension 5V Polulu U1V11F5
 
 ```
-Les sources des bibliothèques des périphériques ainsi que du PCB 
-sont disponibles dans le dossier /devices du git.
+Les sources des bibliothèques des périphériques ainsi que du PCB sont disponibles dans le dossier /devices du git.
 ```
 ### Site Web
 Le site internet possède les fonctionnalitées suivantes :
@@ -24,8 +23,7 @@ Le site internet possède les fonctionnalitées suivantes :
 * Historique des positions du traqueur
 
 ```
-Les sources du serveur, de la base de donnée et du site Web 
-sont disponibles dans la partie cloud/ du git.
+Les sources du serveur, de la base de donnée et du site Web sont disponibles dans la partie cloud/ du git.
 ```
 
 # Notice d'utilisation
