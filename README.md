@@ -48,6 +48,11 @@ https://backend.sigfox.com/auth/login
 ### Serveur
 Le serveur est un ensemble de programmes gérant le site Web ainsi que la base de donnée. 
 Il peut être hebergé sur une machine locale, ou bien sur internet via un VPS. 
+En local, on peut lancer le site avec les commandes suivantes :
+```
+$ cd /path/to/sources
+$ php -S 127.0.0.1.:8888
+```
 
 ### Site Web
 Le site web est disponible à l'adresse suivante :
