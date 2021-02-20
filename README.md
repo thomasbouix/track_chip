@@ -36,6 +36,10 @@ Le système dans son ensemble possède le comportement suivant :
 ### Device
 Le device s'allume et s'éteint avec le boutton ON/OFF sur le côté de sa boîte protectrice.
 Il envoie alors sa position toutes les 5 minutes.
+```
+Le programme faisant fonctionner le device peut-être modifié et téléversé avec l'IE Arduino.
+Il faut simplement s'assurer que les librairies utilisées sont bien visibles en les ajoutant dans ~/Arduino/lib.
+```
 
 ### Réseau SigFox
 Le device envoie ses données sur un backend web en utilisant le réseau SigFox.
@@ -61,5 +65,4 @@ https://track-chip.alwaysdata.net/
 ```
 Des identifiants seront demandés pour s'y connecter.
 Contacter l'adminitrateur pour en obtenir.
-
 
