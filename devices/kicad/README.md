@@ -38,5 +38,12 @@ faire des plans de masse séparés et les relier avec une piste.
 
 ## Batterie
 ```
-On utiliser un circuit avec chargeur intégré.
+On utilise un circuit avec chargeur intégré.
 ```
+# Version Sigfox
+La version Sigfox utilise un module Wisol pour les communications.
+C'est cette version qui a été retenue pour les démonstrations
+
+# Version GSM
+La version GSM utilise une carte SIM pour les communications.
+Cette version est en cours de développement.
