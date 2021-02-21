@@ -33,7 +33,7 @@ private :
 	int recep_power[3];
 	float location_lat  	= 0;
 	float location_lng  	= 0;
-	int accuracy		= 0;
+	int accuracy			= 0;
 	
 	//Mac address
 	uint8_t bssidtab[NB_ADRESSE_MAC][TAILLE_ADRESSE_MAC];
@@ -43,6 +43,7 @@ public :
 	~TrackChip();
 
 	// Peripherals utilities
+	void send_data(String s);	// Wisol
 	float get_altitude();		// Altimètre
 	String get_position();		// GSP
 
@@ -55,13 +56,16 @@ public :
 	int get_wifi_accuracy()	{ return accuracy;	}
 	float get_wifi_lat()	{ return location_lat;	}
 	float get_wifi_lng()	{ return location_lng;	}
-	uint8_t*  get_bssid(int i);
+  uint8_t*  get_bssid(int i);
 
-	//create different message
-	String create_message1();
-	String create_message2();
-	String create_message3();
-	void chose_message_to_send();
+  //create different message
+   String create_message1();
+   String create_message2();
+   String create_message3();
+   void chose_message_to_send();
+
+   //function used in create message
+   String part_bssid_to_hexa(uint8_t* macaddr);
 };
 
 #endif

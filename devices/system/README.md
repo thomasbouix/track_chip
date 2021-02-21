@@ -15,4 +15,8 @@ C'est parce que ce gps utilise le même port série que le calbe USB utilisé po
 * Le wisol communique avec la liaison _Serial2_ sur les broches RX2 et TX2 de l'ESP32 
 	+ BAUDE=9600 par défaut
 
+# class_system/
+Ce dossier instancie un code example utilisant la classe track_chip
 
+# bare_system/
+Ce dossier instancie un code example utilisant les libairies sans la classe track_chip 
