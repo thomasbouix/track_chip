@@ -9,7 +9,7 @@ uint8_t bssidtab[NB_ADRESSE_MAC][TAILLE_ADRESSE_MAC];
 
 Wisol w = Wisol();
 BMP180I2C bmp = BMP180I2C(BMP_I2C_ADDRESS); 
-GROVE11302() gps = GROVE11302();
+GROVE11302 gps = GROVE11302();
 
 void setup() {
 	Serial.begin(115200); 
@@ -183,7 +183,7 @@ void wifi_scan() {
 bool receive_fix() {
 	//GROVE11302 gps_grove = GROVE11302();
 	gps.get_data_line();
-	char* buf = (char*) gps_grove.buffer;
+	char* buf = (char*) gps.buffer;
 	String trame = String(buf);
 	int MIN_SIZE_CHAR_TRAME = 67;
 	return trame.length() >=MIN_SIZE_CHAR_TRAME;
