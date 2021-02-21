@@ -85,7 +85,7 @@ void TrackChip::wifi_scan() {
       //Serial.print("test BD google : ");
       //Serial.print(bssid_str[9]);
       //Serial.println(bssid_str[10]);
-      Serial.println("test bssidtab: ");
+      
       /*if (test_to_delete < 2){
         Serial.println("enter test to delete");
         for(int k = 0; k<TAILLE_ADRESSE_MAC ;k++){
@@ -104,10 +104,6 @@ void TrackChip::wifi_scan() {
           };
 				mac_address[wifi_saved] = bssid_str;
 				recep_power[wifi_saved] = power;
-				for(int j = 0; j++ ;j<6){
-				  bssidtab[wifi_saved][j] = bssid[5-j];
-          Serial.print(bssid[5-j]);
-				}
 				wifi_saved++;
 			}
 
@@ -231,39 +227,45 @@ String TrackChip::create_message1(){
   uint8_t* mac1_addr = this->get_bssid(0);
   int mac1_power = abs(recep_power[0]);
   int altitude = 23;//TrackChip::get_altitude();
-  String res = "";
-  for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
+  String res = "01";
+  Serial.print("taille auth :");
+  Serial.println(res.length());
+  res+=String(mac1_power);
+  /*for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
     Serial.print(mac1_addr[i]);
     sprintf(temp,"%2X",mac1_addr[i]);
     Serial.print(": ");
     Serial.println(temp);
+    Wisol::complete_hexa_bytes(temp, 1);
     res += temp;
-    }
-   //res+= String(mac1_power);
+    }*/
+   res+= TrackChip::part_bssid_to_hexa(mac1_addr);
    res+= String(altitude,HEX);
-   res+=String(1);
+   res+="00";
    return res;
   }
 
 String TrackChip::create_message2(){
   char temp[2];
   uint8_t* mac2_addr = this->get_bssid(1);
-  int mac1_power = abs(recep_power[1]);
-  String res = "";
-  for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
+  int mac2_power = abs(recep_power[1]);
+  String res = "02";
+  res+= String(mac2_power);
+  /*for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
     Serial.print(mac2_addr[i]);
     sprintf(temp,"%2X",mac2_addr[i]);
     Serial.print(": ");
     Serial.println(temp);
     res += temp;
-    }
-   res+=String(2);
+    }*/
+   res+= TrackChip::part_bssid_to_hexa(mac2_addr);
+   res+="0000";
    return res;
   }
 
 String TrackChip::create_message3(){
   int prec = 5;
-  String res;
+  String res = "03";
   String trame = "$GPGGA,123519,4807.038,N,01131.324,E,1,08,0.9,545.4,M,46.9,M, , *42";//trackChip.get_position();
   int lat_angle, lat_minute; 
   double lat_seconde;
@@ -276,7 +278,6 @@ String TrackChip::create_message3(){
   Wisol::trame_GPGGA_to_DMS(trame, &lat_angle, &lat_minute, &lat_seconde, &lat_c, &lng_angle, &lng_minute, &lng_seconde,  &lng_c);
   res+= Wisol::dms_lat_to_trame_hexa(lat_c, lat_angle, lat_minute, lat_seconde,prec);
   res+= Wisol::dms_lng_to_trame_hexa(lng_c, lng_angle, lng_minute, lng_seconde,prec);
-  res+=String(3);
   return res;
 }
 
@@ -295,4 +296,20 @@ void TrackChip::chose_message_to_send(){
     Serial.println(temp);
     Wisol::send_string_data(temp);
   }
+}
+
+
+//function used in create message
+String TrackChip::part_bssid_to_hexa(uint8_t* macaddr){
+    char temp[2];
+    String res="";
+    for (int i = 0; i <TAILLE_ADRESSE_MAC;i++){
+      Serial.print(macaddr[i]);
+      sprintf(temp,"%2X",macaddr[i]);
+      Wisol::complete_hexa_bytes(res, 1);
+      Serial.print(": ");
+      Serial.println(temp);
+      res+=temp;
+    }
+    return res;
 }

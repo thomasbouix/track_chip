@@ -63,6 +63,9 @@ public :
    String create_message2();
    String create_message3();
    void chose_message_to_send();
+
+   //function used in create message
+   String part_bssid_to_hexa(uint8_t* macaddr);
 };
 
 #endif

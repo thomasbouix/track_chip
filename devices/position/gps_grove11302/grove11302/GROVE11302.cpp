@@ -44,5 +44,10 @@ void GROVE11302::clearBufferArray(unsigned char *arr, int count)   // function t
 }
 
 bool GROVE11302::receive_fix() {
-	return false; // A faire
+	//GROVE11302 gps_grove = GROVE11302();
+	this->get_data_line();
+  	char* buf = (char*) this->buffer;
+  	String trame = String(buf);
+  	int MIN_SIZE_CHAR_TRAME = 67;
+  	return trame.length() >=MIN_SIZE_CHAR_TRAME;
 }

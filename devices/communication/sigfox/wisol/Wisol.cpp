@@ -6,6 +6,7 @@ Librairie permettant d'envoyer une chaine de caractère de 12 octets d'un ESP32 
 //Constructor
 Wisol::Wisol(int baudrate, int RX, int TX){
 	Serial2.begin(baudrate, SERIAL_8N1, RX, TX);
+	while (!Serial2);
 }
 
 Wisol::Wisol(){
@@ -44,6 +45,9 @@ bool Wisol::string_ok(String verif){
 //public function
 void Wisol::send_string_data(String envoie) {
 
+	Serial.println("Wisol::send_string_data => envoie = " );
+	Serial.println(envoie);
+
  	if (string_ok(envoie)) {
 		Serial.println("Wisol::send_string_data => string is valid" );
 		String command = "AT$SF=";
@@ -55,6 +59,7 @@ void Wisol::send_string_data(String envoie) {
 
 	} else {
 		Serial.println("Wisol::send_string_data => string is not valid" );
+
 	}
 }
 
@@ -110,22 +115,22 @@ String Wisol::complete_hexa_bytes(String hexa, int nb_bytes){ // prend en argume
 }
 
 String Wisol::dms_lat_to_trame_hexa(char cardinal, int angle, int minute, double seconde,int prec){
-	double dd = shift_latitude(Dms_to_dd(cardinal,angle,minute, seconde));
-	String res_lat = Wisol::double_to_hexa(dd,prec);
-	res_lat = complete_hexa_bytes(res_lat,4);
+	double dd = shift_latitude(Dms_to_dd(cardinal, angle, minute, seconde));
+	String res_lat = Wisol::double_to_hexa(dd, prec);
+	res_lat = complete_hexa_bytes(res_lat, 4);
 	return res_lat;
 }
 
 String Wisol::dms_lng_to_trame_hexa(char cardinal, int angle, int minute, double seconde,int prec){
-	double dd = shift_longitude(Dms_to_dd(cardinal,angle,minute, seconde));
-	String res_lat = Wisol::double_to_hexa(dd,prec);
+	double dd = shift_longitude(Dms_to_dd(cardinal, angle, minute, seconde));
+	String res_lat = Wisol::double_to_hexa(dd, prec);
 	res_lat = complete_hexa_bytes(res_lat,4);
 	return res_lat;
 }
 
 String Wisol::altitude_to_trame_hexa(int altitude){
 	String res_alt = Wisol::int_to_hexa(altitude);
-	return complete_hexa_bytes(res_alt,1);
+	return complete_hexa_bytes(res_alt, 1);
 }
 
 
