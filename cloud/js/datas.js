@@ -2,13 +2,15 @@
 // Realise un GET sur datas.php et recupere le Json contenant les infos de la dernière position. 
 // Puis affiche les points de position sur la carte 
 
-function get_data_device(location_id) {
+function get_data_device(/*location_id*/) {
 
   console.log("get_data_device()");
 
   var alt;
   var lat;
   var lng;
+
+  var data_obj;
 
   $.ajax({
     url: '../php/datas.php',
@@ -21,20 +23,7 @@ function get_data_device(location_id) {
       console.log("data receive from data.php (CHANGE) :");
       console.log(data);
 
-      var res = data[location_id];
-
-      console.log("Device Altitude : ");
-      console.log(res['altitude']);
-
-      console.log("Device Latitude : ");
-      console.log(res['latitude']);
-
-      console.log("Device Longitude : ");
-      console.log(res['longitude']);
-
-      alt = res['altitude'];
-      lat = res['latitude'];
-      lng = res['longitude'];
+      data_obj = data;
 
     },
     error : function(resultat, statut, erreur){
@@ -42,5 +31,6 @@ function get_data_device(location_id) {
     },
   });
 
-  return [alt, lat, lng];
+  //return [alt, lat, lng];
+  return data_obj;
 }

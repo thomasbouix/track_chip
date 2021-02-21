@@ -27,7 +27,7 @@ function initMap() {
   // Default position : center of Paris
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 48.858725, lng: 2.341706 },
-    zoom: 6,
+    zoom: 12,
   });
 
   directionsRenderer.setMap(map);
@@ -108,23 +108,40 @@ function initMap() {
     markers     = [];
     pos_marker  = [];
 
+    // Rely all old tracker's positions
+    const flightPlanCoordinates = [];
+
+    // call fonction which GET datas.php
+    let data_array;
+    data_array = get_data_device();
+
+    console.log(data_array);
+
+    nb_position_display = data_array['length'];
+    console.log('nb_position_display : ');
+    console.log(nb_position_display);
+
     for (var i = 0; i < nb_position_display; i++) {
 
-      // call fonction which GET datas.php
-      let data_array;
-      data_array = get_data_device(i);
-
-      console.log("data_array[");
+      console.log('i : ');
       console.log(i);
-      console.log("] :\n");
-      console.log(data_array);
+      console.log(data_array[i]);
 
-      current_tracket_alt = data_array[0];
+      element = data_array[i];
 
-      pos_marker.push({ lat: data_array[1], lng: data_array[2] });
+      console.log(element['altitude']);
+      console.log(element['latitude']);
+      console.log(element['longitude']);
+
+      current_tracket_alt = element['altitude'];
+
+      pos_marker.push({ lat: element['latitude'], lng: element['longitude'] });
+
 
       if (i != nb_position_display - 1){
         // add circle marker on each old tracker's position
+        console.log("circle marker");
+
         markers.push(new google.maps.Marker({
           position: pos_marker[i],
           icon: {
@@ -136,28 +153,20 @@ function initMap() {
       }
       else {
         // add clasic marker on current tracker position
+        console.log("classic marker");
+
         markers.push(new google.maps.Marker({
           position: pos_marker[i],
           map: map,
         }));
       }
+
+    flightPlanCoordinates.push(pos_marker[i]);
+
     }
 
     tracker_marker = markers[nb_position_display - 1];
     
-    // Rely all old tracker's positions
-    const flightPlanCoordinates = [
-      pos_marker[0],
-      pos_marker[1],
-      pos_marker[2],
-      pos_marker[3],
-      pos_marker[4],
-      pos_marker[5],
-      pos_marker[6],
-      pos_marker[7],
-      pos_marker[8],
-      pos_marker[9]
-    ];
     const flightPath = new google.maps.Polyline({
       path: flightPlanCoordinates,
       geodesic: true,
@@ -178,8 +187,8 @@ function initMap() {
       window_tracker_pos.open(map, tracker_marker);
     });
     
-    map.setCenter(pos_marker[nb_position_display - 1]);
-    map.setZoom(11);
+    map.setCenter(tracker_pos);
+    map.setZoom(16);
 
     handleLocationError(true, window_tracker_pos, map.getCenter());
   });
